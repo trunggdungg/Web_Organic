@@ -1,0 +1,173 @@
+.forgot-container {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 90%;
+    max-width: 400px;
+}
+
+.forgot-header {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.forgot-header h1 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.forgot-header p {
+    color: #777;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-size: 14px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    border-color: #4285f4;
+    outline: none;
+}
+
+.btn-reset {
+    background-color: #4285f4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px;
+    width: 100%;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-bottom: 20px;
+}
+
+.btn-reset:hover {
+    background-color: #3367d6;
+}
+
+.or-text {
+    text-align: center;
+    position: relative;
+    margin: 20px 0;
+}
+
+.or-text:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 45%;
+    height: 1px;
+    background: #ddd;
+}
+
+.or-text:after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 45%;
+    height: 1px;
+    background: #ddd;
+}
+
+.btn-otp {
+    background-color: #34a853;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 12px;
+    width: 100%;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.btn-otp:hover {
+    background-color: #2d9249;
+}
+
+.back-link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
+}
+
+.back-link a {
+    color: #4285f4;
+    text-decoration: none;
+}
+
+.back-link a:hover {
+    text-decoration: underline;
+}
+
+.verification-section {
+    display: none;
+    margin-top: 20px;
+}
+
+.verification-code {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.verification-code input {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    font-size: 18px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 0 5px;
+}
+
+.verification-code input:focus {
+    border-color: #4285f4;
+    outline: none;
+}
+
+.timer {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #555;
+}
+
+.resend {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.resend a {
+    color: #4285f4;
+    text-decoration: none;
+}
+
+.resend a:hover {
+    text-decoration: underline;
+}
