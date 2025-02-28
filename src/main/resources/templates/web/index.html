@@ -22,13 +22,10 @@
   <!-- link CSS -->
   <link rel="stylesheet" href="/assets/css/style.css">
 
-
-
-
 </head>
 
 <div class="font-sans">
-  <div class="header-sticky">
+  <div class="header header-sticky ">
     <!-- Top Navigation -->
     <div class="bg-gray-100 border-b border-gray-300">
       <div class="container mx-auto flex justify-between items-center py-2 px-2">
@@ -51,10 +48,10 @@
                     <span style="font-size: 1.5rem; font-weight: bold; color: black;">Orga<span
                             style="color: #10b981;">nic</span></span>
 
-          <a href="#" class="nav-link">Trang chủ</a>
+          <a href="/" class="nav-link">Trang chủ</a>
 
           <div class="dropdown-parent">
-            <a href="#" class="nav-link" style="display: flex; align-items: center;">
+            <a href="/product" class="nav-link" style="display: flex; align-items: center;">
               Sản phẩm <i class="fas fa-sm fa-chevron-right ml-1"
                           style="font-size: 0.75rem; margin-left: 0.25rem;"></i>
             </a>
@@ -65,10 +62,10 @@
             </div>
           </div>
 
-          <a href="#" class="nav-link">Khuyến mãi</a>
+          <a href="/promotion" class="nav-link">Khuyến mãi</a>
 
           <div class="dropdown-parent">
-            <a href="#" class="nav-link" style="display: flex; align-items: center;">
+            <a href="/blog" class="nav-link" style="display: flex; align-items: center;">
               Blogs <i class="fas fa-sm fa-chevron-right ml-1"
                        style="font-size: 0.75rem; margin-left: 0.25rem;"></i>
             </a>
@@ -79,7 +76,7 @@
             </div>
           </div>
 
-          <a href="#" class="nav-link">Liên hệ</a>
+          <a href="/contact" class="nav-link">Liên hệ</a>
         </div>
 
         <!-- Right side - User Controls -->
@@ -1304,6 +1301,20 @@
     document.getElementById("favorite-sidebar").classList.add("-translate-x-full");
   });
 
+  const userIcon = document.getElementById("user-icon");
+  const userMenu = document.getElementById("user-menu");
+
+  userIcon.addEventListener("click", function(event) {
+    userMenu.classList.toggle("hidden");
+    event.stopPropagation(); // Ngăn sự kiện click lan ra ngoài
+  });
+
+  // Ẩn menu nếu click ra ngoài
+  document.addEventListener("click", function(event) {
+    if (!userIcon.contains(event.target) && !userMenu.contains(event.target)) {
+      userMenu.classList.add("hidden");
+    }
+  });
 </script>
 </body>
 </html>
