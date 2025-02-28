@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="main-layout(title, css, content, js)">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title th:replace="${title}">Utero - video background home</title>
+
+  <link href="/assets/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+  <link href="/assets/theme7b30.css" rel="stylesheet" type="text/css"/>
+  <!-- For Js Library -->
+  <script src="/assets/vendor7b30.js"></script>
+  <script src="/assets/theme7b30.js"></script>
+
+  <!--Link CSS rieng-->
+  <th:block th:replace="${css}"></th:block>
+
+</head>
+<body class="home home-video-background inner-page">
+<div id="main">
+  <th:block th:replace="~{web/fragments/header :: .header}"></th:block>
+  <th:block th:replace="~{web/fragments/header :: .sidebar-contact }"></th:block>
+
+  <!--  Giao dien rieng -->
+  <th:block th:replace="${content}"></th:block>
+
+  <th:block th:replace="~{web/fragments/footer :: .footer}"></th:block>
+  <th:block th:replace="~{web/fragments/search-popup :: .search-popup}"></th:block>
+</div>
+<!--JS rieng -->
+<th:block th:replace="${js}"></th:block>
+</body>
+</html>
