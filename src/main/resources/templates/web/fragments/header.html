@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!--    css-->
+    <link rel="stylesheet" href="/assets/css/style.css">
+
+
+</head>
+<body>
+
+    <div class="header header-sticky ">
+        <!-- Top Navigation -->
+        <div class="bg-gray-100 border-b border-gray-300">
+            <div class="container mx-auto flex justify-between items-center py-2 px-2">
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-700">Về ORGANIC</a>
+                    <a href="#" class="text-gray-700">Hướng dẫn mua hàng</a>
+                    <a href="#" class="text-gray-700">Trò chuyện cùng ORGANIC</a>
+                    <a href="#" class="text-gray-700" id="open-favorite-btn">Sản phẩm yêu thích</a>
+                </div>
+                <div>
+                    <i class="fas fa-user-circle text-2xl text-gray-700"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Navigation -->
+        <div class="bg-white border-b border-gray-300">
+            <div class="container mx-auto flex justify-between items-center py-4 px-2">
+                <div style="display: flex; align-items: center; gap: 1rem;">
+                    <span style="font-size: 1.5rem; font-weight: bold; color: black;">Orga<span
+                            style="color: #10b981;">nic</span></span>
+
+                    <a href="#" class="nav-link">Trang chủ</a>
+
+                    <div class="dropdown-parent">
+                        <a href="#" class="nav-link" style="display: flex; align-items: center;">
+                            Sản phẩm <i class="fas fa-sm fa-chevron-right ml-1"
+                                        style="font-size: 0.75rem; margin-left: 0.25rem;"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item">Sản phẩm 1</a>
+                            <a href="#" class="dropdown-item">Sản phẩm 2</a>
+                            <a href="#" class="dropdown-item">Sản phẩm 3</a>
+                        </div>
+                    </div>
+
+                    <a href="#" class="nav-link">Khuyến mãi</a>
+
+                    <div class="dropdown-parent">
+                        <a href="#" class="nav-link" style="display: flex; align-items: center;">
+                            Blogs <i class="fas fa-sm fa-chevron-right ml-1"
+                                     style="font-size: 0.75rem; margin-left: 0.25rem;"></i>
+                        </a>
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item">Blog 1</a>
+                            <a href="#" class="dropdown-item">Blog 2</a>
+                            <a href="#" class="dropdown-item">Blog 3</a>
+                        </div>
+                    </div>
+
+                    <a href="#" class="nav-link">Liên hệ</a>
+                </div>
+
+                <!-- Right side - User Controls -->
+
+                <div class="flex items-center space-x-4">
+                    <button class="bg-white border border-gray-300 rounded-full px-4 py-2 shadow-sm">Lịch sử mua
+                        hàng</button>
+                    <div class="relative">
+                        <input type="text" placeholder="Value" class="border border-gray-300 rounded-full px-4 py-2">
+                        <i class="fas fa-search absolute right-3 top-3 text-gray-500"></i>
+                    </div>
+                    <i class="fas fa-shopping-cart text-2xl text-green-500"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Breadcrumb -->
+        <div class="bg-green-500 text-white py-2 px-4 ">
+            <div class="container mx-auto ">
+                <span>Trang chủ > Sản phẩm</span>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
