@@ -202,10 +202,7 @@
 /* liên hệ */
 #home-shop-map {
     align-items: center;
-    background: url(/static/assets/img/bg/bg_feedback.d3724c210d6633d0eb48.jpg);
-    background-attachment: fixed;
-    background-position: top;
-    background-repeat: no-repeat;
+    background: url(/assets/img/bg/bg_feedback.d3724c210d6633d0eb48.jpg) no-repeat fixed top;
     background-size: cover;
     display: flex;
     flex-direction: column;
