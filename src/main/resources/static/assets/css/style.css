@@ -93,8 +93,8 @@
 /* back-ground product */
 .product-popular{
     background-color: #f1f7ee;
-    background-image: url(/static/assets/img/bg/img4-8.7dcfccb29b6f34f038a4.png),
-    url(/static/assets/img/bg/img4-8.7dcfccb29b6f34f038a4.png); background-repeat: no-repeat; background-position: left top, right bottom;
+    background-image: url(/assets/img/bg/img4-8.7dcfccb29b6f34f038a4.png),
+    url(/assets/img/bg/img4-8.7dcfccb29b6f34f038a4.png); background-repeat: no-repeat; background-position: left top, right bottom;
 }
 
 .product-readyEat{
@@ -105,16 +105,16 @@
 
 .product-nonFood{
     background-color: #f1f7ee;
-    background-image: url(/static/assets/img/bg/img4-8.7dcfccb29b6f34f038a4.png),
-    url(/static/assets/img/bg/img4-8.7dcfccb29b6f34f038a4.png); background-repeat: no-repeat; background-position: left top, right bottom;
+    background-image: url(/assets/img/bg/img4-8.7dcfccb29b6f34f038a4.png),
+    url(/assets/img/bg/img4-8.7dcfccb29b6f34f038a4.png); background-repeat: no-repeat; background-position: left top, right bottom;
 }
 
 /* partner */
 .partner{
     height: 400px;
     background-color: #05c26a;
-    background-image: url(/static/assets/img/partner-left-bg.03f4baa7a7b5d95344d9.png),
-    url(/static/assets/img/partner-right-bg.ac73c7ad7cb191e2b851.png);
+    background-image: url(/assets/img/partner-left-bg.03f4baa7a7b5d95344d9.png),
+    url(/assets/img/partner-right-bg.ac73c7ad7cb191e2b851.png);
     background-repeat: no-repeat;
     background-position: left bottom, right top;
 }
@@ -308,9 +308,9 @@
 
 /* footer */
 .footer {
-    background-color: #f1f7ee;
-    background-image: url(/static/assets/img/hero-left-bg.edb946c6720d43f411b6.png),
-    url(/static/assets/img/hero-right-bg.d3391a89393dd94712f3.png);
+
+    background-image: url(/assets/img/hero-left-bg.edb946c6720d43f411b6.png),
+    url(/assets/img/hero-right-bg.d3391a89393dd94712f3.png);
     background-repeat: no-repeat;
     background-position: left top, right bottom;
 }
