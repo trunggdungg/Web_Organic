@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.text.DecimalFormat;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -27,7 +27,7 @@ public class ProductVariants {
     Product product;
 
     String weight;
-    DecimalFormat price;
+    BigDecimal price;
     Integer stock;
     Boolean isDefault;
     LocalDateTime createdAt;
