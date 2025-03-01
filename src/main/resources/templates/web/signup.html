@@ -25,74 +25,10 @@
 
 </head>
 
-<div class="font-sans">
+<body class="font-sans">
     <div class="header-sticky">
         <!-- Top Navigation -->
-        <div class="bg-gray-100 border-b border-gray-300">
-            <div class="container mx-auto flex justify-between items-center py-2 px-2">
-                <div class="flex space-x-4">
-                    <a href="#" class="text-gray-700">Về ORGANIC</a>
-                    <a href="#" class="text-gray-700">Hướng dẫn mua hàng</a>
-                    <a href="#" class="text-gray-700">Trò chuyện cùng ORGANIC</a>
-                    <a href="#" class="text-gray-700">Sản phẩm yêu thích</a>
-                </div>
-                <div>
-                    <i class="fas fa-user-circle text-2xl text-gray-700"></i>
-                </div>
-            </div>
-        </div>
-
-        <!-- Main Navigation -->
-        <div class="bg-white border-b border-gray-300">
-            <div class="container mx-auto flex justify-between items-center py-4 px-2">
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <span style="font-size: 1.5rem; font-weight: bold; color: black;">Orga<span
-                            style="color: #10b981;">nic</span></span>
-
-                    <a href="#" class="nav-link">Trang chủ</a>
-
-                    <div class="dropdown-parent">
-                        <a href="#" class="nav-link" style="display: flex; align-items: center;">
-                            Sản phẩm <i class="fas fa-sm fa-chevron-right ml-1"
-                                        style="font-size: 0.75rem; margin-left: 0.25rem;"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item">Sản phẩm 1</a>
-                            <a href="#" class="dropdown-item">Sản phẩm 2</a>
-                            <a href="#" class="dropdown-item">Sản phẩm 3</a>
-                        </div>
-                    </div>
-
-                    <a href="#" class="nav-link">Khuyến mãi</a>
-
-                    <div class="dropdown-parent">
-                        <a href="#" class="nav-link" style="display: flex; align-items: center;">
-                            Blogs <i class="fas fa-sm fa-chevron-right ml-1"
-                                     style="font-size: 0.75rem; margin-left: 0.25rem;"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item">Blog 1</a>
-                            <a href="#" class="dropdown-item">Blog 2</a>
-                            <a href="#" class="dropdown-item">Blog 3</a>
-                        </div>
-                    </div>
-
-                    <a href="#" class="nav-link">Liên hệ</a>
-                </div>
-
-                <!-- Right side - User Controls -->
-
-                <div class="flex items-center space-x-4">
-                    <button class="bg-white border border-gray-300 rounded-full px-4 py-2 shadow-sm">Lịch sử mua
-                        hàng</button>
-                    <div class="relative">
-                        <input type="text" placeholder="Value" class="border border-gray-300 rounded-full px-4 py-2">
-                        <i class="fas fa-search absolute right-3 top-3 text-gray-500"></i>
-                    </div>
-                    <i class="fas fa-shopping-cart text-2xl text-green-500"></i>
-                </div>
-            </div>
-        </div>
+        <div th:insert="~{/web/fragments/header}"></div>
 
         <!-- Breadcrumb -->
         <div class="bg-green-500 text-white py-2 px-4 ">
@@ -163,59 +99,11 @@
         </form>
     </div>
 
-</div>
 
 
 <!-- Footer -->
 <div class="bg-gray-900 text-white footer">
-    <footer class="py-12">
-        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
-            <!-- About Section -->
-            <div>
-                <h2 class="text-2xl font-bold text-white">Organ<span class="text-green-500">ic</span></h2>
-                <p class="mt-4 text-gray-400">
-                    Organic chuyên cung cấp những sản phẩm được kiểm soát chặt chẽ từ khâu con giống, chế biến thức
-                    ăn, chăm sóc sức khỏe vật nuôi đến giết mổ, bao gói, bảo quản và vận chuyển một cách tốt nhất,
-                    sạch nhất cho thị trường.
-                </p>
-                <div class="flex mt-4 space-x-4">
-                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook fa-2x"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-google fa-2x"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter fa-2x"></i></a>
-                </div>
-            </div>
-            <!-- Links Section -->
-            <div>
-                <h3 class="text-xl font-bold text-white">Liên kết</h3>
-                <ul class="mt-4 space-y-2 text-gray-400">
-                    <li><a href="#" class="hover:text-white">Giới thiệu</a></li>
-                    <li><a href="#" class="hover:text-white">Sản phẩm</a></li>
-                    <li><a href="#" class="hover:text-white">Tin tức</a></li>
-                    <li><a href="#" class="hover:text-white">Cửa hàng</a></li>
-                </ul>
-            </div>
-            <!-- Contact Section -->
-            <div>
-                <h3 class="text-xl font-bold text-white">Liên hệ</h3>
-                <ul class="mt-4 space-y-2 text-gray-400">
-                    <li><i class="fas fa-map-marker-alt"></i> Thụy Phương, Bắc Từ Liêm, HN.</li>
-                    <li><i class="fas fa-phone"></i> 034 444 9999</li>
-                    <li><i class="fas fa-envelope"></i> organic.com</li>
-                </ul>
-            </div>
-            <!-- Newsletter Section -->
-            <div>
-                <h3 class="text-xl font-bold text-white">Bản tin</h3>
-                <p class="mt-4 text-gray-400">Bạn sẽ nhận được thông báo khi có tin mới.</p>
-                <form class="mt-4 flex">
-                    <input type="email" placeholder="Địa chỉ Email *"
-                           class="w-full px-4 py-2 rounded-l-md focus:outline-none">
-                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-r-md"><i
-                            class="fas fa-envelope"></i></button>
-                </form>
-            </div>
-        </div>
-    </footer>
+    <div th:insert="~{/web/fragments/footer}"></div>
 </div>
 <!-- Script boostrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
