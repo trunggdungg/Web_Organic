@@ -51,4 +51,15 @@ public class WebController {
     public String getPromotionPage() {
         return "/web/promotion";
     }
+
+    @GetMapping("/payment")
+    public String getPaymentPage() {
+        return "/web/payment";
+    }
+
+    @GetMapping("/checkout")
+    public String getCheckoutPage() {
+        return "/web/checkout";
+    }
+
 }
