@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.text.DecimalFormat;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
@@ -29,12 +29,18 @@ public class Order {
     String addressDetail;
     String fullName;
     String phone;
-    DecimalFormat productCost;
-    DecimalFormat shippingCost;
+    BigDecimal productCost;
+    BigDecimal shippingCost;
+
+    @Enumerated(EnumType.STRING)
     Status_Enum status;
+
     String paymentMethod;
+
+    @Enumerated(EnumType.STRING)
     Payment_Status_Enum paymentStatus;
-    DecimalFormat total;
+
+    BigDecimal total;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
