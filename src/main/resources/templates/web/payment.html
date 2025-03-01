@@ -27,75 +27,10 @@
 
 </head>
 
-<div class="font-sans">
+<body class="font-sans">
     <div class="header-sticky">
         <!-- Top Navigation -->
-        <div class="bg-gray-100 border-b border-gray-300">
-            <div class="container mx-auto flex justify-between items-center py-2 px-2">
-                <div class="flex space-x-4">
-                    <a href="#" class="text-gray-700">Về ORGANIC</a>
-                    <a href="#" class="text-gray-700">Hướng dẫn mua hàng</a>
-                    <a href="#" class="text-gray-700">Trò chuyện cùng ORGANIC</a>
-                    <a href="#" class="text-gray-700">Sản phẩm yêu thích</a>
-                </div>
-                <div>
-                    <i class="fas fa-user-circle text-2xl text-gray-700"></i>
-                </div>
-            </div>
-        </div>
-
-        <!-- Main Navigation -->
-        <div class="bg-white border-b border-gray-300">
-            <div class="container mx-auto flex justify-between items-center py-4 px-2">
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <span style="font-size: 1.5rem; font-weight: bold; color: black;">Orga<span
-                            style="color: #10b981;">nic</span></span>
-
-                    <a href="#" class="nav-link">Trang chủ</a>
-
-                    <div class="dropdown-parent">
-                        <a href="#" class="nav-link" style="display: flex; align-items: center;">
-                            Sản phẩm <i class="fas fa-sm fa-chevron-right ml-1"
-                                        style="font-size: 0.75rem; margin-left: 0.25rem;"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item">Sản phẩm 1</a>
-                            <a href="#" class="dropdown-item">Sản phẩm 2</a>
-                            <a href="#" class="dropdown-item">Sản phẩm 3</a>
-                        </div>
-                    </div>
-
-                    <a href="#" class="nav-link">Khuyến mãi</a>
-
-                    <div class="dropdown-parent">
-                        <a href="#" class="nav-link" style="display: flex; align-items: center;">
-                            Blogs <i class="fas fa-sm fa-chevron-right ml-1"
-                                     style="font-size: 0.75rem; margin-left: 0.25rem;"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item">Blog 1</a>
-                            <a href="#" class="dropdown-item">Blog 2</a>
-                            <a href="#" class="dropdown-item">Blog 3</a>
-                        </div>
-                    </div>
-
-                    <a href="#" class="nav-link">Liên hệ</a>
-                </div>
-
-                <!-- Right side - User Controls -->
-
-                <div class="flex items-center space-x-4">
-                    <button class="bg-white border border-gray-300 rounded-full px-4 py-2 shadow-sm">Lịch sử mua
-                        hàng</button>
-                    <div class="relative">
-                        <input type="text" placeholder="Value" class="border border-gray-300 rounded-full px-4 py-2">
-                        <i class="fas fa-search absolute right-3 top-3 text-gray-500"></i>
-                    </div>
-                    <i class="fas fa-shopping-cart text-2xl text-green-500"></i>
-                </div>
-            </div>
-        </div>
-
+        <div th:insert="~{/web/fragments/header}"></div>
         <!-- Breadcrumb -->
         <div class="bg-green-500 text-white py-2 px-4 ">
             <div class="container mx-auto ">
@@ -106,9 +41,122 @@
 
     <!-- div separate -->
 
-
-    <!-- payment -->
     <div class="container mx-auto p-4">
+
+        <h1 class="text-lg font-bold text-red-500" style="font-size: 30px;">
+            <i class="fas fa-map-marker-alt">
+            </i>
+            Địa chỉ nhận hàng
+        </h1>
+        <div class="flex items-center mt-2">
+
+            <div class="ml-2">
+
+                <p class="text-sm font-bold">
+                    Trung Dũng
+                    <span>(+84)</span>
+                    <span>342709006</span>
+                </p>
+                <p class="text-sm">
+                    Đường Đắp Mỹ Tạp Hóa Cô Hoa Đối Diện Có Đường Bê Tông Chạy Hết Đường Bê Tông Quẹo Trái Nhà Nằm Bên
+                    Phải, Thị Trấn An Phú, Huyện An Phú, An Giang
+                </p>
+            </div>
+            <div class="ml-auto flex items-center">
+                <button class="text-red-500 text-sm mr-2">
+                    Mặc định
+                </button>
+                <!-- Nút "Thay đổi" -->
+                <button id="change-address-btn" class="border border-gray-300 px-2 py-1 text-sm">
+                    Thay đổi
+                </button>
+            </div>
+        </div>
+        <hr class="my-4" />
+
+
+
+
+        <!-- Modal (ẩn ban đầu) -->
+        <div id="address-modal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden" style="z-index: 111">
+            <div class="bg-white p-6 rounded-lg shadow-lg w-1/2">
+                <h1 class="text-xl font-semibold mb-4">Địa Chỉ Của Tôi</h1>
+                <div class="border border-gray-300 p-4 rounded-lg">
+                    <div class="flex items-start mb-4">
+                        <i class="fas fa-dot-circle text-red-500 text-xl mr-2"></i>
+                        <div class="flex-grow">
+                            <div class="flex items-center mb-2">
+                                <span class="font-semibold text-lg">Trung Dũng</span>
+                                <span class="ml-2 text-gray-600">(+84) 342709006</span>
+                            </div>
+                            <p class="text-gray-700">
+                                Đường Đắp Mỹ Tạp Hóa Cô Hoa Đối Diện Có Đường Bê Tông Chạy Hết Đường Bê Tông Quẹo Trái
+                                Nhà Nằm Bên Phải, Thị Trấn An Phú, Huyện An Phú, An Giang
+                            </p>
+                            <span class="text-red-500 mt-2 block">Mặc định</span>
+                        </div>
+                        <button
+                                class="ml-4 text-blue-600 border border-blue-600 rounded px-2 py-1 whitespace-nowrap">Cập
+                            nhật</button>
+                    </div>
+                    <!-- Nút "Thêm Địa Chỉ Mới" -->
+                    <button id="add-address-btn"
+                            class="flex items-center text-gray-700 border border-gray-400 rounded px-4 py-2 mt-4">
+                        <i class="fas fa-plus mr-2"></i> Thêm Địa Chỉ Mới
+                    </button>
+                </div>
+                <div class="flex justify-end mt-4">
+                    <button id="close-modal-btn" class="border border-gray-400 rounded px-4 py-2 mr-2">HỦY</button>
+                    <button class="bg-red-500 text-white rounded px-4 py-2">XÁC NHẬN</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal new adđd -->
+        <div id="new-address-modal"
+             class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden" style="z-index: 111">
+            <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl">
+                <h1 class="text-xl font-semibold mb-4">Địa Chỉ Mới</h1>
+                <form>
+                    <div class="grid grid-cols-1 gap-4 mb-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="text" placeholder="Họ và tên" class="border border-gray-300 p-3 w-full">
+                            <input type="text" placeholder="Số điện thoại" class="border border-gray-300 p-3 w-full">
+                        </div>
+                        <div class="grid grid-cols-3 gap-4">
+                            <select class="border border-gray-300 p-3 w-full">
+                                <option>Tỉnh/Thành phố</option>
+                            </select>
+                            <select class="border border-gray-300 p-3 w-full">
+                                <option>Quận/Huyện</option>
+                            </select>
+                            <select class="border border-gray-300 p-3 w-full">
+                                <option>Phường/Xã</option>
+                            </select>
+                        </div>
+                        <div>
+                            <textarea placeholder="Địa chỉ cụ thể"
+                                      class="border border-gray-300 p-3 w-full h-24"></textarea>
+                        </div>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <input type="checkbox" id="defaultAddress" class="mr-2">
+                        <label for="defaultAddress" class="text-sm">Đặt làm địa chỉ mặc định</label>
+                    </div>
+                    <div class="flex justify-between">
+                        <button type="button" id="back-modal-btn" class="border border-gray-300 px-4 py-2">Trở
+                            lại</button>
+                        <button type="submit" id="submit-new-address" class="bg-red-500 text-white px-4 py-2">HOÀN THÀNH</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+
+    </div>
+    <!-- payment -->
+    <div class="container mx-auto pl-4 pr-4 pb-4">
         <h1 class="text-lg font-semibold mb-4">
             Phương Thức Thanh Toán
         </h1>
@@ -264,59 +312,11 @@
         </div>
     </div>
 
-</div>
 
 
 <!-- Footer -->
 <div class="bg-gray-900 text-white footer">
-    <footer class="py-12">
-        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
-            <!-- About Section -->
-            <div>
-                <h2 class="text-2xl font-bold text-white">Organ<span class="text-green-500">ic</span></h2>
-                <p class="mt-4 text-gray-400">
-                    Organic chuyên cung cấp những sản phẩm được kiểm soát chặt chẽ từ khâu con giống, chế biến thức
-                    ăn, chăm sóc sức khỏe vật nuôi đến giết mổ, bao gói, bảo quản và vận chuyển một cách tốt nhất,
-                    sạch nhất cho thị trường.
-                </p>
-                <div class="flex mt-4 space-x-4">
-                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook fa-2x"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-google fa-2x"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter fa-2x"></i></a>
-                </div>
-            </div>
-            <!-- Links Section -->
-            <div>
-                <h3 class="text-xl font-bold text-white">Liên kết</h3>
-                <ul class="mt-4 space-y-2 text-gray-400">
-                    <li><a href="#" class="hover:text-white">Giới thiệu</a></li>
-                    <li><a href="#" class="hover:text-white">Sản phẩm</a></li>
-                    <li><a href="#" class="hover:text-white">Tin tức</a></li>
-                    <li><a href="#" class="hover:text-white">Cửa hàng</a></li>
-                </ul>
-            </div>
-            <!-- Contact Section -->
-            <div>
-                <h3 class="text-xl font-bold text-white">Liên hệ</h3>
-                <ul class="mt-4 space-y-2 text-gray-400">
-                    <li><i class="fas fa-map-marker-alt"></i> Thụy Phương, Bắc Từ Liêm, HN.</li>
-                    <li><i class="fas fa-phone"></i> 034 444 9999</li>
-                    <li><i class="fas fa-envelope"></i> organic.com</li>
-                </ul>
-            </div>
-            <!-- Newsletter Section -->
-            <div>
-                <h3 class="text-xl font-bold text-white">Bản tin</h3>
-                <p class="mt-4 text-gray-400">Bạn sẽ nhận được thông báo khi có tin mới.</p>
-                <form class="mt-4 flex">
-                    <input type="email" placeholder="Địa chỉ Email *"
-                           class="w-full px-4 py-2 rounded-l-md focus:outline-none">
-                    <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-r-md"><i
-                            class="fas fa-envelope"></i></button>
-                </form>
-            </div>
-        </div>
-    </footer>
+    <div th:insert="~{/web/fragments/footer}"></div>
 </div>
 <!-- Script boostrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -327,6 +327,45 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script src="/assets/js/main.js"></script>
+
+    <!-- JavaScript để xử lý modal -->
+    <script>
+        // Mở modal địa chỉ
+        document.getElementById("change-address-btn").addEventListener("click", function () {
+            document.getElementById("address-modal").classList.remove("hidden");
+        });
+
+        document.getElementById("close-modal-btn").addEventListener("click", function () {
+            document.getElementById("address-modal").classList.add("hidden");
+        });
+
+        // Đóng modal khi click bên ngoài
+        document.getElementById("address-modal").addEventListener("click", function (event) {
+            if (event.target === this) {
+                this.classList.add("hidden");
+            }
+        });
+        // Mở modal địa chỉ mới
+        document.getElementById("add-address-btn").addEventListener("click", function () {
+            document.getElementById("new-address-modal").classList.remove("hidden");
+        });
+
+        document.getElementById("back-modal-btn").addEventListener("click", function () {
+            document.getElementById("new-address-modal").classList.add("hidden");
+        });
+
+        // Đóng modal khi click bên ngoài
+        document.getElementById("new-address-modal").addEventListener("click", function (event) {
+            if (event.target === this) {
+                this.classList.add("hidden");
+            }
+        });
+        // Đóng modal "new-address-modal" khi nhấn "HOÀN THÀNH"
+        document.getElementById("submit-new-address").addEventListener("click", function(event) {
+            event.preventDefault(); // Ngăn form reload trang
+            document.getElementById("new-address-modal").classList.add("hidden"); // Chỉ đóng modal này
+        });
+    </script>
 </body>
 
 </html>
