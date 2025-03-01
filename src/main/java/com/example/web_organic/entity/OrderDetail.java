@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.text.DecimalFormat;
+import java.math.BigDecimal;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,8 +21,10 @@ public class OrderDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
-    DecimalFormat unitPrice;
-    DecimalFormat subTotal;
+    BigDecimal unitPrice;
+
+    Integer quantity;
+    BigDecimal subTotal;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
