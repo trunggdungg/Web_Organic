@@ -3,7 +3,6 @@ package com.example.web_organic.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.w3c.dom.Text;
 
 @NoArgsConstructor
 @AllArgsConstructor
