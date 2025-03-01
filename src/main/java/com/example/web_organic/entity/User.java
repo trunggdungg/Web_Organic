@@ -1,5 +1,6 @@
 package com.example.web_organic.entity;
 
+import com.example.web_organic.modal.Enum.User_Role;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -11,9 +12,10 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 @FieldDefaults(level = lombok.AccessLevel.PRIVATE)
 @ToString
-@Builder
+
 
 @Entity
 @Table(name = "users")
@@ -32,11 +34,6 @@ public class User {
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    List<Role> roles;
+    @Enumerated(EnumType.STRING)
+    User_Role role;
 }
