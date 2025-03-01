@@ -23,656 +23,584 @@
     <link rel="stylesheet" href="/assets/css/style.css">
 
 
-
-
 </head>
 
-<div class="font-sans">
-    <div class="header-sticky">
-        <!-- Top Navigation -->
-        <div class="bg-gray-100 border-b border-gray-300">
-            <div class="container mx-auto flex justify-between items-center py-2 px-2">
-                <div class="flex space-x-4">
-                    <a href="#" class="text-gray-700">Về ORGANIC</a>
-                    <a href="#" class="text-gray-700">Hướng dẫn mua hàng</a>
-                    <a href="#" class="text-gray-700">Trò chuyện cùng ORGANIC</a>
-                    <a href="#" class="text-gray-700">Sản phẩm yêu thích</a>
-                </div>
-                <div>
-                    <i class="fas fa-user-circle text-2xl text-gray-700"></i>
-                </div>
-            </div>
-        </div>
-
-        <!-- Main Navigation -->
-        <div class="bg-white border-b border-gray-300">
-            <div class="container mx-auto flex justify-between items-center py-4 px-2">
-                <div style="display: flex; align-items: center; gap: 1rem;">
-                    <span style="font-size: 1.5rem; font-weight: bold; color: black;">Orga<span
-                            style="color: #10b981;">nic</span></span>
-
-                    <a href="#" class="nav-link">Trang chủ</a>
-
-                    <div class="dropdown-parent">
-                        <a href="#" class="nav-link" style="display: flex; align-items: center;">
-                            Sản phẩm <i class="fas fa-sm fa-chevron-right ml-1"
-                                        style="font-size: 0.75rem; margin-left: 0.25rem;"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item">Sản phẩm 1</a>
-                            <a href="#" class="dropdown-item">Sản phẩm 2</a>
-                            <a href="#" class="dropdown-item">Sản phẩm 3</a>
-                        </div>
-                    </div>
-
-                    <a href="#" class="nav-link">Khuyến mãi</a>
-
-                    <div class="dropdown-parent">
-                        <a href="#" class="nav-link" style="display: flex; align-items: center;">
-                            Blogs <i class="fas fa-sm fa-chevron-right ml-1"
-                                     style="font-size: 0.75rem; margin-left: 0.25rem;"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                            <a href="#" class="dropdown-item">Blog 1</a>
-                            <a href="#" class="dropdown-item">Blog 2</a>
-                            <a href="#" class="dropdown-item">Blog 3</a>
-                        </div>
-                    </div>
-
-                    <a href="#" class="nav-link">Liên hệ</a>
-                </div>
-
-                <!-- Right side - User Controls -->
-
-                <div class="flex items-center space-x-4">
-                    <button class="bg-white border border-gray-300 rounded-full px-4 py-2 shadow-sm">Lịch sử mua
-                        hàng</button>
-                    <div class="relative">
-                        <input type="text" placeholder="Value" class="border border-gray-300 rounded-full px-4 py-2">
-                        <i class="fas fa-search absolute right-3 top-3 text-gray-500"></i>
-                    </div>
-                    <i class="fas fa-shopping-cart text-2xl text-green-500"></i>
-                </div>
-            </div>
-        </div>
-
-        <!-- Breadcrumb -->
-        <div class="bg-green-500 text-white py-2 px-4 ">
-            <div class="container mx-auto ">
-                <span>Trang chủ > Sản phẩm</span>
-            </div>
+<body class="font-sans">
+        <div class="header-sticky">
+    <!-- Top Navigation -->
+    <div th:insert="~{/web/fragments/header}"></div>
+    <!-- Breadcrumb -->
+    <div class="bg-green-500 text-white py-2 px-4 ">
+        <div class="container mx-auto ">
+            <span>Trang chủ > Sản phẩm</span>
         </div>
     </div>
-
-    <!-- info -->
-    <div class="container mx-auto max-w-7xl flex min-h-screen">
-        <!-- Sidebar -->
-        <div class="w-1/4 bg-white p-4">
-            <div class="flex items-center mb-6">
-                <img alt="User avatar" class="rounded-full" height="40"
-                     src="https://storage.googleapis.com/a1aa/image/8SI-01SR79j2roiL50GROAG0X_tLv1__s0eZ6j5WF9c.jpg"
-                     width="40" />
-                <div class="ml-4">
-                    <p class="font-bold">dngtrung973</p>
-                    <a class="text-blue-500" href="#">Sửa Hồ Sơ</a>
-                </div>
-            </div>
-            <ul class="space-y-4">
-                <li id="profile-nav" class="flex items-center text-red-500 cursor-pointer">
-                    <i class="fas fa-id-card mr-2"></i>
-                    Hồ Sơ
-                </li>
-                <li id="bank-nav" class="flex items-center cursor-pointer">
-                    <i class="fas fa-university mr-2"></i>
-                    Ngân Hàng
-                </li>
-                <li id="address-nav" class="flex items-center cursor-pointer">
-                    <i class="fas fa-map-marker-alt mr-2"></i>
-                    Địa Chỉ
-                </li>
-                <li id="password-nav" class="flex items-center cursor-pointer">
-                    <i class="fas fa-lock mr-2"></i>
-                    Đổi Mật Khẩu
-                </li>
-                <li id="orders-nav" class="flex items-center cursor-pointer">
-                    <i class="fas fa-box mr-2"></i>
-                    Đơn Mua
-                </li>
-            </ul>
         </div>
 
-        <!-- Main Content -->
-        <div class="w-3/4 bg-white p-8" id="content">
-            <!-- Default Profile Content -->
-            <div id="profile-content">
-                <h1 class="text-2xl font-bold mb-4">Hồ Sơ Của Tôi</h1>
-                <p class="text-gray-600 mb-6">Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
-                <div class="flex">
-                    <div class="w-2/3">
-                        <div class="mb-4">
-                            <label class="block text-gray-700">Tên đăng nhập</label>
-                            <input class="w-full border border-gray-300 p-2 rounded" disabled type="text"
-                                   value="dngtrung973" />
-                            <p class="text-gray-500 text-sm">Tên Đăng nhập chỉ có thể thay đổi một lần.</p>
+<!-- info -->
+<div class="container mx-auto max-w-7xl flex min-h-screen" style="min-height: 85vh">
+    <!-- Sidebar -->
+    <div class="w-1/4 bg-white p-4">
+        <div class="flex items-center mb-6">
+            <img alt="User avatar" class="rounded-full" height="40"
+                 src="https://storage.googleapis.com/a1aa/image/8SI-01SR79j2roiL50GROAG0X_tLv1__s0eZ6j5WF9c.jpg"
+                 width="40"/>
+            <div class="ml-4">
+                <p class="font-bold">dngtrung973</p>
+                <a class="text-blue-500" href="#">Sửa Hồ Sơ</a>
+            </div>
+        </div>
+        <ul class="space-y-4">
+            <li id="profile-nav" class="flex items-center text-red-500 cursor-pointer">
+                <i class="fas fa-id-card mr-2"></i>
+                Hồ Sơ
+            </li>
+            <li id="bank-nav" class="flex items-center cursor-pointer">
+                <i class="fas fa-university mr-2"></i>
+                Ngân Hàng
+            </li>
+            <li id="address-nav" class="flex items-center cursor-pointer">
+                <i class="fas fa-map-marker-alt mr-2"></i>
+                Địa Chỉ
+            </li>
+            <li id="password-nav" class="flex items-center cursor-pointer">
+                <i class="fas fa-lock mr-2"></i>
+                Đổi Mật Khẩu
+            </li>
+            <li id="orders-nav" class="flex items-center cursor-pointer">
+                <i class="fas fa-box mr-2"></i>
+                Đơn Mua
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="w-3/4 bg-white p-8" id="content">
+        <!-- Default Profile Content -->
+        <div id="profile-content">
+            <h1 class="text-2xl font-bold mb-4">Hồ Sơ Của Tôi</h1>
+            <p class="text-gray-600 mb-6">Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
+            <div class="flex">
+                <div class="w-2/3">
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Tên đăng nhập</label>
+                        <input class="w-full border border-gray-300 p-2 rounded" disabled type="text"
+                               value="dngtrung973"/>
+                        <p class="text-gray-500 text-sm">Tên Đăng nhập chỉ có thể thay đổi một lần.</p>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Tên</label>
+                        <input class="w-full border border-gray-300 p-2 rounded" type="text"/>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Email</label>
+                        <p class="text-gray-700">
+                            le********@gmail.com
+                            <a class="text-blue-500" href="#">Thay Đổi</a>
+                        </p>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Số điện thoại</label>
+                        <p class="text-gray-700">0987654321 <a class="text-blue-500 cursor-pointer" id="openModal">Thay
+                            Đổi</a></p>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Giới tính</label>
+                        <div class="flex items-center space-x-4">
+                            <label class="flex items-center">
+                                <input class="mr-2" name="gender" type="radio"/> Nam
+                            </label>
+                            <label class="flex items-center">
+                                <input class="mr-2" name="gender" type="radio"/> Nữ
+                            </label>
+                            <label class="flex items-center">
+                                <input class="mr-2" name="gender" type="radio"/> Khác
+                            </label>
                         </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700">Tên</label>
-                            <input class="w-full border border-gray-300 p-2 rounded" type="text" />
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700">Email</label>
-                            <p class="text-gray-700">
-                                le********@gmail.com
-                                <a class="text-blue-500" href="#">Thay Đổi</a>
-                            </p>
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700">Số điện thoại</label>
-                            <p class="text-gray-700">0987654321 <a class="text-blue-500 cursor-pointer" id="openModal">Thay
-                                Đổi</a></p>
-                        </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700">Giới tính</label>
-                            <div class="flex items-center space-x-4">
-                                <label class="flex items-center">
-                                    <input class="mr-2" name="gender" type="radio" /> Nam
-                                </label>
-                                <label class="flex items-center">
-                                    <input class="mr-2" name="gender" type="radio" /> Nữ
-                                </label>
-                                <label class="flex items-center">
-                                    <input class="mr-2" name="gender" type="radio" /> Khác
-                                </label>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700">Ngày sinh</label>
+                        <p class="text-gray-700">
+                            **/**/2003
+                            <a class="text-blue-500 cursor-pointer" id="openDobModal">Thay Đổi</a>
+                        </p>
+                    </div>
+                    <button class="bg-red-500 text-white px-4 py-2 rounded">Lưu</button>
+                </div>
+                <div class="w-1/3 flex flex-col items-center">
+                    <img alt="Profile picture placeholder" class="rounded-full mb-4" height="100"
+                         src="https://storage.googleapis.com/a1aa/image/XfIoHfq7LhigO6K5ctFokVSlIMEZzlikoNHnICCdd60.jpg"
+                         width="100"/>
+                    <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded">Chọn Ảnh</button>
+                    <p class="text-gray-500 text-sm mt-2">Dung lượng file tối đa 1 MB</p>
+                    <p class="text-gray-500 text-sm">Định dạng: .JPEG, .PNG</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Address Content (Hidden by default) -->
+        <div id="address-content" class="hidden">
+            <div class="max-w-4xl mx-auto p-4 bg-white">
+                <div class="flex justify-between items-center mb-4">
+                    <h1 class="text-xl font-semibold">Địa chỉ của tôi</h1>
+                    <button id="add-address-btn" class="bg-red-500 text-white px-4 py-2 rounded">
+                        + Thêm địa chỉ mới
+                    </button>
+                </div>
+                <div>
+                    <h2 class="text-lg font-semibold mb-2">Địa chỉ</h2>
+                    <div class="border-t border-gray-300 pt-4">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-lg font-semibold">Trung Dũng</h3>
+                                <p class="text-gray-600">(+84) 342 769 006</p>
+                                <p class="text-gray-600">Trung Tâm Dạy Nghề & Giáo Dục Thường Xuyên Huyện An Phú,
+                                    Đường Không Tên</p>
+                                <p class="text-gray-600">Thị Trấn An Phú, Huyện An Phú, An Giang</p>
+                                <span class="inline-block bg-red-500 text-white px-2 py-1 text-sm rounded mt-2">Mặc định</span>
+                            </div>
+                            <div class="flex flex-col items-end">
+                                <a href="#" class="text-blue-500 mb-2">Cập nhật</a>
+                                <a href="#" class="text-blue-500 mb-2">Xóa</a>
+                                <button class="border border-gray-300 text-gray-700 px-4 py-2 rounded">Thiết lập mặc
+                                    định
+                                </button>
                             </div>
                         </div>
-                        <div class="mb-4">
-                            <label class="block text-gray-700">Ngày sinh</label>
-                            <p class="text-gray-700">
-                                **/**/2003
-                                <a class="text-blue-500 cursor-pointer" id="openDobModal">Thay Đổi</a>
-                            </p>
-                        </div>
-                        <button class="bg-red-500 text-white px-4 py-2 rounded">Lưu</button>
                     </div>
-                    <div class="w-1/3 flex flex-col items-center">
-                        <img alt="Profile picture placeholder" class="rounded-full mb-4" height="100"
-                             src="https://storage.googleapis.com/a1aa/image/XfIoHfq7LhigO6K5ctFokVSlIMEZzlikoNHnICCdd60.jpg"
-                             width="100" />
-                        <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded">Chọn Ảnh</button>
-                        <p class="text-gray-500 text-sm mt-2">Dung lượng file tối đa 1 MB</p>
-                        <p class="text-gray-500 text-sm">Định dạng: .JPEG, .PNG</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bank Content (Hidden by default) -->
+        <div id="bank-content" class="hidden">
+            <h1 class="text-2xl font-bold mb-4">Thông Tin Ngân Hàng</h1>
+            <p class="text-gray-600 mb-6">Quản lý thông tin tài khoản ngân hàng của bạn</p>
+            <!-- Bank content goes here -->
+            <div class="border p-4 rounded mb-4">
+                <p class="text-gray-700 mb-2">Bạn chưa có tài khoản ngân hàng nào được liên kết</p>
+                <button class="bg-red-500 text-white px-4 py-2 rounded">+ Thêm Tài Khoản Ngân Hàng</button>
+            </div>
+        </div>
+
+        <!-- Password Content (Hidden by default) -->
+        <div id="password-content" class="hidden">
+            <h1 class="text-2xl font-bold mb-4">Đổi Mật Khẩu</h1>
+            <p class="text-gray-600 mb-6">Thay đổi mật khẩu để bảo mật tài khoản</p>
+            <div class="mb-4">
+                <label class="block text-gray-700 mb-2">Mật khẩu hiện tại</label>
+                <input class="w-full border border-gray-300 p-2 rounded" type="password"/>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 mb-2">Mật khẩu mới</label>
+                <input class="w-full border border-gray-300 p-2 rounded" type="password"/>
+            </div>
+            <div class="mb-4">
+                <label class="block text-gray-700 mb-2">Xác nhận mật khẩu mới</label>
+                <input class="w-full border border-gray-300 p-2 rounded" type="password"/>
+            </div>
+            <button class="bg-red-500 text-white px-4 py-2 rounded">Xác Nhận</button>
+        </div>
+
+        <!-- Orders Content (Hidden by default) -->
+        <div id="orders-content" class="hidden">
+            <h1 class="text-2xl font-bold mb-4">Đơn Mua Của Tôi</h1>
+            <div class="border-b border-gray-200">
+                <ul class="flex flex-wrap -mb-px" id="order-tabs">
+                    <li class="mr-2">
+                        <a href="#"
+                           class="inline-block py-2 px-4 text-red-500 border-b-2 border-red-500 rounded-t-lg"
+                           id="all-tab">Tất cả</a>
+                    </li>
+                    <li class="mr-2">
+                        <a href="#"
+                           class="inline-block py-2 px-4 text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
+                           id="pending-payment-tab">Chờ thanh toán</a>
+                    </li>
+                    <li class="mr-2">
+                        <a href="#"
+                           class="inline-block py-2 px-4 text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
+                           id="to-ship-tab">Chờ giao hàng</a>
+                    </li>
+                    <li class="mr-2">
+                        <a href="#"
+                           class="inline-block py-2 px-4 text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
+                           id="to-receive-tab">Đang giao</a>
+                    </li>
+                    <li class="mr-2">
+                        <a href="#"
+                           class="inline-block py-2 px-4 text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
+                           id="completed-tab">Hoàn thành</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                           class="inline-block py-2 px-4 text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300"
+                           id="cancelled-tab">Đã hủy</a>
+                    </li>
+                </ul>
+            </div>
+
+
+            <!-- Search orders -->
+            <div class="my-4">
+                <div class="relative">
+                    <input type="text" placeholder="Tìm kiếm theo tên Shop, ID đơn hàng hoặc Tên Sản phẩm"
+                           class="w-full border border-gray-300 p-2 pl-10 rounded">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-gray-400"></i>
                     </div>
                 </div>
             </div>
 
-            <!-- Address Content (Hidden by default) -->
-            <div id="address-content" class="hidden">
-                <div class="max-w-4xl mx-auto p-4 bg-white">
-                    <div class="flex justify-between items-center mb-4">
-                        <h1 class="text-xl font-semibold">Địa chỉ của tôi</h1>
-                        <button id="add-address-btn" class="bg-red-500 text-white px-4 py-2 rounded">
-                            + Thêm địa chỉ mới
+            <!-- All Orders Tab Content -->
+            <div id="all-orders" class="order-tab-content">
+                <!-- Order 1 -->
+                <div class="border border-gray-200 rounded p-4 mb-4">
+                    <div class="flex justify-between items-center border-b border-gray-200 pb-2 mb-2">
+                        <div class="flex items-center">
+                            <span class="font-bold mr-2">TechShop Việt Nam</span>
+                            <a href="#" class="text-blue-500 ml-2"><i class="fas fa-comment-dots mr-1"></i> Chat</a>
+                            <a href="#" class="text-blue-500 ml-2"><i class="fas fa-store mr-1"></i> Xem shop</a>
+                        </div>
+                        <div class="text-red-500">Hoàn thành</div>
+                    </div>
+
+                    <div class="flex py-4 border-b border-gray-200">
+                        <img src="/api/placeholder/80/80" alt="Product Image" class="w-20 h-20 object-cover mr-4">
+                        <div class="flex-1">
+                            <p class="font-medium">Tai nghe không dây Bluetooth 5.0 chống ồn âm thanh HiFi</p>
+                            <p class="text-gray-500 text-sm">Phân loại: Đen</p>
+                            <p class="text-gray-500 text-sm">x1</p>
+                        </div>
+                        <div class="text-red-500">₫899.000</div>
+                    </div>
+
+                    <div class="flex justify-between items-center py-4">
+                        <div></div>
+                        <div class="text-right">
+                            <p class="text-gray-600 mb-2">
+                                <span class="mr-2">Tổng số tiền:</span>
+                                <span class="text-red-500 text-xl font-bold">₫899.000</span>
+                            </p>
+                            <div class="flex space-x-2">
+                                <button class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Liên hệ
+                                    người bán
+                                </button>
+                                <button class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Mua lại
+                                </button>
+                                <button class="border border-red-500 text-red-500 px-4 py-2 rounded hover:bg-red-50">
+                                    Đánh giá
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order 2 -->
+                <div class="border border-gray-200 rounded p-4 mb-4">
+                    <div class="flex justify-between items-center border-b border-gray-200 pb-2 mb-2">
+                        <div class="flex items-center">
+                            <span class="font-bold mr-2">Fashion Center</span>
+                            <a href="#" class="text-blue-500 ml-2"><i class="fas fa-comment-dots mr-1"></i> Chat</a>
+                            <a href="#" class="text-blue-500 ml-2"><i class="fas fa-store mr-1"></i> Xem shop</a>
+                        </div>
+                        <div class="text-orange-500">Chờ thanh toán</div>
+                    </div>
+
+                    <div class="flex py-4 border-b border-gray-200">
+                        <img src="/api/placeholder/80/80" alt="Product Image" class="w-20 h-20 object-cover mr-4">
+                        <div class="flex-1">
+                            <p class="font-medium">Áo thun nam form rộng chất cotton cao cấp</p>
+                            <p class="text-gray-500 text-sm">Phân loại: Trắng, XL</p>
+                            <p class="text-gray-500 text-sm">x2</p>
+                        </div>
+                        <div class="text-red-500">₫258.000</div>
+                    </div>
+
+                    <div class="flex justify-between items-center py-4">
+                        <div></div>
+                        <div class="text-right">
+                            <p class="text-gray-600 mb-2">
+                                <span class="mr-2">Tổng số tiền:</span>
+                                <span class="text-red-500 text-xl font-bold">₫258.000</span>
+                            </p>
+                            <div class="flex space-x-2">
+                                <button class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Hủy
+                                </button>
+                                <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Thanh
+                                    toán
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order 3 -->
+                <div class="border border-gray-200 rounded p-4 mb-4">
+                    <div class="flex justify-between items-center border-b border-gray-200 pb-2 mb-2">
+                        <div class="flex items-center">
+                            <span class="font-bold mr-2">Sách & Văn phòng phẩm</span>
+                            <a href="#" class="text-blue-500 ml-2"><i class="fas fa-comment-dots mr-1"></i> Chat</a>
+                            <a href="#" class="text-blue-500 ml-2"><i class="fas fa-store mr-1"></i> Xem shop</a>
+                        </div>
+                        <div class="text-blue-500">Đang giao</div>
+                    </div>
+
+                    <div class="flex py-4 border-b border-gray-200">
+                        <img src="/api/placeholder/80/80" alt="Product Image" class="w-20 h-20 object-cover mr-4">
+                        <div class="flex-1">
+                            <p class="font-medium">Sổ tay kế hoạch 2025 bìa cứng 365 ngày</p>
+                            <p class="text-gray-500 text-sm">Phân loại: Xanh dương</p>
+                            <p class="text-gray-500 text-sm">x1</p>
+                        </div>
+                        <div class="text-red-500">₫125.000</div>
+                    </div>
+
+                    <div class="flex py-4 border-b border-gray-200">
+                        <img src="/api/placeholder/80/80" alt="Product Image" class="w-20 h-20 object-cover mr-4">
+                        <div class="flex-1">
+                            <p class="font-medium">Bút bi gel 0.5mm mực đen cao cấp (Bộ 10 cây)</p>
+                            <p class="text-gray-500 text-sm">x1</p>
+                        </div>
+                        <div class="text-red-500">₫85.000</div>
+                    </div>
+
+                    <div class="flex justify-between items-center py-4">
+                        <div>
+                            <p class="text-gray-600 text-sm">Mã đơn hàng: 2502235498756</p>
+                            <p class="text-gray-600 text-sm">Đơn vị vận chuyển: GiaoHàngNhanh</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-gray-600 mb-2">
+                                <span class="mr-2">Tổng số tiền:</span>
+                                <span class="text-red-500 text-xl font-bold">₫210.000</span>
+                            </p>
+                            <div class="flex space-x-2">
+                                <button class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Theo dõi
+                                    đơn hàng
+                                </button>
+                                <button class="border border-red-500 text-red-500 px-4 py-2 rounded hover:bg-red-50">
+                                    Đã nhận hàng
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order 4 -->
+                <div class="border border-gray-200 rounded p-4 mb-4">
+                    <div class="flex justify-between items-center border-b border-gray-200 pb-2 mb-2">
+                        <div class="flex items-center">
+                            <span class="font-bold mr-2">Smart Home Official</span>
+                            <a href="#" class="text-blue-500 ml-2"><i class="fas fa-comment-dots mr-1"></i> Chat</a>
+                            <a href="#" class="text-blue-500 ml-2"><i class="fas fa-store mr-1"></i> Xem shop</a>
+                        </div>
+                        <div class="text-gray-500">Đã hủy</div>
+                    </div>
+
+                    <div class="flex py-4 border-b border-gray-200">
+                        <img src="/api/placeholder/80/80" alt="Product Image" class="w-20 h-20 object-cover mr-4">
+                        <div class="flex-1">
+                            <p class="font-medium">Đèn thông minh điều khiển bằng giọng nói</p>
+                            <p class="text-gray-500 text-sm">x1</p>
+                        </div>
+                        <div class="text-red-500">₫450.000</div>
+                    </div>
+
+                    <div class="flex justify-between items-center py-4">
+                        <div>
+                            <p class="text-gray-600 text-sm">Lý do hủy: Thay đổi ý định mua hàng</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-gray-600 mb-2">
+                                <span class="mr-2">Tổng số tiền:</span>
+                                <span class="text-red-500 text-xl font-bold">₫450.000</span>
+                            </p>
+                            <div class="flex space-x-2">
+                                <button class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Mua lại
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order 5 -->
+                <div class="border border-gray-200 rounded p-4 mb-4">
+                    <div class="flex justify-between items-center border-b border-gray-200 pb-2 mb-2">
+                        <div class="flex items-center">
+                            <span class="font-bold mr-2">Fresh Food Express</span>
+                            <a href="#" class="text-blue-500 ml-2"><i class="fas fa-comment-dots mr-1"></i> Chat</a>
+                            <a href="#" class="text-blue-500 ml-2"><i class="fas fa-store mr-1"></i> Xem shop</a>
+                        </div>
+                        <div class="text-green-500">Chờ giao hàng</div>
+                    </div>
+
+                    <div class="flex py-4 border-b border-gray-200">
+                        <img src="/api/placeholder/80/80" alt="Product Image" class="w-20 h-20 object-cover mr-4">
+                        <div class="flex-1">
+                            <p class="font-medium">Combo hoa quả tươi 4kg - cam, táo, lê, kiwi</p>
+                            <p class="text-gray-500 text-sm">x1</p>
+                        </div>
+                        <div class="text-red-500">₫350.000</div>
+                    </div>
+
+                    <div class="flex justify-between items-center py-4">
+                        <div>
+                            <p class="text-gray-600 text-sm">Thời gian dự kiến giao: 27/02/2025 - 28/02/2025</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-gray-600 mb-2">
+                                <span class="mr-2">Tổng số tiền:</span>
+                                <span class="text-red-500 text-xl font-bold">₫350.000</span>
+                            </p>
+                            <div class="flex space-x-2">
+                                <button class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Hủy
+                                </button>
+                                <button class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Liên hệ
+                                    người bán
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pending Payment Tab Content -->
+            <div id="pending-payment-orders" class="order-tab-content hidden">
+                <!-- Order -->
+                <div class="border border-gray-200 rounded p-4 mb-4">
+                    <div class="flex justify-between items-center border-b border-gray-200 pb-2 mb-2">
+                        <div class="flex items-center">
+                            <span class="font-bold mr-2">Fashion Center</span>
+                            <a href="#" class="text-blue-500 ml-2"><i class="fas fa-comment-dots mr-1"></i> Chat</a>
+                            <a href="#" class="text-blue-500 ml-2"><i class="fas fa-store mr-1"></i> Xem shop</a>
+                        </div>
+                        <div class="text-orange-500">Chờ thanh toán</div>
+                    </div>
+
+                    <div class="flex py-4 border-b border-gray-200">
+                        <img src="/api/placeholder/80/80" alt="Product Image" class="w-20 h-20 object-cover mr-4">
+                        <div class="flex-1">
+                            <p class="font-medium">Áo thun nam form rộng chất cotton cao cấp</p>
+                            <p class="text-gray-500 text-sm">Phân loại: Trắng, XL</p>
+                            <p class="text-gray-500 text-sm">x2</p>
+                        </div>
+                        <div class="text-red-500">₫258.000</div>
+                    </div>
+
+                    <div class="flex justify-between items-center py-4">
+                        <div></div>
+                        <div class="text-right">
+                            <p class="text-gray-600 mb-2">
+                                <span class="mr-2">Tổng số tiền:</span>
+                                <span class="text-red-500 text-xl font-bold">₫258.000</span>
+                            </p>
+                            <div class="flex space-x-2">
+                                <button class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Hủy
+                                </button>
+                                <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Thanh
+                                    toán
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal thêm số điện thoại -->
+        <div id="phoneModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+            <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
+                <h1 class="text-xl font-semibold mb-4">Chỉnh Sửa Số Điện Thoại</h1>
+                <div class="mb-4">
+                    <label for="phone" class="block text-gray-700 mb-2">Thêm số điện thoại mới</label>
+                    <input type="text" id="phone" class="w-full px-3 py-2 border border-gray-300 rounded"/>
+                </div>
+                <div class="flex justify-end space-x-2">
+                    <button id="closeModal" class="bg-gray-300 text-gray-700 px-4 py-2 rounded">Hủy</button>
+                    <button class="bg-red-500 text-white px-4 py-2 rounded">Tiếp Theo</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal ngày sinh -->
+        <div id="dobModal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 hidden">
+            <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
+                <h1 class="text-xl font-semibold mb-4">Chỉnh Sửa Ngày Sinh</h1>
+                <div class="mb-4">
+                    <label for="dobInput" class="block text-gray-700 mb-2">Chọn ngày sinh mới</label>
+                    <input type="date" id="dobInput" class="w-full px-3 py-2 border border-gray-300 rounded"/>
+                </div>
+                <div class="flex justify-end space-x-4">
+                    <button id="closeDobModal" class="bg-gray-300 text-gray-700 px-4 py-2 rounded">Hủy</button>
+                    <button id="saveDob" class="bg-red-500 text-white px-4 py-2 rounded">Lưu</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal địa chỉ mới -->
+        <div id="new-address-modal"
+             class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
+            <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl">
+                <h1 class="text-xl font-semibold mb-4">Địa Chỉ Mới</h1>
+                <form>
+                    <div class="grid grid-cols-1 gap-4 mb-4">
+                        <div class="grid grid-cols-2 gap-4">
+                            <input type="text" placeholder="Họ và tên" class="border border-gray-300 p-3 w-full">
+                            <input type="text" placeholder="Số điện thoại"
+                                   class="border border-gray-300 p-3 w-full">
+                        </div>
+                        <div class="grid grid-cols-3 gap-4">
+                            <select class="border border-gray-300 p-3 w-full">
+                                <option>Tỉnh/Thành phố</option>
+                            </select>
+                            <select class="border border-gray-300 p-3 w-full">
+                                <option>Quận/Huyện</option>
+                            </select>
+                            <select class="border border-gray-300 p-3 w-full">
+                                <option>Phường/Xã</option>
+                            </select>
+                        </div>
+                        <div>
+                                <textarea placeholder="Địa chỉ cụ thể"
+                                          class="border border-gray-300 p-3 w-full h-24"></textarea>
+                        </div>
+                    </div>
+                    <div class="flex items-center mb-4">
+                        <input type="checkbox" id="defaultAddress" class="mr-2">
+                        <label for="defaultAddress" class="text-sm">Đặt làm địa chỉ mặc định</label>
+                    </div>
+                    <div class="flex justify-between">
+                        <button type="button" id="back-modal-btn" class="border border-gray-300 px-4 py-2">Trở lại
+                        </button>
+                        <button type="submit" id="submit-new-address" class="bg-red-500 text-white px-4 py-2">HOÀN
+                            THÀNH
                         </button>
                     </div>
-                    <div>
-                        <h2 class="text-lg font-semibold mb-2">Địa chỉ</h2>
-                        <div class="border-t border-gray-300 pt-4">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <h3 class="text-lg font-semibold">Trung Dũng</h3>
-                                    <p class="text-gray-600">(+84) 342 769 006</p>
-                                    <p class="text-gray-600">Trung Tâm Dạy Nghề & Giáo Dục Thường Xuyên Huyện An Phú, Đường Không Tên</p>
-                                    <p class="text-gray-600">Thị Trấn An Phú, Huyện An Phú, An Giang</p>
-                                    <span class="inline-block bg-red-500 text-white px-2 py-1 text-sm rounded mt-2">Mặc định</span>
-                                </div>
-                                <div class="flex flex-col items-end">
-                                    <a href="#" class="text-blue-500 mb-2">Cập nhật</a>
-                                    <a href="#" class="text-blue-500 mb-2">Xóa</a>
-                                    <button class="border border-gray-300 text-gray-700 px-4 py-2 rounded">Thiết lập mặc định</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Bank Content (Hidden by default) -->
-            <div id="bank-content" class="hidden">
-                <h1 class="text-2xl font-bold mb-4">Thông Tin Ngân Hàng</h1>
-                <p class="text-gray-600 mb-6">Quản lý thông tin tài khoản ngân hàng của bạn</p>
-                <!-- Bank content goes here -->
-                <div class="border p-4 rounded mb-4">
-                    <p class="text-gray-700 mb-2">Bạn chưa có tài khoản ngân hàng nào được liên kết</p>
-                    <button class="bg-red-500 text-white px-4 py-2 rounded">+ Thêm Tài Khoản Ngân Hàng</button>
-                </div>
-            </div>
-
-            <!-- Password Content (Hidden by default) -->
-            <div id="password-content" class="hidden">
-                <h1 class="text-2xl font-bold mb-4">Đổi Mật Khẩu</h1>
-                <p class="text-gray-600 mb-6">Thay đổi mật khẩu để bảo mật tài khoản</p>
-                <div class="mb-4">
-                    <label class="block text-gray-700 mb-2">Mật khẩu hiện tại</label>
-                    <input class="w-full border border-gray-300 p-2 rounded" type="password" />
-                </div>
-                <div class="mb-4">
-                    <label class="block text-gray-700 mb-2">Mật khẩu mới</label>
-                    <input class="w-full border border-gray-300 p-2 rounded" type="password" />
-                </div>
-                <div class="mb-4">
-                    <label class="block text-gray-700 mb-2">Xác nhận mật khẩu mới</label>
-                    <input class="w-full border border-gray-300 p-2 rounded" type="password" />
-                </div>
-                <button class="bg-red-500 text-white px-4 py-2 rounded">Xác Nhận</button>
-            </div>
-
-            <!-- Orders Content (Hidden by default) -->
-            <div id="orders-content" class="hidden">
-                <h1 class="text-2xl font-bold mb-4">Đơn Mua Của Tôi</h1>
-                <div class="border-b border-gray-200">
-                    <ul class="flex flex-wrap -mb-px" id="order-tabs">
-                        <li class="mr-2">
-                            <a href="#" class="inline-block py-2 px-4 text-red-500 border-b-2 border-red-500 rounded-t-lg" id="all-tab">Tất cả</a>
-                        </li>
-                        <li class="mr-2">
-                            <a href="#" class="inline-block py-2 px-4 text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300" id="pending-payment-tab">Chờ thanh toán</a>
-                        </li>
-                        <li class="mr-2">
-                            <a href="#" class="inline-block py-2 px-4 text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300" id="to-ship-tab">Chờ giao hàng</a>
-                        </li>
-                        <li class="mr-2">
-                            <a href="#" class="inline-block py-2 px-4 text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300" id="to-receive-tab">Đang giao</a>
-                        </li>
-                        <li class="mr-2">
-                            <a href="#" class="inline-block py-2 px-4 text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300" id="completed-tab">Hoàn thành</a>
-                        </li>
-                        <li>
-                            <a href="#" class="inline-block py-2 px-4 text-gray-500 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300" id="cancelled-tab">Đã hủy</a>
-                        </li>
-                    </ul>
-                </div>
-
-
-                <!-- Search orders -->
-                <div class="my-4">
-                    <div class="relative">
-                        <input type="text" placeholder="Tìm kiếm theo tên Shop, ID đơn hàng hoặc Tên Sản phẩm" class="w-full border border-gray-300 p-2 pl-10 rounded">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i class="fas fa-search text-gray-400"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- All Orders Tab Content -->
-                <div id="all-orders" class="order-tab-content">
-                    <!-- Order 1 -->
-                    <div class="border border-gray-200 rounded p-4 mb-4">
-                        <div class="flex justify-between items-center border-b border-gray-200 pb-2 mb-2">
-                            <div class="flex items-center">
-                                <span class="font-bold mr-2">TechShop Việt Nam</span>
-                                <a href="#" class="text-blue-500 ml-2"><i class="fas fa-comment-dots mr-1"></i> Chat</a>
-                                <a href="#" class="text-blue-500 ml-2"><i class="fas fa-store mr-1"></i> Xem shop</a>
-                            </div>
-                            <div class="text-red-500">Hoàn thành</div>
-                        </div>
-
-                        <div class="flex py-4 border-b border-gray-200">
-                            <img src="/api/placeholder/80/80" alt="Product Image" class="w-20 h-20 object-cover mr-4">
-                            <div class="flex-1">
-                                <p class="font-medium">Tai nghe không dây Bluetooth 5.0 chống ồn âm thanh HiFi</p>
-                                <p class="text-gray-500 text-sm">Phân loại: Đen</p>
-                                <p class="text-gray-500 text-sm">x1</p>
-                            </div>
-                            <div class="text-red-500">₫899.000</div>
-                        </div>
-
-                        <div class="flex justify-between items-center py-4">
-                            <div></div>
-                            <div class="text-right">
-                                <p class="text-gray-600 mb-2">
-                                    <span class="mr-2">Tổng số tiền:</span>
-                                    <span class="text-red-500 text-xl font-bold">₫899.000</span>
-                                </p>
-                                <div class="flex space-x-2">
-                                    <button class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Liên hệ người bán</button>
-                                    <button class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Mua lại</button>
-                                    <button class="border border-red-500 text-red-500 px-4 py-2 rounded hover:bg-red-50">Đánh giá</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Order 2 -->
-                    <div class="border border-gray-200 rounded p-4 mb-4">
-                        <div class="flex justify-between items-center border-b border-gray-200 pb-2 mb-2">
-                            <div class="flex items-center">
-                                <span class="font-bold mr-2">Fashion Center</span>
-                                <a href="#" class="text-blue-500 ml-2"><i class="fas fa-comment-dots mr-1"></i> Chat</a>
-                                <a href="#" class="text-blue-500 ml-2"><i class="fas fa-store mr-1"></i> Xem shop</a>
-                            </div>
-                            <div class="text-orange-500">Chờ thanh toán</div>
-                        </div>
-
-                        <div class="flex py-4 border-b border-gray-200">
-                            <img src="/api/placeholder/80/80" alt="Product Image" class="w-20 h-20 object-cover mr-4">
-                            <div class="flex-1">
-                                <p class="font-medium">Áo thun nam form rộng chất cotton cao cấp</p>
-                                <p class="text-gray-500 text-sm">Phân loại: Trắng, XL</p>
-                                <p class="text-gray-500 text-sm">x2</p>
-                            </div>
-                            <div class="text-red-500">₫258.000</div>
-                        </div>
-
-                        <div class="flex justify-between items-center py-4">
-                            <div></div>
-                            <div class="text-right">
-                                <p class="text-gray-600 mb-2">
-                                    <span class="mr-2">Tổng số tiền:</span>
-                                    <span class="text-red-500 text-xl font-bold">₫258.000</span>
-                                </p>
-                                <div class="flex space-x-2">
-                                    <button class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Hủy</button>
-                                    <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Thanh toán</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Order 3 -->
-                    <div class="border border-gray-200 rounded p-4 mb-4">
-                        <div class="flex justify-between items-center border-b border-gray-200 pb-2 mb-2">
-                            <div class="flex items-center">
-                                <span class="font-bold mr-2">Sách & Văn phòng phẩm</span>
-                                <a href="#" class="text-blue-500 ml-2"><i class="fas fa-comment-dots mr-1"></i> Chat</a>
-                                <a href="#" class="text-blue-500 ml-2"><i class="fas fa-store mr-1"></i> Xem shop</a>
-                            </div>
-                            <div class="text-blue-500">Đang giao</div>
-                        </div>
-
-                        <div class="flex py-4 border-b border-gray-200">
-                            <img src="/api/placeholder/80/80" alt="Product Image" class="w-20 h-20 object-cover mr-4">
-                            <div class="flex-1">
-                                <p class="font-medium">Sổ tay kế hoạch 2025 bìa cứng 365 ngày</p>
-                                <p class="text-gray-500 text-sm">Phân loại: Xanh dương</p>
-                                <p class="text-gray-500 text-sm">x1</p>
-                            </div>
-                            <div class="text-red-500">₫125.000</div>
-                        </div>
-
-                        <div class="flex py-4 border-b border-gray-200">
-                            <img src="/api/placeholder/80/80" alt="Product Image" class="w-20 h-20 object-cover mr-4">
-                            <div class="flex-1">
-                                <p class="font-medium">Bút bi gel 0.5mm mực đen cao cấp (Bộ 10 cây)</p>
-                                <p class="text-gray-500 text-sm">x1</p>
-                            </div>
-                            <div class="text-red-500">₫85.000</div>
-                        </div>
-
-                        <div class="flex justify-between items-center py-4">
-                            <div>
-                                <p class="text-gray-600 text-sm">Mã đơn hàng: 2502235498756</p>
-                                <p class="text-gray-600 text-sm">Đơn vị vận chuyển: GiaoHàngNhanh</p>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-gray-600 mb-2">
-                                    <span class="mr-2">Tổng số tiền:</span>
-                                    <span class="text-red-500 text-xl font-bold">₫210.000</span>
-                                </p>
-                                <div class="flex space-x-2">
-                                    <button class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Theo dõi đơn hàng</button>
-                                    <button class="border border-red-500 text-red-500 px-4 py-2 rounded hover:bg-red-50">Đã nhận hàng</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Order 4 -->
-                    <div class="border border-gray-200 rounded p-4 mb-4">
-                        <div class="flex justify-between items-center border-b border-gray-200 pb-2 mb-2">
-                            <div class="flex items-center">
-                                <span class="font-bold mr-2">Smart Home Official</span>
-                                <a href="#" class="text-blue-500 ml-2"><i class="fas fa-comment-dots mr-1"></i> Chat</a>
-                                <a href="#" class="text-blue-500 ml-2"><i class="fas fa-store mr-1"></i> Xem shop</a>
-                            </div>
-                            <div class="text-gray-500">Đã hủy</div>
-                        </div>
-
-                        <div class="flex py-4 border-b border-gray-200">
-                            <img src="/api/placeholder/80/80" alt="Product Image" class="w-20 h-20 object-cover mr-4">
-                            <div class="flex-1">
-                                <p class="font-medium">Đèn thông minh điều khiển bằng giọng nói</p>
-                                <p class="text-gray-500 text-sm">x1</p>
-                            </div>
-                            <div class="text-red-500">₫450.000</div>
-                        </div>
-
-                        <div class="flex justify-between items-center py-4">
-                            <div>
-                                <p class="text-gray-600 text-sm">Lý do hủy: Thay đổi ý định mua hàng</p>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-gray-600 mb-2">
-                                    <span class="mr-2">Tổng số tiền:</span>
-                                    <span class="text-red-500 text-xl font-bold">₫450.000</span>
-                                </p>
-                                <div class="flex space-x-2">
-                                    <button class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Mua lại</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Order 5 -->
-                    <div class="border border-gray-200 rounded p-4 mb-4">
-                        <div class="flex justify-between items-center border-b border-gray-200 pb-2 mb-2">
-                            <div class="flex items-center">
-                                <span class="font-bold mr-2">Fresh Food Express</span>
-                                <a href="#" class="text-blue-500 ml-2"><i class="fas fa-comment-dots mr-1"></i> Chat</a>
-                                <a href="#" class="text-blue-500 ml-2"><i class="fas fa-store mr-1"></i> Xem shop</a>
-                            </div>
-                            <div class="text-green-500">Chờ giao hàng</div>
-                        </div>
-
-                        <div class="flex py-4 border-b border-gray-200">
-                            <img src="/api/placeholder/80/80" alt="Product Image" class="w-20 h-20 object-cover mr-4">
-                            <div class="flex-1">
-                                <p class="font-medium">Combo hoa quả tươi 4kg - cam, táo, lê, kiwi</p>
-                                <p class="text-gray-500 text-sm">x1</p>
-                            </div>
-                            <div class="text-red-500">₫350.000</div>
-                        </div>
-
-                        <div class="flex justify-between items-center py-4">
-                            <div>
-                                <p class="text-gray-600 text-sm">Thời gian dự kiến giao: 27/02/2025 - 28/02/2025</p>
-                            </div>
-                            <div class="text-right">
-                                <p class="text-gray-600 mb-2">
-                                    <span class="mr-2">Tổng số tiền:</span>
-                                    <span class="text-red-500 text-xl font-bold">₫350.000</span>
-                                </p>
-                                <div class="flex space-x-2">
-                                    <button class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Hủy</button>
-                                    <button class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Liên hệ người bán</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Pending Payment Tab Content -->
-                <div id="pending-payment-orders" class="order-tab-content hidden">
-                    <!-- Order -->
-                    <div class="border border-gray-200 rounded p-4 mb-4">
-                        <div class="flex justify-between items-center border-b border-gray-200 pb-2 mb-2">
-                            <div class="flex items-center">
-                                <span class="font-bold mr-2">Fashion Center</span>
-                                <a href="#" class="text-blue-500 ml-2"><i class="fas fa-comment-dots mr-1"></i> Chat</a>
-                                <a href="#" class="text-blue-500 ml-2"><i class="fas fa-store mr-1"></i> Xem shop</a>
-                            </div>
-                            <div class="text-orange-500">Chờ thanh toán</div>
-                        </div>
-
-                        <div class="flex py-4 border-b border-gray-200">
-                            <img src="/api/placeholder/80/80" alt="Product Image" class="w-20 h-20 object-cover mr-4">
-                            <div class="flex-1">
-                                <p class="font-medium">Áo thun nam form rộng chất cotton cao cấp</p>
-                                <p class="text-gray-500 text-sm">Phân loại: Trắng, XL</p>
-                                <p class="text-gray-500 text-sm">x2</p>
-                            </div>
-                            <div class="text-red-500">₫258.000</div>
-                        </div>
-
-                        <div class="flex justify-between items-center py-4">
-                            <div></div>
-                            <div class="text-right">
-                                <p class="text-gray-600 mb-2">
-                                    <span class="mr-2">Tổng số tiền:</span>
-                                    <span class="text-red-500 text-xl font-bold">₫258.000</span>
-                                </p>
-                                <div class="flex space-x-2">
-                                    <button class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Hủy</button>
-                                    <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Thanh toán</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal thêm số điện thoại -->
-            <div id="phoneModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
-                <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
-                    <h1 class="text-xl font-semibold mb-4">Chỉnh Sửa Số Điện Thoại</h1>
-                    <div class="mb-4">
-                        <label for="phone" class="block text-gray-700 mb-2">Thêm số điện thoại mới</label>
-                        <input type="text" id="phone" class="w-full px-3 py-2 border border-gray-300 rounded" />
-                    </div>
-                    <div class="flex justify-end space-x-2">
-                        <button id="closeModal" class="bg-gray-300 text-gray-700 px-4 py-2 rounded">Hủy</button>
-                        <button class="bg-red-500 text-white px-4 py-2 rounded">Tiếp Theo</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal ngày sinh -->
-            <div id="dobModal" class="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 hidden">
-                <div class="bg-white p-8 rounded shadow-md w-full max-w-md">
-                    <h1 class="text-xl font-semibold mb-4">Chỉnh Sửa Ngày Sinh</h1>
-                    <div class="mb-4">
-                        <label for="dobInput" class="block text-gray-700 mb-2">Chọn ngày sinh mới</label>
-                        <input type="date" id="dobInput" class="w-full px-3 py-2 border border-gray-300 rounded" />
-                    </div>
-                    <div class="flex justify-end space-x-4">
-                        <button id="closeDobModal" class="bg-gray-300 text-gray-700 px-4 py-2 rounded">Hủy</button>
-                        <button id="saveDob" class="bg-red-500 text-white px-4 py-2 rounded">Lưu</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal địa chỉ mới -->
-            <div id="new-address-modal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
-                <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl">
-                    <h1 class="text-xl font-semibold mb-4">Địa Chỉ Mới</h1>
-                    <form>
-                        <div class="grid grid-cols-1 gap-4 mb-4">
-                            <div class="grid grid-cols-2 gap-4">
-                                <input type="text" placeholder="Họ và tên" class="border border-gray-300 p-3 w-full">
-                                <input type="text" placeholder="Số điện thoại" class="border border-gray-300 p-3 w-full">
-                            </div>
-                            <div class="grid grid-cols-3 gap-4">
-                                <select class="border border-gray-300 p-3 w-full">
-                                    <option>Tỉnh/Thành phố</option>
-                                </select>
-                                <select class="border border-gray-300 p-3 w-full">
-                                    <option>Quận/Huyện</option>
-                                </select>
-                                <select class="border border-gray-300 p-3 w-full">
-                                    <option>Phường/Xã</option>
-                                </select>
-                            </div>
-                            <div>
-                                <textarea placeholder="Địa chỉ cụ thể" class="border border-gray-300 p-3 w-full h-24"></textarea>
-                            </div>
-                        </div>
-                        <div class="flex items-center mb-4">
-                            <input type="checkbox" id="defaultAddress" class="mr-2">
-                            <label for="defaultAddress" class="text-sm">Đặt làm địa chỉ mặc định</label>
-                        </div>
-                        <div class="flex justify-between">
-                            <button type="button" id="back-modal-btn" class="border border-gray-300 px-4 py-2">Trở lại</button>
-                            <button type="submit" id="submit-new-address" class="bg-red-500 text-white px-4 py-2">HOÀN THÀNH</button>
-                        </div>
-                    </form>
-                </div>
+                </form>
             </div>
         </div>
-
     </div>
 
+</div>
 
-    <!-- Footer -->
-    <div class="bg-gray-900 text-white footer">
-        <footer class="py-12">
-            <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
-                <!-- About Section -->
-                <div>
-                    <h2 class="text-2xl font-bold text-white">Organ<span class="text-green-500">ic</span></h2>
-                    <p class="mt-4 text-gray-400">
-                        Organic chuyên cung cấp những sản phẩm được kiểm soát chặt chẽ từ khâu con giống, chế biến thức
-                        ăn, chăm sóc sức khỏe vật nuôi đến giết mổ, bao gói, bảo quản và vận chuyển một cách tốt nhất,
-                        sạch nhất cho thị trường.
-                    </p>
-                    <div class="flex mt-4 space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook fa-2x"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-google fa-2x"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter fa-2x"></i></a>
-                    </div>
-                </div>
-                <!-- Links Section -->
-                <div>
-                    <h3 class="text-xl font-bold text-white">Liên kết</h3>
-                    <ul class="mt-4 space-y-2 text-gray-400">
-                        <li><a href="#" class="hover:text-white">Giới thiệu</a></li>
-                        <li><a href="#" class="hover:text-white">Sản phẩm</a></li>
-                        <li><a href="#" class="hover:text-white">Tin tức</a></li>
-                        <li><a href="#" class="hover:text-white">Cửa hàng</a></li>
-                    </ul>
-                </div>
-                <!-- Contact Section -->
-                <div>
-                    <h3 class="text-xl font-bold text-white">Liên hệ</h3>
-                    <ul class="mt-4 space-y-2 text-gray-400">
-                        <li><i class="fas fa-map-marker-alt"></i> Thụy Phương, Bắc Từ Liêm, HN.</li>
-                        <li><i class="fas fa-phone"></i> 034 444 9999</li>
-                        <li><i class="fas fa-envelope"></i> organic.com</li>
-                    </ul>
-                </div>
-                <!-- Newsletter Section -->
-                <div>
-                    <h3 class="text-xl font-bold text-white">Bản tin</h3>
-                    <p class="mt-4 text-gray-400">Bạn sẽ nhận được thông báo khi có tin mới.</p>
-                    <form class="mt-4 flex">
-                        <input type="email" placeholder="Địa chỉ Email *"
-                               class="w-full px-4 py-2 rounded-l-md focus:outline-none">
-                        <button type="submit" class="bg-green-500 text-white px-4 py-2 rounded-r-md"><i
-                                class="fas fa-envelope"></i></button>
-                    </form>
-                </div>
-            </div>
-        </footer>
-    </div>
-    <!-- Script boostrap -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-            crossorigin="anonymous"></script>
 
-    <!-- JS carousel -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
-    <script src="/assets/js/main.js"></script>
+<!-- Footer -->
+<div class="bg-gray-900 text-white footer">
+    <div th:insert="~{/web/fragments/footer}"></div>
+</div>
+<!-- Script boostrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
 
-    <script src="/assets/js/modal.js"></script>
-    </body>
+<!-- JS carousel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="/assets/js/main.js"></script>
+
+<script src="/assets/js/modal.js"></script>
+
+</body>
 
 </html>
