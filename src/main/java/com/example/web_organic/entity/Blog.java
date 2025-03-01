@@ -22,6 +22,7 @@ public class Blog {
     Integer id;
     String title;
     String slug;
+    @Column(columnDefinition = "TEXT")
     String content;
     String description;
     String thumbnail;
