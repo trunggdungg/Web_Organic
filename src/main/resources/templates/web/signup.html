@@ -26,79 +26,79 @@
 </head>
 
 <body class="font-sans">
-    <div class="header-sticky">
-        <!-- Top Navigation -->
-        <div th:insert="~{/web/fragments/header}"></div>
+<div class="header-sticky">
+    <!-- Top Navigation -->
+    <div th:insert="~{/web/fragments/header}"></div>
 
-        <!-- Breadcrumb -->
-        <div class="bg-green-500 text-white py-2 px-4 ">
-            <div class="container mx-auto ">
-                <span>Trang chủ > Sản phẩm</span>
-            </div>
+    <!-- Breadcrumb -->
+    <div class="bg-green-500 text-white py-2 px-4 ">
+        <div class="container mx-auto ">
+            <span>Trang chủ > Sản phẩm</span>
         </div>
     </div>
+</div>
 
 
-    <!-- login -->
-    <div class="signup-container mx-auto">
-        <div class="signup-header">
-            <h1>Đăng ký tài khoản</h1>
-            <p>Vui lòng điền thông tin của bạn để tạo tài khoản mới</p>
-        </div>
-        <form>
-            <div class="columns">
-                <div class="input-group">
-                    <label for="firstname">Họ</label>
-                    <input type="text" id="firstname" placeholder="Nhập họ của bạn">
-                </div>
-                <div class="input-group">
-                    <label for="lastname">Tên</label>
-                    <input type="text" id="lastname" placeholder="Nhập tên của bạn">
-                </div>
-            </div>
-            <div class="input-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" placeholder="Nhập địa chỉ email của bạn">
-            </div>
-
-            <div class="input-group">
-                <label for="password">Mật khẩu</label>
-                <input type="password" id="password" placeholder="Tạo mật khẩu mới">
-            </div>
-            <div class="input-group">
-                <label for="confirm-password">Xác nhận mật khẩu</label>
-                <input type="password" id="confirm-password" placeholder="Nhập lại mật khẩu">
-            </div>
-            <div class="terms">
-                <input type="checkbox" id="terms" required>
-                <label for="terms">Tôi đồng ý với <a href="#">Điều khoản sử dụng</a> và <a href="#">Chính sách bảo mật</a> của dịch vụ</label>
-            </div>
-            <button type="submit" class="btn-signup">Đăng ký</button>
-
-            <div class="social-signup">
-                <div class="social-signup-text">Hoặc đăng ký với</div>
-                <div class="social-signup-buttons">
-                    <button type="button" class="social-btn facebook-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white">
-                            <path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127c-.82-.088-1.643-.13-2.467-.127-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"/>
-                        </svg>
-                        Facebook
-                    </button>
-                    <button type="button" class="social-btn google-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white">
-                            <path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032c0-3.331,2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12c0,5.523,4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/>
-                        </svg>
-                        Google
-                    </button>
-                </div>
-            </div>
-
-            <div class="login-link">
-                Bạn đã có tài khoản? <a href="#">Đăng nhập</a>
-            </div>
-        </form>
+<!-- login -->
+<div class="signup-container mx-auto">
+    <div class="signup-header">
+        <h1>Đăng ký tài khoản</h1>
+        <p>Vui lòng điền thông tin của bạn để tạo tài khoản mới</p>
     </div>
+    <form>
+        <div class="columns">
+            <div class="input-group">
+                <label for="fullname">Họ và tên</label>
+                <input type="text" id="fullname" placeholder="Nhập họ và tên của bạn">
+            </div>
+            <!--                <div class="input-group">-->
+            <!--                    <label for="lastname">Tên</label>-->
+            <!--                    <input type="text" id="lastname" placeholder="Nhập tên của bạn">-->
+            <!--                </div>-->
+        </div>
+        <div class="input-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Nhập địa chỉ email của bạn">
+        </div>
 
+        <div class="input-group">
+            <label for="password">Mật khẩu</label>
+            <input type="password" id="password" placeholder="Tạo mật khẩu mới">
+        </div>
+        <div class="input-group">
+            <label for="confirm-password">Xác nhận mật khẩu</label>
+            <input type="password" id="confirm-password" placeholder="Nhập lại mật khẩu">
+        </div>
+        <div class="terms">
+            <input type="checkbox" id="terms" required>
+            <label for="terms">Tôi đồng ý với <a href="#">Điều khoản sử dụng</a> và <a href="#">Chính sách bảo mật</a>
+                của dịch vụ</label>
+        </div>
+        <button type="submit" class="btn-signup">Đăng ký</button>
+
+        <div class="social-signup">
+            <div class="social-signup-text">Hoặc đăng ký với</div>
+            <div class="social-signup-buttons">
+                <button type="button" class="social-btn facebook-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white">
+                        <path d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127c-.82-.088-1.643-.13-2.467-.127-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"/>
+                    </svg>
+                    Facebook
+                </button>
+                <button type="button" class="social-btn google-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white">
+                        <path d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032c0-3.331,2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12c0,5.523,4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/>
+                    </svg>
+                    Google
+                </button>
+            </div>
+        </div>
+
+        <div class="login-link">
+            Bạn đã có tài khoản? <a href="/login">Đăng nhập</a>
+        </div>
+    </form>
+</div>
 
 
 <!-- Footer -->
@@ -115,6 +115,64 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script src="/assets/js/main.js"></script>
 
+
+<script>
+    const fullnameEL = document.getElementById('fullname');
+    const emailEL = document.getElementById('email');
+    const passwordEL = document.getElementById('password');
+    const confirmPasswordEL = document.getElementById('confirm-password');
+    const btnSigupEl = document.querySelector('.btn-signup');
+
+    btnSigupEl.addEventListener('click', async (e) => {
+        e.preventDefault();
+        const fullName = fullnameEL.value;
+        const email = emailEL.value;
+        const password = passwordEL.value;
+        const confirmPassword = confirmPasswordEL.value;
+
+        if (fullName === '') {
+            alertWarning('Họ và tên không được để trống');
+            return;
+
+        }
+        if (email === '') {
+          alertWarning('Email không được để trống');
+            return;
+        }
+        if (password === '') {
+           alertWarning('Mật khẩu không được để trống');
+            return;
+        }
+        if (confirmPassword === '') {
+          alertWarning('Xác nhận mật khẩu không được để trống');
+            return;
+        }
+        if (password !== confirmPassword) {
+           alertError('Mật khẩu không trùng khớp');
+            return;
+        }
+        const data = {
+            fullName,
+            email,
+            password
+        };
+        console.log(data);
+        try {
+            // Call API
+            const response = await axios.post('/api/auth/signup', data);
+            if (response.status === 200) {
+                alertSuccess('Đăng ký tài khoản thành công');
+                setTimeout(() => {
+
+                }, 1200);
+            }
+
+        } catch (error) {
+          alertError('Đăng ký tài khoản thất bại');
+            alert(error.message);
+        }
+    });
+</script>
 
 
 </body>
