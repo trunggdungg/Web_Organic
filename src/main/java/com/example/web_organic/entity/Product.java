@@ -26,6 +26,7 @@ public class Product {
     String imageUrl;
     Integer discount;
     Boolean status;
+    Boolean isFeatured;
 
     @ManyToOne
     @JoinColumn(name = "brand_id")
