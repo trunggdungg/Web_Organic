@@ -14,6 +14,8 @@ import com.github.slugify.Slugify;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.math.BigDecimal;
@@ -76,7 +78,7 @@ class WebOrganicApplicationTests {
             User user = User.builder()
                 .username(name)
                 .password(passwordEncoder.encode("123"))
-                .fullname(name)
+                .fullName(name)
                 .email(faker.internet().emailAddress())
                 .phone(faker.phoneNumber().phoneNumber())
                 .avatar(faker.avatar().image())
@@ -198,7 +200,7 @@ class WebOrganicApplicationTests {
             Product product = Product.builder()
                 .name(name)
                 .slug(slug)
-                .imageUrl(image)
+                .imageUrl("https://placehold.co/200x200?text="+ name.substring(0, 1).toUpperCase())
                 .description(description)
                 .discount(discount)
                 .status(status)
@@ -229,7 +231,7 @@ class WebOrganicApplicationTests {
         Random random = new Random();
         Faker faker = new Faker();
         for (int i = 0; i < 50; i++) {
-            Product product = productRepository.findById(random.nextInt(10) + 1).orElseThrow(() -> new RuntimeException("Product not found"));
+            Product product = productRepository.findById(random.nextInt(11) + 10).orElseThrow(() -> new RuntimeException("Product not found"));
             ProductImage productImage = ProductImage.builder()
                 .product(product)
                 .imageProduct("https://placehold.co/200x200?text=" + product.getName().substring(0, 1).toUpperCase())
@@ -247,7 +249,7 @@ class WebOrganicApplicationTests {
         List<String> weightOptions = Arrays.asList("300g", "1kg");
 
         // Duyệt qua từng sản phẩm có ID từ 1 đến 10
-        for (int productId = 1; productId <= 10; productId++) {
+        for (int productId = 11; productId <= 20; productId++) {
             Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
 
@@ -277,6 +279,27 @@ class WebOrganicApplicationTests {
 
 
     @Test
+    void createFullOrderProcess() {
+        Random random = new Random();
+
+        // 1. Tạo cart items (nếu chưa có)
+//        createCart();
+
+        // 2. Lấy một user để tạo đơn hàng
+        User user = userRepository.findById(7)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // 3. Tạo đơn hàng cho user
+        Order createdOrder = createOrderForUser(user);
+
+        // 4. Tạo order details từ cart items của user
+        createOrderDetailsFromCart(user, createdOrder);
+
+        // 5. Tùy chọn: Xóa các cart items của user sau khi đặt hàng
+        // cartRepository.deleteAllByUser(user);
+    }
+
+    @Test
     void createCart() {
         Random random = new Random();
         for (int i = 0; i < 10; i++) {
@@ -293,37 +316,8 @@ class WebOrganicApplicationTests {
     }
 
 
-    @Test
-    void createFullOrderProcess() {
-        Random random = new Random();
 
-        // 1. Tạo cart items (nếu chưa có)
-        createCart();
 
-        // 2. Lấy một user để tạo đơn hàng
-        User user = userRepository.findById(random.nextInt(10) + 1)
-            .orElseThrow(() -> new RuntimeException("User not found"));
-
-        // 3. Tạo đơn hàng cho user
-        Order createdOrder = createOrderForUser(user);
-
-        // 4. Tạo order details từ cart items của user
-        createOrderDetailsFromCart(user, createdOrder);
-
-        // 5. Tùy chọn: Xóa các cart items của user sau khi đặt hàng
-        // cartRepository.deleteAllByUser(user);
-    }
-
-@Test
-void test(){
-//       List<Address>  address =  addressRepository.findByIsDefaultTrue();
-//    System.out.println(address);
-    Random random = new Random();
-    User user = userRepository.findById(random.nextInt(10) + 1)
-        .orElseThrow(() -> new RuntimeException("User not found"));
-    String address = addressRepository.findAddressSelectedByUserId(user.getId());
-    System.out.println(address);
-}
     @Test
     Order createOrderForUser(User user) {
         Random random = new Random();
@@ -338,7 +332,7 @@ void test(){
 
         // Tạo đơn hàng mới
         Order order = Order.builder()
-            .fullName(user.getFullname())
+            .fullName(user.getFullName())
             .phone(user.getPhone())
             .addressSelect(String.valueOf(address))
             .addressDetail("Số " + (random.nextInt(100) + 1) + ", Đường ABC")
@@ -417,8 +411,8 @@ void test(){
     void createOrderCancellation() {
         Random random = new Random();
         for (int i = 0; i < 10; i++) {
-            User user = userRepository.findById(5).orElseThrow(() -> new RuntimeException("User not found"));
-            Order order = orderRepository.findById(2).orElseThrow(() -> new RuntimeException("Order not found"));
+            User user = userRepository.findById(7).orElseThrow(() -> new RuntimeException("User not found"));
+            Order order = orderRepository.findById(3).orElseThrow(() -> new RuntimeException("Order not found"));
             String reason = "Lý do hủy đơn hàng: " + i;
             OrderCancellation orderCancellation = OrderCancellation.builder()
                 .user(user)
@@ -430,6 +424,48 @@ void test(){
         }
     }
 
+    @Test
+    void test(){
+//       List<Address>  address =  addressRepository.findByIsDefaultTrue();
+//    System.out.println(address);
+//        Random random = new Random();
+//        User user = userRepository.findById(random.nextInt(10) + 1)
+//            .orElseThrow(() -> new RuntimeException("User not found"));
+//        String address = addressRepository.findAddressSelectedByUserId(user.getId());
+//        System.out.println(address);
+        Random random = new Random();
+        User user = userRepository.findById(random.nextInt(10) + 1)
+            .orElseThrow(() -> new RuntimeException("User not found"));
+        Address address = (Address) addressRepository.findByUserIdAndIsDefaultTrue(user.getId())
+            .orElseThrow(() -> new RuntimeException("Default address not found"));
+        System.out.println(address);
+    }
 
+    @Test
+    void loadProductCategory() {
+        List<Product> products = productRepository.findByCategoryId(6, PageRequest.of(0, 10, Sort.by("createdAt").descending())).getContent();
+        for (Product product : products) {
+            System.out.println(product);
+        }
+        System.out.println(products);
+    }
 
+    @Test
+    void loadPrVariant(){
+    List<Product> products = productRepository.findAll();
+        for (Product product : products) {
+            Integer productId = product.getId();
+
+            // Gọi repository để lấy variant mặc định
+            ProductVariants defaultVariant = productVariantRepository.findByProductIdAndIsDefaultTrue(productId);
+
+            // In ra kết quả kiểm tra
+            System.out.println("Product ID: " + productId);
+            if (defaultVariant != null) {
+                System.out.println("  ➜ Default Variant Price: " + defaultVariant.getPrice());
+            } else {
+                System.out.println("  ⚠ Không có variant mặc định!");
+            }
+        }
+    }
 }
