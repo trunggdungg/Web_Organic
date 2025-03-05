@@ -17,5 +17,8 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 """)
     //lấy ra các sản phẩm có isfeatures = true hoặc có rating trung bình từ các review >= 3
     Page<Product> findFeaturedProductsWithRatingAboveThree(Pageable pageable);
-
+//    lấy ra các sản phẩm theo category
+    Page<Product> findByCategoryId(Integer categoryId, Pageable pageable);
+//    tim theo slug
+    Page<Product> findByCategorySlug(String slug, Pageable pageable);
 }
