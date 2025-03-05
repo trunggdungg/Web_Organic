@@ -468,4 +468,12 @@ class WebOrganicApplicationTests {
             }
         }
     }
+
+    @Test
+    void loadPrCateSlug(){
+        List<Product> products = productRepository.findByCategorySlug("music", PageRequest.of(0, 10, Sort.by("createdAt").descending())).getContent();
+        for (Product product : products) {
+            System.out.println(product);
+        }
+    }
 }
