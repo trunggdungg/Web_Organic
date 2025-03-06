@@ -14,6 +14,7 @@ import com.github.slugify.Slugify;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -472,6 +473,14 @@ class WebOrganicApplicationTests {
     @Test
     void loadPrCateSlug(){
         List<Product> products = productRepository.findByCategorySlug("music", PageRequest.of(0, 10, Sort.by("createdAt").descending())).getContent();
+        for (Product product : products) {
+            System.out.println(product);
+        }
+    }
+
+    @Test
+    void loadPrDissCountMax(){
+        List<Product> products = productRepository.findTop15ByOrderByDiscountDesc();
         for (Product product : products) {
             System.out.println(product);
         }
