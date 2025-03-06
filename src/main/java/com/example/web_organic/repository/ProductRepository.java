@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("""
@@ -21,4 +23,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     Page<Product> findByCategoryId(Integer categoryId, Pageable pageable);
 //    tim theo slug
     Page<Product> findByCategorySlug(String slug, Pageable pageable);
+
+    List<Product> findTop15ByOrderByDiscountDesc();
+
 }
