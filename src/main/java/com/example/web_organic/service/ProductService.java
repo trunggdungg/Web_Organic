@@ -38,6 +38,10 @@ public class ProductService {
         Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by("createdAt").descending());
         return productRepository.findByCategorySlug(slug, pageable);
     }
+//    lấy 15 sản phẩm có discount lớn nhất
+    public List<Product> getProductDiscountMax() {
+        return productRepository.findTop15ByOrderByDiscountDesc();
+    }
 
     // lấy giá sản phẩm
     public BigDecimal getProductVariantPrice(Integer productId) {
