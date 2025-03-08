@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -8,6 +8,7 @@
 
     <!-- Script -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
     <!-- icon fontawesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!-- Boostrap -->
@@ -27,174 +28,201 @@
     <link rel="stylesheet" href="/assets/css/style.css">
 
 
-
 </head>
 
 <body class="font-sans">
-    <div class="header-sticky">
-        <!-- Top Navigation -->
-        <div th:insert="~{/web/fragments/header}"></div>
+<div class="header-sticky">
+    <!-- Top Navigation -->
+    <div th:insert="~{/web/fragments/header}"></div>
 
-        <!-- Breadcrumb -->
-        <div class="bg-green-500 text-white py-2 px-4 ">
-            <div class="container mx-auto ">
-                <span>Trang chủ > Sản phẩm</span>
-            </div>
+    <!-- Breadcrumb -->
+    <div class="bg-green-500 text-white py-2 px-4 ">
+        <div class="container mx-auto ">
+            <span>Trang chủ > Sản phẩm</span>
         </div>
     </div>
+</div>
 
-    <!-- div separate -->
+<!-- div separate -->
 
 
-    <!-- contact -->
-    <div class="container mx-auto p-4">
-        <div class="flex flex-col md:flex-row">
-            <!-- Left Column: Images -->
-            <div class="flex flex-col space-y-4">
-                <img alt="Small image of octopus on a black plate with garnish" class="w-24 h-24 object-cover"
-                     height="100"
-                     src="https://storage.googleapis.com/a1aa/image/obGo_fg97yUPACgVHvf7Graeqeuumj8a39gKqrfgOPY.jpg"
-                     width="100" />
-                <img alt="Small image of red octopus on ice" class="w-24 h-24 object-cover" height="100"
-                     src="https://storage.googleapis.com/a1aa/image/9Hxmu5x5RS5J1h3SSeQAnBXQP07DBMcwGr83Pd-U1iQ.jpg"
-                     width="100" />
-                <img alt="Small image of octopus on a white plate with checkered cloth" class="w-24 h-24 object-cover"
-                     height="100"
-                     src="https://storage.googleapis.com/a1aa/image/CGbCfByUG_XPxcf7sU5Rdw2wIXAl2U_ZKYJ24g2eTcw.jpg"
-                     width="100" />
-            </div>
-            <!-- Main Image -->
-            <div class="flex-1 mx-4">
-                <img alt="Main image of octopus on a white plate with checkered cloth"
-                     class=" object-cover ml-5" height="600"
-                     src="https://storage.googleapis.com/a1aa/image/V7962frvz9d8dcvGR6kvwec7AOzE-NLkr7aGGubKu-Y.jpg"
-                     width="600" />
-            </div>
-            <!-- Right Column: Product Details -->
-            <div class="flex-1">
-                <h1 class="text-2xl font-bold">
-                    Bạch tuộc - 300g
-                </h1>
-                <hr class="my-2" />
-                <div class="flex items-center space-x-2 mt-2">
-                    <span class="text-red-500 text-2xl font-bold">
-                        200,000₫
-                    </span>
-                    <span class="line-through text-gray-500">
-                        400,000₫
-                    </span>
-                </div>
-                <div class="mt-2">
-                    <span class="font-semibold">
-                        Thương hiệu:
-                    </span>
-                    Đang cập nhật
-                </div>
-                <div class="mt-2">
-                    <span class="font-semibold">
-                        Kích thước :
-                    </span>
-                    <!-- <div class="flex space-x-2 mt-1">
-                        <button class="px-4 py-2 bg-gray-800 text-white rounded">
-                            300g
-                        </button>
-                        <button class="px-4 py-2 bg-gray-800 text-white rounded">
-                            1kg
-                        </button>
-                    </div> -->
-                </div>
-                <div class="flex items-center mt-4">
-                    <span class="font-semibold mr-2">Số lượng:</span>
-                    <button class="px-3 border border-gray-400 h-[35px] text-lg font-bold rounded-l">-</button>
-                    <input class="w-16 text-center border-t border-b  h-[35px] text-lg" type="text" value="1" />
-                    <button class="px-3 border border-gray-400 h-[35px] text-lg font-bold rounded-r">+</button>
-                    <i class="far fa-heart ml-auto text-2xl text-red-500 cursor-pointer"></i>
+<!-- contact -->
+<div class="container mx-auto p-4" >
+    <div class="flex flex-col md:flex-row">
+        <!-- Left Column: Images -->
+        <div class="w-28 h-[500px] overflow-hidden">
+            <div class="swiper mySwiper h-full">
+                <div class="swiper-wrapper">
+                    <!-- Các ảnh -->
+                    <div class="swiper-slide" th:each="img : ${productImages}">
+                        <img class="w-24 h-24 object-cover" th:src="${img.getImageProduct()}"/>
+                    </div>
+
                 </div>
 
-                <div class="flex space-x-4 mt-4">
-                    <button class="flex-1 px-4 py-2 bg-green-500 text-white rounded">
-                        Thêm vào giỏ hàng
-                    </button>
-                    <button class="flex-1 px-4 py-2 bg-red-500 text-white rounded">
-                        Mua ngay
-                    </button>
-                </div>
+                <!-- Nút điều hướng -->
+<!--                <div class="swiper-button-prev"></div>-->
+<!--                <div class="swiper-button-next"></div>-->
             </div>
         </div>
-        <!-- Product Description -->
-        <div class="mt-6">
-            <h2 class="text-lg font-semibold">
-                Mô tả sản phẩm :
-            </h2>
-            <p class="mt-2 text-gray-700">
-                Mực Nang Kiên Giang được là sạch da và nội tạng sẵn rồi sau đó cấp đông chuyền sâu để giữ chất lượng.
-                Thịt mực nang có độ giòn và thịt tương đối ngọt, da trắng ngần như cơm dừa. Size : 300grs up/ con ( 1-3
-                con/kg ) Size : 300grs up/ con ( 1-3 con/kg ). Món ngon: hấp hành gừng, xào hành tây, cắt miếng lăn bột
-                chiên giòn, nướng,...
-            </p>
+        <!-- Main Image -->
+        <div class="flex-1 mx-4">
+            <img alt="Main image of octopus on a white plate with checkered cloth"
+                 class=" object-cover ml-5" height="600"
+                 th:src="${product.imageUrl}"
+                 width="600"/>
         </div>
-    </div>
+        <!-- Right Column: Product Details -->
+        <div class="flex-1">
+            <h1 class="text-2xl font-bold" th:text="${product.name}">
+                Bạch tuộc - 300g
+            </h1>
+            <hr class="my-2"/>
+            <div class="flex items-center space-x-2 mt-2">
+                     <span class="price-new text-red-500 text-xl font-semibold mr-2"
+                           th:text="${product.discount != null} ?
+               ${#numbers.formatDecimal(productVariantPrices.get(product.id) - (productVariantPrices.get(product.id) * product.discount / 100), 0, 'COMMA', 0, 'POINT')} + '₫' :
+               ${#numbers.formatDecimal(productVariantPrices.get(product.id), 0, 'COMMA', 0, 'POINT')} + '₫'">
+                            </span>
 
-    <!-- commment -->
-    <section class="py-4">
-        <div class="container">
-            <div class="d-flex justify-content-between">
-                <h4>Bình luận (<span id="total-reviews">0</span>)</h4>
-                <button class="btn btn-primary btn-create-review" type="button" data-bs-toggle="modal"
-                        data-bs-target="#modalReview">Viết bình luận
+                <span class="price-old text-gray-500 line-through"
+                      th:if="${product.discount != null and product.discount != 0}"
+                      th:text="${#numbers.formatDecimal(productVariantPrices.get(product.id), 0, 'COMMA', 0, 'POINT')} + '₫'">
+                                440,000₫
+                            </span>
+            </div>
+            <div class="mt-4">
+                <span class="font-semibold">
+                    Thương hiệu:
+                </span>
+
+                <th:block th:if="${product.brand.nameBrand != null}">
+                    <button type="button"
+                            class="px-3 mt-2 py-2 bg-white text-gray-800 border border-gray-400 size-button"
+                            style="display: block"
+                            th:text="${product.brand.nameBrand}">
+                    </button>
+                </th:block>
+
+                <p class="mt-2" th:if="${product.brand.nameBrand == null}">Đang cập nhật</p>
+            </div>
+
+            <div class="mt-4">
+                <span class="font-semibold">
+                    Kích thước :
+                </span>
+                <div class="flex space-x-2 mt-3">
+                    <!-- Lặp qua danh sách biến thể của sản phẩm -->
+                    <th:block th:each="variant : ${productVariants}">
+                        <button type="button"
+                                class="px-3 py-2 bg-white text-gray-800 border border-gray-400 size-button"
+                                th:classappend="${variantStocks.get(variant.id) <= 0 ? 'out-of-stock relative' : ''}"
+                                th:text="${variant.weight}"
+                        th:data-stock="${variantStocks.get(variant.id)}">
+                        </button>
+                    </th:block>
+                </div>
+
+                <!-- Nếu bạn cần lưu giá trị đã chọn để gửi form -->
+                <input type="hidden" id="selectedSizeInput" name="selectedSize" value="">
+            </div>
+            <div class="flex items-center mt-4">
+                <span class="font-semibold mr-2">Số lượng:</span>
+                <button class="px-3 border border-gray-400 h-[35px] text-lg font-bold rounded-l">-</button>
+                <input class="w-16 text-center border-t border-b  h-[35px] text-lg" type="text" value="1"/>
+                <button class="px-3 border border-gray-400 h-[35px] text-lg font-bold rounded-r">+</button>
+                <i class="far fa-heart ml-auto text-2xl text-red-500 cursor-pointer"></i>
+            </div>
+
+            <div class="flex space-x-4 mt-4">
+                <button class="flex-1 px-4 py-2 bg-green-500 text-white rounded">
+                    Thêm vào giỏ hàng
+                </button>
+                <button class="flex-1 px-4 py-2 bg-red-500 text-white rounded">
+                    Mua ngay
                 </button>
             </div>
-            <div class="review-list">
-                <!-- Bình luận giả -->
-                <div class="rating-item d-flex">
-                    <div class="rating-avatar">
-                        <img src="https://via.placeholder.com/50" alt="Nguyễn Văn A">
+        </div>
+    </div>
+    <!-- Product Description -->
+    <div class="mt-6">
+        <h2 class="text-lg font-semibold">
+            Mô tả sản phẩm :
+        </h2>
+        <p class="mt-2 text-gray-700" th:text="${product.description}">
+            Mực Nang Kiên Giang được là sạch da và nội tạng sẵn rồi sau đó cấp đông chuyền sâu để giữ chất lượng.
+            Thịt mực nang có độ giòn và thịt tương đối ngọt, da trắng ngần như cơm dừa. Size : 300grs up/ con ( 1-3
+            con/kg ) Size : 300grs up/ con ( 1-3 con/kg ). Món ngon: hấp hành gừng, xào hành tây, cắt miếng lăn bột
+            chiên giòn, nướng,...
+        </p>
+    </div>
+</div>
+
+<!-- commment -->
+<section class="py-4">
+    <div class="container">
+        <div class="d-flex justify-content-between">
+            <h4>Bình luận (<span id="total-reviews" th:text="${reviews.size()}">0</span>)</h4>
+            <button class="btn btn-primary btn-create-review" type="button" data-bs-toggle="modal"
+                    data-bs-target="#modalReview">Viết bình luận
+            </button>
+        </div>
+        <div class="review-list">
+            <!-- Bình luận giả -->
+            <div class="rating-item d-flex" th:each="review : ${reviews}">
+                <div class="rating-avatar">
+                    <img th:src="${review.user.avatar}" th:alt="${review.user.fullName}">
+                </div>
+                <div class="rating-info ms-3">
+                    <div class="d-flex">
+                        <p class="rating-name" th:text="${review.user.fullName}">Nguyễn Văn A</p>
                     </div>
-                    <div class="rating-info ms-3">
-                        <div class="d-flex">
-                            <p class="rating-name">Nguyễn Văn A</p>
-                            <p class="rating-time ms-2">25/02/2025</p>
-                        </div>
-                        <div class="rating-star">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star empty-star"></i> <!-- Sao xám -->
-                        </div>
-                        <p class="rating-content">Sản phẩm rất tốt!</p>
-                        <div>
-                            <span class="text-primary">Sửa</span> |
-                            <span class="text-danger">Xóa</span>
-                        </div>
+
+                    <div class="d-flex">
+                    <p class="rating-time" th:text="${#temporals.format(review.createdAt, 'dd/MMM/yyyy')}">25/02/2025</p>
+                     <p class="time ms-2" th:text="${#temporals.format(review.createdAt, 'HH:mm')}">20:11</p>
+                    </div>
+                    <div class="rating-star">
+                        <th:block th:each="i : ${#numbers.sequence(1, 5)}">
+                            <i th:class="${i <= review.rating} ? 'fa fa-star' : 'fa fa-star empty-star'"></i>
+                        </th:block>
+                    </div>
+
+                    <p class="rating-content" th:text="${review.content}">Sản phẩm rất tốt!</p>
+                    <span class="show-more" onclick="toggleExpand(this.previousElementSibling)">Xem thêm</span>
+
+                    <div>
+                        <span class="text-primary">Sửa</span> |
+                        <span class="text-danger">Xóa</span>
                     </div>
                 </div>
+            </div>
 
-                <div class="rating-item d-flex">
-                    <div class="rating-avatar">
-                        <img src="https://via.placeholder.com/50" alt="Trần Thị B">
+            <div class="rating-item d-flex">
+                <div class="rating-avatar">
+                    <img src="https://via.placeholder.com/50" alt="Trần Thị B">
+                </div>
+                <div class="rating-info ms-3">
+                    <div class="d-flex">
+                        <p class="rating-name">Trần Thị B</p>
+                        <p class="rating-time ms-2">24/02/2025</p>
                     </div>
-                    <div class="rating-info ms-3">
-                        <div class="d-flex">
-                            <p class="rating-name">Trần Thị B</p>
-                            <p class="rating-time ms-2">24/02/2025</p>
-                        </div>
-                        <div class="rating-star">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star empty-star"></i>
-                            <i class="fa fa-star empty-star"></i>
-                            <i class="fa fa-star empty-star"></i>
-                        </div>
-                        <p class="rating-content">Chất lượng trung bình.</p>
-                        <div>
-                            <span class="text-primary">Sửa</span> |
-                            <span class="text-danger">Xóa</span>
-                        </div>
+                    <div class="rating-star">
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star"></i>
+                        <i class="fa fa-star empty-star"></i>
+                        <i class="fa fa-star empty-star"></i>
+                        <i class="fa fa-star empty-star"></i>
+                    </div>
+                    <p class="rating-content">Chất lượng trung bình.</p>
+                    <div>
+                        <span class="text-primary">Sửa</span> |
+                        <span class="text-danger">Xóa</span>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </section>
 <!-- modal bình luận -->
 <!--modal danh gia-->
@@ -253,27 +281,75 @@
 
 
         <div class="owl-carousel owl-theme">
-            <div class="item border border-green-500 bg-white relative overflow-hidden min-h-[300px] flex flex-col">
+            <div class="item group border border-green-500 bg-white relative overflow-hidden min-h-[300px] flex flex-col"
+                 th:each="relatedProduct : ${relatedProducts}">
+                <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm"
+                     th:if="${relatedProduct.discount != null and relatedProduct.discount > 0}"
+                     th:text="${'-' + relatedProduct.discount + '% OFF'}">-15%</div>
+                <div class="absolute top-2 right-2 bg-green-200 text-green-800 px-2 py-1 text-sm"
+                     th:if="${productStocks.get(relatedProduct.id) == 0}">Tạm hết
+                </div>
+
+                <!-- Heart button overlay -->
+                <div class="heart-overlay absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full  transition-all duration-300 group-hover:translate-x-2 group-hover:opacity-100" style="z-index: 112">
+                    <button class="heart-button bg-white p-2 rounded-full shadow-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500 " fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Buy button overlay -->
+                <div class="buy-overlay absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-full  transition-all duration-300 group-hover:-translate-x-2 group-hover:opacity-100">
+                    <button class="buy-button bg-green-500 text-white px-4 py-2 rounded-full shadow-md">Mua hàng</button>
+                </div>
+                <a th:href="|/product/${relatedProduct.id}/${relatedProduct.slug}|">
+                <img th:alt="${relatedProduct.name}" class="w-full h-60 object-cover"
+                     th:src="${relatedProduct.imageUrl}"/>
+                </a>
+
+                <div class="p-3 text-center flex flex-col h-full" style="height: 124px">
+                    <p class="text-lg" th:text="${relatedProduct.name}">Dầu Olive hữu cơ Gusti Italia 500ml</p>
+                    <div class="mt-auto">
+                        <div class="flex justify-center items-center mt-2">
+                          <span class="price-new text-red-500 text-xl font-semibold mr-2"
+                                th:text="${relatedProduct.discount != null } ? ${#numbers.formatDecimal(productVariantPrices.get(relatedProduct.id) - (productVariantPrices.get(relatedProduct.id) * relatedProduct.discount / 100), 0, 'COMMA', 0, 'POINT')} + '₫' :
+                                      ${#numbers.formatDecimal(productVariantPrices.get(relatedProduct.id), 0, 'COMMA', 0, 'POINT')} + '₫'">
+                </span>
+
+                            <span class="price-old text-gray-500 line-through"
+                                  th:if="${relatedProduct.discount != null and relatedProduct.discount != 0}"
+                                  th:text="${#numbers.formatDecimal(productVariantPrices.get(relatedProduct.id), 0, 'COMMA', 0, 'POINT')} + '₫'">
+                </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item group border border-green-500 bg-white relative overflow-hidden min-h-[300px] flex flex-col">
                 <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm">-15%</div>
                 <div class="absolute top-2 right-2 bg-green-200 text-green-800 px-2 py-1 text-sm">Tạm hết</div>
 
                 <!-- Heart button overlay -->
-                <div class="heart-overlay">
-                    <button class="heart-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                <div class="heart-overlay absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full  transition-all duration-300 group-hover:translate-x-2 group-hover:opacity-100" style="z-index: 112">
+                    <button class="heart-button bg-white p-2 rounded-full shadow-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500 " fill="none" viewBox="0 0 24 24"
                              stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                         </svg>
                     </button>
                 </div>
+
                 <!-- Buy button overlay -->
-                <div class="buy-overlay">
-                    <button class="buy-button">Mua hàng</button>
+                <div class="buy-overlay absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-full  transition-all duration-300 group-hover:-translate-x-2 group-hover:opacity-100">
+                    <button class="buy-button bg-green-500 text-white px-4 py-2 rounded-full shadow-md">Mua hàng</button>
                 </div>
 
                 <img alt="Thịt gà - 1kg" class="w-full h-60 object-cover"
-                     src="https://storage.googleapis.com/a1aa/image/8i4yLd6XdlflaljUcctxSK902Arhp5XGHB7ZB2_VyGo.jpg" />
+                     src="https://storage.googleapis.com/a1aa/image/8i4yLd6XdlflaljUcctxSK902Arhp5XGHB7ZB2_VyGo.jpg"/>
 
 
                 <div class="p-3 text-center flex flex-col h-full">
@@ -286,148 +362,13 @@
                     </div>
                 </div>
             </div>
-            <div class="item border border-green-500 bg-white relative overflow-hidden min-h-[300px] flex flex-col">
-                <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm">-15%</div>
-                <div class="absolute top-2 right-2 bg-green-200 text-green-800 px-2 py-1 text-sm">Tạm hết</div>
 
-                <!-- Heart button overlay -->
-                <div class="heart-overlay">
-                    <button class="heart-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                             stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                        </svg>
-                    </button>
-                </div>
-                <!-- Buy button overlay -->
-                <div class="buy-overlay">
-                    <button class="buy-button">Mua hàng</button>
-                </div>
-
-                <img alt="Thịt gà - 1kg" class="w-full h-60 object-cover"
-                     src="https://storage.googleapis.com/a1aa/image/8i4yLd6XdlflaljUcctxSK902Arhp5XGHB7ZB2_VyGo.jpg" />
-
-
-                <div class="p-3 text-center flex flex-col h-full">
-                    <p class="text-lg">Dầu Olive hữu cơ Gusti Italia 500ml</p>
-                    <div class="mt-auto">
-                        <div class="flex justify-center items-center mt-2">
-                            <p class="text-red-500 text-xl font-semibold mr-2">330,000₫</p>
-                            <p class="text-gray-500 line-through">440,000₫</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item border border-green-500 bg-white relative overflow-hidden min-h-[300px] flex flex-col">
-                <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm">-15%</div>
-                <div class="absolute top-2 right-2 bg-green-200 text-green-800 px-2 py-1 text-sm">Tạm hết</div>
-
-                <!-- Heart button overlay -->
-                <div class="heart-overlay">
-                    <button class="heart-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                             stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                        </svg>
-                    </button>
-                </div>
-                <!-- Buy button overlay -->
-                <div class="buy-overlay">
-                    <button class="buy-button">Mua hàng</button>
-                </div>
-
-                <img alt="Thịt gà - 1kg" class="w-full h-60 object-cover"
-                     src="https://storage.googleapis.com/a1aa/image/8i4yLd6XdlflaljUcctxSK902Arhp5XGHB7ZB2_VyGo.jpg" />
-
-
-                <div class="p-3 text-center flex flex-col h-full">
-                    <p class="text-lg">Dầu Olive hữu cơ Gusti Italia 500ml</p>
-                    <div class="mt-auto">
-                        <div class="flex justify-center items-center mt-2">
-                            <p class="text-red-500 text-xl font-semibold mr-2">330,000₫</p>
-                            <p class="text-gray-500 line-through">440,000₫</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item border border-green-500 bg-white relative overflow-hidden min-h-[300px] flex flex-col">
-                <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm">-15%</div>
-                <div class="absolute top-2 right-2 bg-green-200 text-green-800 px-2 py-1 text-sm">Tạm hết</div>
-
-                <!-- Heart button overlay -->
-                <div class="heart-overlay">
-                    <button class="heart-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                             stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                        </svg>
-                    </button>
-                </div>
-                <!-- Buy button overlay -->
-                <div class="buy-overlay">
-                    <button class="buy-button">Mua hàng</button>
-                </div>
-
-                <img alt="Thịt gà - 1kg" class="w-full h-60 object-cover"
-                     src="https://storage.googleapis.com/a1aa/image/8i4yLd6XdlflaljUcctxSK902Arhp5XGHB7ZB2_VyGo.jpg" />
-
-
-                <div class="p-3 text-center flex flex-col h-full">
-                    <p class="text-lg">Dầu Olive hữu cơ Gusti Italia 500ml</p>
-                    <div class="mt-auto">
-                        <div class="flex justify-center items-center mt-2">
-                            <p class="text-red-500 text-xl font-semibold mr-2">330,000₫</p>
-                            <p class="text-gray-500 line-through">440,000₫</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item border border-green-500 bg-white relative overflow-hidden min-h-[300px] flex flex-col">
-                <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm">-15%</div>
-                <div class="absolute top-2 right-2 bg-green-200 text-green-800 px-2 py-1 text-sm">Tạm hết</div>
-
-                <!-- Heart button overlay -->
-                <div class="heart-overlay">
-                    <button class="heart-button">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                             stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                        </svg>
-                    </button>
-                </div>
-                <!-- Buy button overlay -->
-                <div class="buy-overlay">
-                    <button class="buy-button">Mua hàng</button>
-                </div>
-
-                <img alt="Thịt gà - 1kg" class="w-full h-60 object-cover"
-                     src="https://storage.googleapis.com/a1aa/image/8i4yLd6XdlflaljUcctxSK902Arhp5XGHB7ZB2_VyGo.jpg" />
-
-
-                <div class="p-3 text-center flex flex-col h-full">
-                    <p class="text-lg">Dầu Olive hữu cơ Gusti Italia 500ml</p>
-                    <div class="mt-auto">
-                        <div class="flex justify-center items-center mt-2">
-                            <p class="text-red-500 text-xl font-semibold mr-2">330,000₫</p>
-                            <p class="text-gray-500 line-through">440,000₫</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="item">
-                <h4>6</h4>
-            </div>
 
         </div>
         <!-- Product Card -->
 
     </div>
 </div>
-
 
 
 <!-- Footer -->
@@ -443,6 +384,35 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script src="/assets/js/main.js"></script>
+<script src="/assets/js/click.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+<script th:inline="javascript">
+    const productStocks = [[${productStocks}]]
+    console.log(productStocks)
+    const variantStocks = [[${variantStocks}]]
+    console.log(variantStocks)
+    const product = [[${product}]]
+    console.log(product)
+
+    const productVariants= [[${productVariants}]]
+    console.log(productVariants)
+    const  relatedProducts = [[${relatedProducts}]]
+    console.log(relatedProducts)
+    const  reviews = [[${reviews}]]
+    console.log(reviews)
+    var swiper = new Swiper(".mySwiper", {
+        direction: "vertical", // Hiển thị dọc
+        slidesPerView: 5, // Hiển thị tối đa 5 ảnh cùng lúc
+        spaceBetween: 10,
+        // loop: true, // Lặp lại
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        mousewheel: true, // Cuộn bằng chuột
+    });
+</script>
+
 </body>
 
 </html>
