@@ -24,13 +24,17 @@ public class Blog {
     String slug;
     @Column(columnDefinition = "TEXT")
     String content;
+//    String slugCategory;
     String description;
     String thumbnail;
     Boolean status;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
     LocalDateTime publishedAt;
-    String category;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    Category category;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
