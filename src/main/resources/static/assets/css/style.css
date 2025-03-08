@@ -127,77 +127,89 @@
     align-items: center;
 }
 
-.buy-overlay {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    width: 50%; /* Chỉ chiếm một nửa bên phải */
-    background: rgba(0, 0, 0, 0);
-    display: flex;
-    margin-right: 5px;
-    align-items: center;
-    justify-content: flex-end;
-    transform: translateX(100%);
-    transition: transform 0.3s ease;
+/*.buy-overlay {*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    right: 0;*/
+/*    bottom: 0;*/
+/*    width: 50%; !* Chỉ chiếm một nửa bên phải *!*/
+/*    background: rgba(0, 0, 0, 0);*/
+/*    display: flex;*/
+/*    margin-right: 5px;*/
+/*    align-items: center;*/
+/*    justify-content: flex-end;*/
+/*    transform: translateX(100%);*/
+/*    transition: transform 0.3s ease;*/
+/*}*/
+
+/*.heart-overlay {*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    bottom: 0;*/
+/*    width: 50%; !* Chỉ chiếm một nửa bên trái *!*/
+/*    background: rgba(0, 0, 0, 0);*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    margin-left: 5px;*/
+/*    justify-content: flex-start;*/
+/*    transform: translateX(-100%);*/
+/*    transition: transform 0.3s ease;*/
+/*}*/
+
+/*.buy-button {*/
+/*    background: #22c55e;*/
+/*    color: white;*/
+/*    padding: 8px 10px;*/
+/*    border-radius: 9999px;*/
+/*    border: none;*/
+/*    cursor: pointer;*/
+/*    transition: background-color 0.3s;*/
+/*}*/
+
+/*.buy-button:hover {*/
+/*    background: #16a34a;*/
+/*}*/
+
+/*.heart-button {*/
+/*    background: white;*/
+/*    color: #ef4444;*/
+/*    width: 40px;*/
+/*    height: 40px;*/
+/*    border-radius: 50%;*/
+/*    border: none;*/
+/*    cursor: pointer !important;*/
+/*    display: flex;*/
+/*    align-items: center;*/
+/*    justify-content: center;*/
+/*    transition: background-color 0.3s;*/
+/*}*/
+
+/*.item .heart-button:hover {*/
+/*    background: #fecaca;*/
+
+/*}*/
+
+/*.relative:hover .heart-overlay,*/
+/*.heart-overlay:hover {*/
+/*    transform: translateX(0);*/
+/*}*/
+
+/*.relative:hover .buy-overlay,*/
+/*.buy-overlay:hover {*/
+/*    transform: translateX(0);*/
+/*}*/
+
+
+.heart-overlay:hover .heart-button{
+    background-color: red !important;
+
+}
+.heart-overlay:hover .heart-button svg {
+    color: white !important;
+
 }
 
-.heart-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 50%; /* Chỉ chiếm một nửa bên trái */
-    background: rgba(0, 0, 0, 0);
-    display: flex;
-    align-items: center;
-    margin-left: 5px;
-    justify-content: flex-start;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-}
-
-.buy-button {
-    background: #22c55e;
-    color: white;
-    padding: 8px 10px;
-    border-radius: 9999px;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.buy-button:hover {
-    background: #16a34a;
-}
-
-.heart-button {
-    background: white;
-    color: #ef4444;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer !important;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s;
-}
-
-.heart-button:hover {
-    background: #fecaca;
-}
-
-.relative:hover .heart-overlay,
-.heart-overlay:hover {
-    transform: translateX(0);
-}
-
-.relative:hover .buy-overlay,
-.buy-overlay:hover {
-    transform: translateX(0);
-}
 
 /* liên hệ */
 #home-shop-map {
@@ -359,4 +371,64 @@
 .text-danger {
     color: red;
     cursor: pointer;
+}
+
+/*out of stock*/
+.out-of-stock {
+    opacity: 0.6;
+    cursor: not-allowed;
+    position: relative;
+}
+
+/* Đường gạch chéo thứ nhất - từ trái trên xuống phải dưới */
+.out-of-stock::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to right bottom, transparent 45%, #000000 46%, #000000 48%, transparent 49%);
+    pointer-events: none;
+}
+
+/* Đường gạch chéo thứ hai - từ phải trên xuống trái dưới */
+.out-of-stock::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to left bottom, transparent 45%, #000000 46%, #000000 48%, transparent 49%);
+    pointer-events: none;
+}
+/*xem thêm  bình lận*/
+.rating-content {
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Giới hạn 2 dòng */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+    max-height: 3em; /* Độ cao tối đa (tùy chỉnh theo font-size) */
+    transition: max-height 0.3s ease;
+}
+
+.rating-content.expanded {
+    -webkit-line-clamp: unset;
+    max-height: none;
+}
+
+.show-more {
+    color: blue;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+/*chiều cao của title blog */
+.fixed-h2 {
+    height: 56px; /* Đặt chiều cao đủ cho 2 dòng */
+    overflow: hidden;
 }
