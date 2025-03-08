@@ -1,4 +1,5 @@
 package com.example.web_organic.entity;
+import com.example.web_organic.modal.Enum.Category_Type;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -21,6 +22,11 @@ public class Category {
     Integer id;
     String name;
     String slug;
+    Boolean status;
+
+    @Enumerated(EnumType.STRING)
+    Category_Type type;
+    
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
 }
