@@ -35,3 +35,15 @@ document.addEventListener('DOMContentLoaded', function() {
         firstAvailableButton.click();
     }
 });
+
+
+//mở xem thêm bình luân
+function toggleExpand(contentElement) {
+    if (contentElement.classList.contains('expanded')) {
+        contentElement.classList.remove('expanded');
+        contentElement.nextElementSibling.innerText = "Xem thêm";
+    } else {
+        contentElement.classList.add('expanded');
+        contentElement.nextElementSibling.innerText = "Thu gọn";
+    }
+}
