@@ -64,9 +64,11 @@
                                     style="font-size: 0.75rem; margin-left: 0.25rem;"></i>
                     </a>
                     <div class="dropdown-menu">
-                        <a href="#" class="dropdown-item">Sản phẩm 1</a>
-                        <a href="#" class="dropdown-item">Sản phẩm 2</a>
-                        <a href="#" class="dropdown-item">Sản phẩm 3</a>
+                        <a th:each="categoryProduct : ${categoryProduct}"
+                           th:href="@{/product(type=${categoryProduct.slug})}"
+                           th:text="${categoryProduct.name}" class="dropdown-item">Sản phẩm 1</a>
+<!--                        <a href="#" class="dropdown-item">Sản phẩm 2</a>-->
+<!--                        <a href="#" class="dropdown-item">Sản phẩm 3</a>-->
                     </div>
                 </div>
 
@@ -78,10 +80,16 @@
                                  style="font-size: 0.75rem; margin-left: 0.25rem;"></i>
                     </a>
                     <div class="dropdown-menu">
-                        <a href="#" class="dropdown-item">Blog 1</a>
-                        <a href="#" class="dropdown-item">Blog 2</a>
-                        <a href="#" class="dropdown-item">Blog 3</a>
+                        <a th:each="category : ${categoryBlog}"
+                           th:href="@{/blog(type=${category.slug})}"
+                           class="dropdown-item"
+                           th:text="${category.name}">
+                        </a>
+<!--                        <a href="#" class="dropdown-item">Sản phẩm 1</a>-->
+<!--                        <a href="#" class="dropdown-item">Sản phẩm 2</a>-->
+<!--                        <a href="#" class="dropdown-item">Sản phẩm 3</a>-->
                     </div>
+
                 </div>
 
                 <a href="/contact" class="nav-link">Liên hệ</a>
@@ -97,9 +105,15 @@
                 </a>
 
                 <div class="relative">
-                    <input type="text" placeholder="Value" class="border border-gray-300 rounded-full px-4 py-2">
+                    <input type="text" id="search-input" placeholder="Tìm kiếm sản phẩm..."
+                           class="border border-gray-300 rounded-full px-4 py-2">
                     <i class="fas fa-search absolute right-3 top-3 text-gray-500"></i>
+
+                    <!-- Kết quả tìm kiếm sẽ hiển thị ở đây -->
+                    <div id="search-results" class="absolute bg-white w-full border mt-1 shadow-md hidden">
+                    </div>
                 </div>
+
                 <a href="/cart" class="relative">
                     <i class="fas fa-shopping-cart text-2xl text-green-500"></i>
                     <span class="absolute -top-2 -right-2.5 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
@@ -249,7 +263,10 @@
     <!--            </div>-->
     <!--        </div>-->
 </div>
+<script src="/assets/js/search.js"></script>
+
 <script>
+
     document.getElementById("open-favorite-btn").addEventListener("click", function () {
         document.getElementById("favorite-sidebar").classList.remove("-translate-x-full");
     });
