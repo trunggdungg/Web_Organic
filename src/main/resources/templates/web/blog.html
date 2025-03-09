@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -41,14 +41,14 @@
     </div>
 
     <!-- div separate -->
-    <div class=" flex flex-col items-center ">
-        <div class="text-center mt-12 my-8">
-            <!-- <hr class="mb-4 border-t border-gray-800"> -->
-            <h2 class="text-2xl font-bold text-gray-800">KHÁM PHÁ SẢN PHẨM CỦA CHÚNG TÔI</h2>
-            <p class="text-gray-600">Những sản phẩm tươi ngon và chất lượng nhất dành cho bạn</p>
-            <hr class="mt-4 border-t border-gray-800">
-        </div>
-    </div>
+<!--    <div class=" flex flex-col items-center ">-->
+<!--        <div class="text-center mt-12 my-8">-->
+<!--            &lt;!&ndash; <hr class="mb-4 border-t border-gray-800"> &ndash;&gt;-->
+<!--            <h2 class="text-2xl font-bold text-gray-800">KHÁM PHÁ SẢN PHẨM CỦA CHÚNG TÔI</h2>-->
+<!--            <p class="text-gray-600">Những sản phẩm tươi ngon và chất lượng nhất dành cho bạn</p>-->
+<!--            <hr class="mt-4 border-t border-gray-800">-->
+<!--        </div>-->
+<!--    </div>-->
 
     <!-- blog -->
     <div class="container mx-auto px-4 py-8 blog">
@@ -59,26 +59,27 @@
             Thực phẩm hữu cơ hay còn được biết đến rộng rãi với cái tên "thực phẩm Organic", không tự dưng xuất hiện mà
             xuất phát từ nhu cầu chăm sóc sức khoẻ rất khắt khe của người tiêu dùng.
         </p>
-
+        <hr class="mt-4 border-t border-gray-800 mb-10">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
             <!-- Phần blog chiếm 3/4 -->
             <div class="md:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
-                <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="bg-white rounded-lg shadow-md overflow-hidden" th:each="blog : ${blogs}">
                     <div class="relative">
                         <img alt="People preparing traditional food" class="w-full h-48 object-cover"
                              style="height:230px"
-                             src="https://storage.googleapis.com/a1aa/image/hexYomgaJudP6HTDPtfezVoMQqPJmZivDYNPWN1wQss.jpg"
+                             th:src="${blog.thumbnail}"
                              width="600" />
                         <div
                                 class="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-3 py-2 w-14 h-14 flex flex-col items-center justify-center rounded-full text-center leading-tight">
-                            05<br>01/2025
+                            <span th:text="${#temporals.format(blog.publishedAt, 'dd/MMM/yyyy')}"></span>
                         </div>
                     </div>
                     <div class="p-4">
-                        <h2 class="text-lg font-bold mb-2">
+                        <h2 class="text-lg font-bold mb-2 fixed-h2 line-clamp-2" th:text="${blog.title}">
+
                             Ngày Tết - Đặc sản dấu ấn vùng miền
                         </h2>
-                        <p class="text-gray-600">
+                        <p class="text-gray-600 line-clamp-2" th:text="${blog.content}">
                             Ngày Tết - Đặc sản dấu ấn vùng miền của #Organicathaodien đã được các Anh/Chị gần xa đến
                             hưởng ứng...
                         </p>
@@ -152,15 +153,19 @@
                 <h2 class="text-lg font-bold text-white bg-green-600 p-2 rounded-md text-center">
                     CÓ THỂ BẠN QUAN TÂM
                 </h2>
-                <ul class="mt-4 space-y-3">
-                    <li class="flex items-center space-x-3">
-                        <img class="w-16 h-16 object-cover rounded-md"
-                             src="https://file.hstatic.net/200000692807/article/mon-an-voi-hat-quinoa-1_1dd05b680b54411ca664d52cfbb27dcd_large.jpg"
-                             alt="Cách làm trà sữa trân châu hữu cơ">
-                        <a href="#" class="text-gray-700 font-medium hover:underline">
-                            Cách làm trà sữa trân châu hữu cơ
-                        </a>
-                    </li>
+                <ul class="mt-4 space-y-3" >
+                    <th:block th:each="blog, iterStat : ${blogs}">
+                        <li th:if="${iterStat.index} &lt; 5" class="flex items-center space-x-3">
+                            <img class="w-16 h-16 object-cover rounded-md"
+                                 th:src="${blog.thumbnail}"
+                                 th:alt="${blog.title}">
+                            <a th:href="@{/blog/{slug}(slug=${blog.slug})}"
+                               class="text-gray-700 font-medium hover:underline"
+                               th:text="${blog.title}">
+                            </a>
+                        </li>
+                    </th:block>
+
                     <li class="flex items-center space-x-3">
                         <img class="w-16 h-16 object-cover rounded-md"
                              src="https://file.hstatic.net/200000692807/article/mon-an-voi-hat-quinoa-1_1dd05b680b54411ca664d52cfbb27dcd_large.jpg"
@@ -199,12 +204,23 @@
         </div>
 
         <!-- Phân trang -->
-        <div class="pagination flex justify-center items-center mt-6 space-x-2">
-            <button class="page-button px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300"
-                    onclick="prevPage()">«</button>
-            <span id="page-number" class="px-4 py-2 text-gray-700">1</span>
-            <button class="page-button px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300"
-                    onclick="nextPage()">»</button>
+        <div class="pagination flex justify-center items-center mt-6 space-x-2" th:if="${totalPages > 1}">
+            <ul class="pagination  d-flex justify-content-center  mt-3">
+                <li class="page-item" th:classappend="${currentPage== 1?'disabled': ''}">
+                    <a class="page-link" th:href="|/blog?page=${currentPage - 1}|" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>
+                </li>
+                <li class="page-item"
+                    th:classappend="${currentPage == number ? 'active' : ''}"
+                    th:each="number : ${#numbers.sequence(1,totalPages)}"><a class="page-link"
+                                                                                           th:href="|/blog?page=${number}|"
+                                                                                           th:text="${number}">1</a>
+                </li>
+                <li class="page-item"
+                    th:classappend="${currentPage== totalPages?'disabled': ''}"
+                >
+                    <a class="page-link" th:href="|/blog?page=${currentPage + 1}|" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>
+                </li>
+            </ul>
         </div>
     </div>
 
@@ -224,6 +240,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script src="/assets/js/main.js"></script>
+<script th:inline="javascript">
+const blogs = [[${blogs}]];
+console.log(blogs);
+</script>
 </body>
 
 </html>
