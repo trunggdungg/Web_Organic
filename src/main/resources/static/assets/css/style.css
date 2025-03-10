@@ -127,87 +127,43 @@
     align-items: center;
 }
 
-/*.buy-overlay {*/
-/*    position: absolute;*/
-/*    top: 0;*/
-/*    right: 0;*/
-/*    bottom: 0;*/
-/*    width: 50%; !* Chỉ chiếm một nửa bên phải *!*/
-/*    background: rgba(0, 0, 0, 0);*/
-/*    display: flex;*/
-/*    margin-right: 5px;*/
-/*    align-items: center;*/
-/*    justify-content: flex-end;*/
-/*    transform: translateX(100%);*/
-/*    transition: transform 0.3s ease;*/
-/*}*/
 
-/*.heart-overlay {*/
-/*    position: absolute;*/
-/*    top: 0;*/
-/*    left: 0;*/
-/*    bottom: 0;*/
-/*    width: 50%; !* Chỉ chiếm một nửa bên trái *!*/
-/*    background: rgba(0, 0, 0, 0);*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    margin-left: 5px;*/
-/*    justify-content: flex-start;*/
-/*    transform: translateX(-100%);*/
-/*    transition: transform 0.3s ease;*/
-/*}*/
-
-/*.buy-button {*/
-/*    background: #22c55e;*/
-/*    color: white;*/
-/*    padding: 8px 10px;*/
-/*    border-radius: 9999px;*/
-/*    border: none;*/
-/*    cursor: pointer;*/
-/*    transition: background-color 0.3s;*/
-/*}*/
-
-/*.buy-button:hover {*/
-/*    background: #16a34a;*/
-/*}*/
-
-/*.heart-button {*/
-/*    background: white;*/
-/*    color: #ef4444;*/
-/*    width: 40px;*/
-/*    height: 40px;*/
-/*    border-radius: 50%;*/
-/*    border: none;*/
-/*    cursor: pointer !important;*/
-/*    display: flex;*/
-/*    align-items: center;*/
-/*    justify-content: center;*/
-/*    transition: background-color 0.3s;*/
-/*}*/
-
-/*.item .heart-button:hover {*/
-/*    background: #fecaca;*/
-
-/*}*/
-
-/*.relative:hover .heart-overlay,*/
-/*.heart-overlay:hover {*/
-/*    transform: translateX(0);*/
-/*}*/
-
-/*.relative:hover .buy-overlay,*/
-/*.buy-overlay:hover {*/
-/*    transform: translateX(0);*/
-/*}*/
-
-
+/*hiệu ứng trái tim danh sách yêu thích*/
 .heart-overlay:hover .heart-button{
-    background-color: red !important;
+    background-color: #e89797 !important;
 
 }
 .heart-overlay:hover .heart-button svg {
     color: white !important;
 
+}
+/*click trái tim ds yêu thích*/
+.heart-button.active {
+    background-color: red !important;
+}
+
+.heart-button.active svg {
+    color: white !important;
+}
+
+
+/* Tooltip */
+.heart-button:hover .tooltip {
+    display: block;
+    opacity: 1;
+}
+
+/*bỏ gạch chân*/
+#wishlist-container li span {
+    text-decoration: none;
+}
+
+.line-clamp-2{
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Số dòng tối đa */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 
