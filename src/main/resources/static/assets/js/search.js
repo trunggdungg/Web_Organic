@@ -18,7 +18,7 @@ document.getElementById("search-input").addEventListener("input", function () {
                     <a href="/product/${product.id}/${product.slug}" class="flex items-center space-x-3">
                         <img src="${product.image}" alt="${product.name}" class="w-12 h-12 rounded">
                         <div>
-                            <p class="font-semibold">${product.name}</p>
+                            <p class="font-semibold line-clamp-2">${product.name}</p>
                             <p class="text-red-600">${formatPriceCustom(product.price)}₫</p>
                         </div>
                     </a>
