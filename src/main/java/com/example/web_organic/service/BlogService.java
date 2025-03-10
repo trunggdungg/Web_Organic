@@ -23,11 +23,11 @@ public class BlogService {
     }
 
 
-    public List<Blog> getBlogsByCategory(Category selectedCategory) {
-        return blogRepository.findByCategoryAndStatusTrue(selectedCategory);
+    public Page<Blog> getBlogsByCategory(Category selectedCategory, int page, int pageSize) {
+        return blogRepository.findByCategoryAndStatusTrue(selectedCategory, PageRequest.of(page, pageSize, Sort.by(Sort.Direction.DESC, "createdAt")));
     }
 
-    public List<Blog> getAllBlogs(int page, int pageSize) {
-        return blogRepository.findAll(PageRequest.of(page - 1, pageSize, Sort.by("createdAt").descending())).getContent();
+    public Page<Blog> getAllBlogs(int page, int pageSize) {
+        return blogRepository.findAll(PageRequest.of(page , pageSize, Sort.by(Sort.Direction.DESC,"createdAt")));
     }
 }
