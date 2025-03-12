@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -27,7 +27,7 @@
 
 </head>
 
-<body class="font-sans">
+<body class="font-sans relative">
     <div class="header-sticky">
         <!-- Top Navigation -->
         <div th:insert="~{/web/fragments/header}"></div>
@@ -43,8 +43,8 @@
 
 
     <!-- contact -->
-    <div class="container mx-auto p-4">
-        <table class="w-full border-collapse">
+    <div class="container mx-auto p-4"  style="min-height:500px ">
+        <table class="w-full border-collapse" id="cart-itemsPage">
             <thead>
             <tr class="border-b">
                 <th class="py-2 text-left">
@@ -65,25 +65,28 @@
             </tr>
             </thead>
             <tbody>
-            <tr class="border-b">
+
+            <tr class="border-b" th:id="|cart-item-${cartItem.id}|" th:each="cartItem : ${cartItems}">
                 <td class="py-4 flex items-center">
                     <img alt="Image of ORGANICA Cải xoăn kale ORGANICA / 300g" class="w-20 h-20 object-cover mr-4"
                          height="100"
-                         src="https://storage.googleapis.com/a1aa/image/taxAUw4AdTrlvg4Z9lB4CFSO5K_UvAvmePI19wPZEmI.jpg"
+                         th:src="${cartItem.productVariant.product.imageUrl}"
                          width="100" />
-                    <div>
-                        <p>
-                            ORGANICA
+                    <div style="width: 300px;">
+                        <p  class="line-clamp-2" th:text="${cartItem.productVariant.product.name}">
+                            ORGAN ICAORGANICAORGANI CAORGANICAORGANI CAORGANICAORGANICAORGANICAORGANICAORGANI CAORGANICAORGANICAORGANICAORGANICAORGANICAORGANICAORGANICAORGANICAORGANICAORGANICAORGANICAORGANICAORGANICAORGANICAORGANICA
                         </p>
-                        <p class="text-red-500">
+                        <p class="text-red-500" th:text="' (' +  ${cartItem.productVariant.weight}+')'">
                             Cải xoăn kale
                         </p>
-                        <p>
-                            ORGANICA / 300g
-                        </p>
+
+<!--                        <p>ORGANICA / 300g</p>-->
                     </div>
                 </td>
-                <td class="py-4 text-red-500">
+                <td class="py-4 text-red-500" th:text="${cartItem.productVariant.product.discount != null ?
+    #numbers.formatDecimal(cartItem.productVariant.price - (cartItem.productVariant.price * cartItem.productVariant.product.discount / 100), 0, 'COMMA', 0, 'POINT') + '₫' :
+    #numbers.formatDecimal(cartItem.productVariant.price, 0, 'COMMA', 0, 'POINT') + '₫'}">
+
                     63,000₫
                 </td>
                 <td class="py-4">
@@ -91,71 +94,33 @@
                         <button class="px-2">
                             -
                         </button>
-                        <input class="w-8 text-center border-l border-r" type="text" value="1" />
+                        <input class="w-8 text-center border-l border-r" type="text" th:value="${cartItem.quantity}" />
                         <button class="px-2">
                             +
                         </button>
                     </div>
                 </td>
-                <td class="py-4 text-red-500">
+                <td class="py-4 text-red-500" th:with="discountedPrice=${cartItem.productVariant.product.discount != null ?
+            cartItem.productVariant.price - (cartItem.productVariant.price * cartItem.productVariant.product.discount / 100) :
+            cartItem.productVariant.price}" th:text="${#numbers.formatDecimal(discountedPrice * cartItem.quantity, 0, 'COMMA', 0, 'POINT')} + '₫'">
                     63,000₫
                 </td>
                 <td class="py-4">
-                    <button class="text-gray-500 " style="margin-left: 20px;">
-                        <i class="fas fa-trash">
+                    <button class="text-gray-500" style="margin-left: 20px;" th:onclick="|deleteProduct(${cartItem.id})|">
+                        <i class="fas fa-trash" >
                         </i>
                     </button>
                 </td>
             </tr>
-            <tr class="border-b">
-                <td class="py-4 flex items-center">
-                    <img alt="Image of ORGANICA Cải xoăn kale ORGANICA / 300g" class="w-20 h-20 object-cover mr-4"
-                         height="100"
-                         src="https://storage.googleapis.com/a1aa/image/taxAUw4AdTrlvg4Z9lB4CFSO5K_UvAvmePI19wPZEmI.jpg"
-                         width="100" />
-                    <div>
-                        <p>
-                            ORGANICA
-                        </p>
-                        <p class="text-red-500">
-                            Cải xoăn kale
-                        </p>
-                        <p>
-                            ORGANICA / 300g
-                        </p>
-                    </div>
-                </td>
-                <td class="py-4 text-red-500">
-                    63,000₫
-                </td>
-                <td class="py-4">
-                    <div class="inline-flex items-center border rounded w-auto">
-                        <button class="px-2">
-                            -
-                        </button>
-                        <input class="w-8 text-center border-l border-r" type="text" value="1" />
-                        <button class="px-2">
-                            +
-                        </button>
-                    </div>
-                </td>
-                <td class="py-4 text-red-500">
-                    63,000₫
-                </td>
-                <td class="py-4">
-                    <button class="text-gray-500" style="margin-left: 20px;">
-                        <i class="fas fa-trash">
-                        </i>
-                    </button>
-                </td>
-            </tr>
+
+
             </tbody>
         </table>
-        <div class="flex justify-between items-center mt-4">
+        <div class="flex justify-between items-center mt-4 mb-5">
             <p class="text-xl font-bold " >
                 Tổng cộng:
             </p>
-            <p class="text-xl text-red-500 " style="margin-left: 55%;">
+            <p class="text-xl text-red-500 " id="total-price" style="margin-left: 55%;" >
                 580,000₫
             </p>
             <button class="bg-green-500 text-white px-4 py-2 rounded" style="margin-right: 6%;">
@@ -167,7 +132,7 @@
 
 
 <!-- Footer -->
-<div class="bg-gray-900 text-white footer">
+<div class="bg-gray-900 text-white footer ">
     <div th:insert="~{/web/fragments/footer}"></div>
 </div>
 <!-- Script boostrap -->
@@ -179,6 +144,125 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script src="/assets/js/main.js"></script>
+<!--<script src="/assets/js/cartApi.js"></script>-->
+<!--    <script src="/assets/js/cartHeaderApi.js"></script>-->
+<script th:inline="javascript">
+    const cartItems = [[${cartItems}]];
+    console.log(cartItems);
+
+    document.addEventListener('DOMContentLoaded', function() {
+        calculateTotal();
+
+        // Thêm sự kiện cho các nút tăng/giảm số lượng
+        document.querySelectorAll('tr').forEach(row => {
+            const decreaseButton = row.querySelector('button:nth-child(1)'); // Nút -
+            const increaseButton = row.querySelector('button:nth-child(3)'); // Nút +
+            const quantityInput = row.querySelector('input[type="text"]');
+
+            if (decreaseButton && increaseButton && quantityInput) {
+                decreaseButton.addEventListener('click', function() {
+                    let quantity = parseInt(quantityInput.value);
+                    if (quantity > 1) {
+                        quantityInput.value = quantity - 1;
+                        updateRowTotal(quantityInput);
+                        calculateTotal();
+                    }
+                });
+
+                increaseButton.addEventListener('click', function() {
+                    let quantity = parseInt(quantityInput.value);
+                    quantityInput.value = quantity + 1;
+                    updateRowTotal(quantityInput);
+                    calculateTotal();
+                });
+
+                quantityInput.addEventListener('change', function() {
+                    if (parseInt(this.value) < 1 || isNaN(parseInt(this.value))) {
+                        this.value = 1;
+                    }
+                    updateRowTotal(this);
+                    calculateTotal();
+                });
+            }
+
+            // Xử lý nút xóa sản phẩm
+
+        });
+    });
+
+
+    const deleteProduct = async (id) => {
+        const result = await Swal.fire({
+            title: "Bạn có chắc chắn muốn xóa?",
+            text: "Hành động này không thể hoàn tác!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Đồng ý",
+            cancelButtonText: "Hủy"
+        });
+
+        if (!result.isConfirmed) {
+            console.log(result);
+            return; // Người dùng bấm "Hủy" -> Dừng hàm
+        }
+
+        try {
+            let res = await axios.delete(`/api/delete-cart-item/${id}`);
+            if (res.status === 200) {
+                alertSuccess('Xóa sản phẩm thành công');
+
+                // Xóa sản phẩm khỏi giao diện ngay sau khi API thành công
+                const row = document.getElementById(`cart-item-${id}`);
+                if (row) {
+                    row.remove();
+                    calculateTotal(); // Cập nhật lại tổng giá
+                }
+            }
+        } catch (error) {
+            console.log(error);
+            alertError('Xóa sản phẩm thất bại');
+        }
+    };
+
+
+    // Cập nhật thành tiền cho từng dòng
+    function updateRowTotal(inputElement) {
+        const row = inputElement.closest('tr');
+        const quantity = parseInt(inputElement.value) || 1;
+
+        // Lấy đơn giá (cần xử lý chuỗi định dạng tiền tệ)
+        const priceText = row.querySelector('td:nth-child(2)').textContent.trim();
+        const price = parseFloat(priceText.replace(/[^\d]/g, '')) || 0;
+
+        // Tính thành tiền
+        const total = price * quantity;
+
+        // Hiển thị thành tiền với định dạng tiền tệ
+        row.querySelector('td:nth-child(4)').textContent = formatCurrency(total) + '₫';
+    }
+
+    // Tính tổng cộng tất cả sản phẩm
+    function calculateTotal() {
+        let grandTotal = 0;
+        document.querySelectorAll('#cart-itemsPage tbody tr').forEach(row => {
+            const totalText = row.querySelector('td:nth-child(4)').textContent.trim();
+            const rowTotal = parseFloat(totalText.replace(/[^\d]/g, '')) || 0;
+            grandTotal += rowTotal;
+        });
+
+        // Hiển thị tổng cộng với định dạng tiền tệ
+        document.getElementById('total-price').textContent = formatCurrency(grandTotal) + '₫';
+    }
+
+    // Hàm định dạng số thành chuỗi tiền tệ
+    function formatCurrency(amount) {
+        return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+
+</script>
 </body>
 
 </html>
