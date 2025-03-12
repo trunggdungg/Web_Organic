@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +23,14 @@ public class ProductVariantService {
                 .mapToInt(ProductVariants::getStock)
                 .sum();
     }
+
+    //     lay ra stock cua tung variant
+    public Map<Integer, Integer> getStockByVariant(Integer productId) {
+        List<ProductVariants> variants = productVariantRepository.findByProductId(productId);
+        return variants.stream()
+            .collect(Collectors.toMap(ProductVariants::getId, ProductVariants::getStock));
+    }
+
 
     // Lấy giá của biến thể mặc định
     public BigDecimal getDefaultVariantPrice(Integer productId) {
