@@ -15,7 +15,44 @@
     <!--    css-->
     <link rel="stylesheet" th:href="@{/assets/css/style.css}">
 
+    <style>
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
+        /* Phễu nhỏ */
+        .cart-container .cart-triangle {
+            position: absolute;
+            top: 100%;
+            right: 10px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid white;
+            z-index: 51;
+            display: none;
+        }
+
+        #modal-cart {
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .cart-container:hover .cart-triangle {
+            display: block;
+        }
+
+        .cart-container:hover #modal-cart {
+            display: block;
+        }
+    </style>
 </head>
 <body>
 
@@ -27,7 +64,7 @@
                 <a href="#" class="text-gray-700">Về ORGANIC</a>
                 <a href="#" class="text-gray-700">Hướng dẫn mua hàng</a>
                 <a href="#" class="text-gray-700">Trò chuyện cùng ORGANIC</a>
-                <a href="#" class="text-gray-700" id="open-favorite-btn">Sản phẩm yêu thích</a>
+                <a class="text-gray-700" id="open-favorite-btn" style="cursor: pointer">Sản phẩm yêu thích</a>
             </div>
             <div class="relative">
 
@@ -67,8 +104,8 @@
                         <a th:each="categoryProduct : ${categoryProduct}"
                            th:href="@{/product(type=${categoryProduct.slug})}"
                            th:text="${categoryProduct.name}" class="dropdown-item">Sản phẩm 1</a>
-<!--                        <a href="#" class="dropdown-item">Sản phẩm 2</a>-->
-<!--                        <a href="#" class="dropdown-item">Sản phẩm 3</a>-->
+                        <!--                        <a href="#" class="dropdown-item">Sản phẩm 2</a>-->
+                        <!--                        <a href="#" class="dropdown-item">Sản phẩm 3</a>-->
                     </div>
                 </div>
 
@@ -85,9 +122,9 @@
                            class="dropdown-item"
                            th:text="${category.name}">
                         </a>
-<!--                        <a href="#" class="dropdown-item">Sản phẩm 1</a>-->
-<!--                        <a href="#" class="dropdown-item">Sản phẩm 2</a>-->
-<!--                        <a href="#" class="dropdown-item">Sản phẩm 3</a>-->
+                        <!--                        <a href="#" class="dropdown-item">Sản phẩm 1</a>-->
+                        <!--                        <a href="#" class="dropdown-item">Sản phẩm 2</a>-->
+                        <!--                        <a href="#" class="dropdown-item">Sản phẩm 3</a>-->
                     </div>
 
                 </div>
@@ -114,17 +151,48 @@
                     </div>
                 </div>
 
-                <a href="/cart" class="relative">
-                    <i class="fas fa-shopping-cart text-2xl text-green-500"></i>
-                    <span class="absolute -top-2 -right-2.5 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full">
-                         0
-                </span>
-                </a>
+                <div class="cart-container relative">
+                    <!-- Icon giỏ hàng -->
+                    <a href="javascript:void(0);" class="relative" id="cart-icon">
+                        <i class="fas fa-shopping-cart text-2xl text-green-500"></i>
+                        <span id="cart-counts" class="absolute  bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full" style="top: -20px; right: -14px;">
+                                0
+                        </span>
+
+                    </a>
+
+                    <!-- Phễu nhỏ -->
+                    <div class="cart-triangle"></div>
+
+                    <!-- Modal Cart -->
+                    <div id="modal-cart"
+                         class="absolute right-0 mt-2 w-96 bg-white rounded-lg shadow-md hidden z-50">
+                        <div class="p-4 border-b border-gray-200">
+                            <h2 class="text-lg font-semibold">Giỏ hàng (<span id="cart-count">0</span> sản phẩm)</h2>
+                        </div>
+                        <div id="cart-items-container" class="max-h-98 overflow-y-auto"></div> <!-- Chứa danh sách sản phẩm -->
+
+                        <div class="p-4 flex justify-between items-center border-t border-gray-200">
+                            <span class="text-lg font-semibold">Tổng cộng</span>
+                            <span class="text-red-500 text-lg font-semibold" id="cart-total">0₫</span>
+                        </div>
+                        <div class="p-4">
+                            <a href="/cart">
+                                <button class="w-full bg-green-500 text-white py-2 rounded-lg font-semibold">
+                                    XEM GIỎ HÀNG
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+
 
             </div>
 
         </div>
     </div>
+
 
     <!-- Sidebar yêu thích -->
     <div id="favorite-sidebar"
@@ -134,125 +202,22 @@
             <button id="close-favorite-btn" class="text-xl">x</button>
         </div>
         <div class="p-4 overflow-y-auto h-[90vh]">
-            <ul class="mt-4 space-y-3">
+            <ul class="mt-4 space-y-3" id="wishlist-container">
 
 
-                <li class="flex items-center space-x-3">
-                    <img class="w-16 h-16 object-cover rounded-md"
-                         src="https://storage.googleapis.com/a1aa/image/6gC6IsqiWF5_QybLME-8X5kMZ_xPQCl897MtmdfULTw.jpg"
-                         alt="Cải xoăn kale">
-                    <div class="flex-1">
-                        <a href="#" class="text-gray-700 font-medium hover:underline block">
-                            Cải xoăn kale ORGANICA / 300g
-                        </a>
-                        <p class="text-red-500 font-bold text-sm">63,000₫</p>
-                    </div>
+                <!--                <li class="flex items-center space-x-3">-->
+                <!--                    <img class="w-16 h-16 object-cover rounded-md"-->
+                <!--                         src="https://storage.googleapis.com/a1aa/image/6gC6IsqiWF5_QybLME-8X5kMZ_xPQCl897MtmdfULTw.jpg"-->
+                <!--                         alt="Cải xoăn kale">-->
+                <!--                    <div class="flex-1">-->
+                <!--                        <a href="#" class="text-gray-700 font-medium hover:underline block">-->
+                <!--                            Cải xoăn kale ORGANICA / 300g-->
+                <!--                        </a>-->
+                <!--                        <p class="text-red-500 font-bold text-sm">63,000₫</p>-->
+                <!--                    </div>-->
 
-                    <i class=" fas fa-solid fa-heart cursor-pointer" style="color: #e11919;font-size: 25px;"></i>
-                </li>
-                <li class="flex items-center space-x-3">
-                    <img class="w-16 h-16 object-cover rounded-md"
-                         src="https://storage.googleapis.com/a1aa/image/6gC6IsqiWF5_QybLME-8X5kMZ_xPQCl897MtmdfULTw.jpg"
-                         alt="Cải xoăn kale">
-                    <div class="flex-1">
-                        <a href="#" class="text-gray-700 font-medium hover:underline block">
-                            Cải xoăn kale ORGANICA / 300g
-                        </a>
-                        <p class="text-red-500 font-bold text-sm">63,000₫</p>
-                    </div>
-
-                    <i class=" fas fa-solid fa-heart cursor-pointer" style="color: #e11919;font-size: 25px;"></i>
-                </li>
-                <li class="flex items-center space-x-3">
-                    <img class="w-16 h-16 object-cover rounded-md"
-                         src="https://storage.googleapis.com/a1aa/image/6gC6IsqiWF5_QybLME-8X5kMZ_xPQCl897MtmdfULTw.jpg"
-                         alt="Cải xoăn kale">
-                    <div class="flex-1">
-                        <a href="#" class="text-gray-700 font-medium hover:underline block">
-                            Cải xoăn kale ORGANICA / 300g
-                        </a>
-                        <p class="text-red-500 font-bold text-sm">63,000₫</p>
-                    </div>
-
-                    <i class=" fas fa-solid fa-heart cursor-pointer" style="color: #e11919;font-size: 25px;"></i>
-                </li>
-                <li class="flex items-center space-x-3">
-                    <img class="w-16 h-16 object-cover rounded-md"
-                         src="https://storage.googleapis.com/a1aa/image/6gC6IsqiWF5_QybLME-8X5kMZ_xPQCl897MtmdfULTw.jpg"
-                         alt="Cải xoăn kale">
-                    <div class="flex-1">
-                        <a href="#" class="text-gray-700 font-medium hover:underline block">
-                            Cải xoăn kale ORGANICA / 300g
-                        </a>
-                        <p class="text-red-500 font-bold text-sm">63,000₫</p>
-                    </div>
-
-                    <i class=" fas fa-solid fa-heart cursor-pointer" style="color: #e11919;font-size: 25px;"></i>
-                </li>
-                <li class="flex items-center space-x-3">
-                    <img class="w-16 h-16 object-cover rounded-md"
-                         src="https://storage.googleapis.com/a1aa/image/6gC6IsqiWF5_QybLME-8X5kMZ_xPQCl897MtmdfULTw.jpg"
-                         alt="Cải xoăn kale">
-                    <div class="flex-1">
-                        <a href="#" class="text-gray-700 font-medium hover:underline block">
-                            Cải xoăn kale ORGANICA / 300g
-                        </a>
-                        <p class="text-red-500 font-bold text-sm">63,000₫</p>
-                    </div>
-
-                    <i class=" fas fa-solid fa-heart cursor-pointer" style="color: #e11919;font-size: 25px;"></i>
-                </li>
-                <li class="flex items-center space-x-3">
-                    <img class="w-16 h-16 object-cover rounded-md"
-                         src="https://storage.googleapis.com/a1aa/image/6gC6IsqiWF5_QybLME-8X5kMZ_xPQCl897MtmdfULTw.jpg"
-                         alt="Cải xoăn kale">
-                    <div class="flex-1">
-                        <a href="#" class="text-gray-700 font-medium hover:underline block">
-                            Cải xoăn kale ORGANICA / 300g
-                        </a>
-                        <p class="text-red-500 font-bold text-sm">63,000₫</p>
-                    </div>
-
-                    <i class=" fas fa-solid fa-heart cursor-pointer" style="color: #e11919;font-size: 25px;"></i>
-                </li>
-                <li class="flex items-center space-x-3">
-                    <img class="w-16 h-16 object-cover rounded-md"
-                         src="https://storage.googleapis.com/a1aa/image/6gC6IsqiWF5_QybLME-8X5kMZ_xPQCl897MtmdfULTw.jpg"
-                         alt="Cải xoăn kale">
-                    <div class="flex-1">
-                        <a href="#" class="text-gray-700 font-medium hover:underline block">
-                            Cải xoăn kale ORGANICA / 300g
-                        </a>
-                        <p class="text-red-500 font-bold text-sm">63,000₫</p>
-                    </div>
-
-                    <i class=" fas fa-solid fa-heart cursor-pointer" style="color: #e11919;font-size: 25px;"></i>
-                </li>
-                <li class="flex items-center space-x-3">
-                    <img class="w-16 h-16 object-cover rounded-md"
-                         src="https://storage.googleapis.com/a1aa/image/6gC6IsqiWF5_QybLME-8X5kMZ_xPQCl897MtmdfULTw.jpg"
-                         alt="Cải xoăn kale">
-                    <div class="flex-1">
-                        <a href="#" class="text-gray-700 font-medium hover:underline block">
-                            Cải xoăn kale ORGANICA / 300g
-                        </a>
-                        <p class="text-red-500 font-bold text-sm">63,000₫</p>
-                    </div>
-
-                    <i class=" fas fa-solid fa-heart cursor-pointer" style="color: #e11919;font-size: 25px;"></i>
-                </li>
-                <li class="flex items-center space-x-3">
-                    <img class="w-16 h-16 object-cover rounded-md"
-                         src="https://storage.googleapis.com/a1aa/image/6gC6IsqiWF5_QybLME-8X5kMZ_xPQCl897MtmdfULTw.jpg"
-                         alt="Hạnh nhân hữu cơ">
-                    <div class="flex-1">
-                        <a href="#" class="text-gray-700 font-medium hover:underline block">
-                            Hạnh nhân hữu cơ ORGANICA / 200g
-                        </a>
-                        <p class="text-red-500 font-bold text-sm">120,000₫</p>
-                    </div>
-                    <i class=" fas fa-solid fa-heart cursor-pointer" style="color: #e11919;font-size: 25px;"></i>
-                </li>
+                <!--                    <i class=" fas fa-solid fa-heart cursor-pointer" style="color: #e11919;font-size: 25px;"></i>-->
+                <!--                </li>-->
             </ul>
         </div>
     </div>
@@ -264,6 +229,31 @@
     <!--        </div>-->
 </div>
 <script src="/assets/js/search.js"></script>
+<script src="/assets/js/wishlist.js"></script>
+<script src="/assets/js/cartHeaderApi.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const cartIcon = document.getElementById("cart-icon");
+        const modalCart = document.getElementById("modal-cart");
+
+        // Toggle modal khi click vào icon giỏ hàng
+        cartIcon.addEventListener("click", function (event) {
+            event.stopPropagation(); // Ngăn chặn sự kiện click lan ra ngoài
+            modalCart.classList.toggle("hidden");
+        });
+
+        // Đóng modal khi click ra ngoài
+        document.addEventListener("click", function (event) {
+            if (!modalCart.contains(event.target) && !cartIcon.contains(event.target)) {
+                modalCart.classList.add("hidden");
+            }
+        });
+    });
+</script>
+
+<script>
+
+</script>
 
 <script>
 
@@ -296,17 +286,18 @@
         try {
             const response = await axios.post("/api/auth/logout");
             if (response.status === 200) {
-                toastr.success("Đăng xuất thành công");
+                alertSuccess("Đăng xuất thành công");
                 setTimeout(() => {
                     window.location.href = "/";
                 }, 1000);
             }
         } catch (e) {
             // console.error(e);
-            toastr.error("Đăng xuất thất bại");
+            alertError("Đăng xuất thất bại");
         }
 
     });
 </script>
+<!--cart header chưa dung-->
 </body>
 </html>
