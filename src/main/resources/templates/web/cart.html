@@ -91,14 +91,11 @@
                 </td>
                 <td class="py-4">
                     <div class="inline-flex items-center border rounded w-auto">
-                        <button class="px-2">
-                            -
-                        </button>
-                        <input class="w-8 text-center border-l border-r" type="text" th:value="${cartItem.quantity}" />
-                        <button class="px-2">
-                            +
-                        </button>
+                        <button class="px-2 decrease-btn" th:data-id="${cartItem.id}">-</button>
+                        <input class="w-8 text-center border-l border-r quantity-input" type="text" th:value="${cartItem.quantity}" th:data-id="${cartItem.id}" />
+                        <button class="px-2 increase-btn" th:data-id="${cartItem.id}">+</button>
                     </div>
+
                 </td>
                 <td class="py-4 text-red-500" th:with="discountedPrice=${cartItem.productVariant.product.discount != null ?
             cartItem.productVariant.price - (cartItem.productVariant.price * cartItem.productVariant.product.discount / 100) :
@@ -144,122 +141,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script src="/assets/js/main.js"></script>
-<!--<script src="/assets/js/cartApi.js"></script>-->
+<script src="/assets/js/cartApi.js"></script>
 <!--    <script src="/assets/js/cartHeaderApi.js"></script>-->
 <script th:inline="javascript">
     const cartItems = [[${cartItems}]];
     console.log(cartItems);
-
-    document.addEventListener('DOMContentLoaded', function() {
-        calculateTotal();
-
-        // Thêm sự kiện cho các nút tăng/giảm số lượng
-        document.querySelectorAll('tr').forEach(row => {
-            const decreaseButton = row.querySelector('button:nth-child(1)'); // Nút -
-            const increaseButton = row.querySelector('button:nth-child(3)'); // Nút +
-            const quantityInput = row.querySelector('input[type="text"]');
-
-            if (decreaseButton && increaseButton && quantityInput) {
-                decreaseButton.addEventListener('click', function() {
-                    let quantity = parseInt(quantityInput.value);
-                    if (quantity > 1) {
-                        quantityInput.value = quantity - 1;
-                        updateRowTotal(quantityInput);
-                        calculateTotal();
-                    }
-                });
-
-                increaseButton.addEventListener('click', function() {
-                    let quantity = parseInt(quantityInput.value);
-                    quantityInput.value = quantity + 1;
-                    updateRowTotal(quantityInput);
-                    calculateTotal();
-                });
-
-                quantityInput.addEventListener('change', function() {
-                    if (parseInt(this.value) < 1 || isNaN(parseInt(this.value))) {
-                        this.value = 1;
-                    }
-                    updateRowTotal(this);
-                    calculateTotal();
-                });
-            }
-
-            // Xử lý nút xóa sản phẩm
-
-        });
-    });
-
-
-    const deleteProduct = async (id) => {
-        const result = await Swal.fire({
-            title: "Bạn có chắc chắn muốn xóa?",
-            text: "Hành động này không thể hoàn tác!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Đồng ý",
-            cancelButtonText: "Hủy"
-        });
-
-        if (!result.isConfirmed) {
-            console.log(result);
-            return; // Người dùng bấm "Hủy" -> Dừng hàm
-        }
-
-        try {
-            let res = await axios.delete(`/api/delete-cart-item/${id}`);
-            if (res.status === 200) {
-                alertSuccess('Xóa sản phẩm thành công');
-
-                // Xóa sản phẩm khỏi giao diện ngay sau khi API thành công
-                const row = document.getElementById(`cart-item-${id}`);
-                if (row) {
-                    row.remove();
-                    calculateTotal(); // Cập nhật lại tổng giá
-                }
-            }
-        } catch (error) {
-            console.log(error);
-            alertError('Xóa sản phẩm thất bại');
-        }
-    };
-
-
-    // Cập nhật thành tiền cho từng dòng
-    function updateRowTotal(inputElement) {
-        const row = inputElement.closest('tr');
-        const quantity = parseInt(inputElement.value) || 1;
-
-        // Lấy đơn giá (cần xử lý chuỗi định dạng tiền tệ)
-        const priceText = row.querySelector('td:nth-child(2)').textContent.trim();
-        const price = parseFloat(priceText.replace(/[^\d]/g, '')) || 0;
-
-        // Tính thành tiền
-        const total = price * quantity;
-
-        // Hiển thị thành tiền với định dạng tiền tệ
-        row.querySelector('td:nth-child(4)').textContent = formatCurrency(total) + '₫';
-    }
-
-    // Tính tổng cộng tất cả sản phẩm
-    function calculateTotal() {
-        let grandTotal = 0;
-        document.querySelectorAll('#cart-itemsPage tbody tr').forEach(row => {
-            const totalText = row.querySelector('td:nth-child(4)').textContent.trim();
-            const rowTotal = parseFloat(totalText.replace(/[^\d]/g, '')) || 0;
-            grandTotal += rowTotal;
-        });
-
-        // Hiển thị tổng cộng với định dạng tiền tệ
-        document.getElementById('total-price').textContent = formatCurrency(grandTotal) + '₫';
-    }
-
-    // Hàm định dạng số thành chuỗi tiền tệ
-    function formatCurrency(amount) {
-        return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    }
 
 
 </script>
