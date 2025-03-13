@@ -2,6 +2,8 @@ package com.example.web_organic.rest;
 
 import com.example.web_organic.entity.CartItem;
 import com.example.web_organic.entity.User;
+import com.example.web_organic.modal.request.AddToCartRequest;
+import com.example.web_organic.modal.request.UpdateCartRequest;
 import com.example.web_organic.modal.response.ErrorResponse;
 import com.example.web_organic.service.CartItemService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,7 +20,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
-public class CartHeaderApi {
+public class CartApi {
     @Autowired
     private CartItemService cartItemService;
     @GetMapping("/cart-header")
@@ -54,5 +56,32 @@ public class CartHeaderApi {
         }
 
     }
+
+    @PatchMapping("/update-cart-item/{id}")
+    public ResponseEntity<?> updateCartItem(@PathVariable Integer id, @RequestBody UpdateCartRequest cartRequest) {
+        try {
+            cartItemService.updateCartItem(id, cartRequest.getQuantity());
+            return ResponseEntity.ok().build();
+        }
+        catch (Exception e) {
+            ErrorResponse errorResponse = ErrorResponse.builder()
+                .status(HttpStatus.BAD_REQUEST)
+                .message(e.getMessage())
+                .build();
+            return ResponseEntity.badRequest().body(errorResponse);
+        }
+    }
+
+
+    @PostMapping("/add-to-cart")
+    public ResponseEntity<?> addToCart(@RequestBody AddToCartRequest addToCartRequest, HttpServletRequest request) {
+        User currentUser = (User) request.getSession().getAttribute("CURRENT_USER");
+        if (currentUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        cartItemService.addToCart(currentUser, addToCartRequest);
+        return ResponseEntity.ok().build();
+    }
+
 
 }
