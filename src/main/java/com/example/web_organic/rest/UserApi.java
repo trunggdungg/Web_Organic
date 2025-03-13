@@ -1,15 +1,15 @@
 package com.example.web_organic.rest;
 
+import com.example.web_organic.entity.User;
 import com.example.web_organic.modal.request.LoginRequest;
 import com.example.web_organic.modal.request.RegisterRequest;
 import com.example.web_organic.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -34,4 +34,13 @@ public class UserApi {
         userService.signup(registerRequest);
         return ResponseEntity.ok().build();
     }
+    @GetMapping("/check-login")
+    public ResponseEntity<?> checkLogin(HttpServletRequest request) {
+        User currentUser = (User) request.getSession().getAttribute("CURRENT_USER");
+        if (currentUser == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
 }
