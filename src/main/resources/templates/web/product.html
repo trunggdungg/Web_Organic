@@ -1,337 +1,355 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
 
-  <!-- Script -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- icon fontawesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <!-- Boostrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Script -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- icon fontawesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Boostrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 
-  <!-- carousel -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
-  <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <!-- carousel -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
 
-  <!-- link CSS -->
-  <link rel="stylesheet" href="/assets/css/style.css">
-
-
+    <!-- link CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css">
 
 
 </head>
 
 <body class="font-sans">
 <div class="header-sticky">
-  <!-- Top Navigation -->
-  <div th:insert="~{/web/fragments/header}"></div>
+    <!-- Top Navigation -->
+    <div th:insert="~{/web/fragments/header}"></div>
 
-  <!-- Breadcrumb -->
-  <div class="bg-green-500 text-white py-2 px-4 ">
-    <div class="container mx-auto ">
-      <span>Trang chủ > Sản phẩm</span>
+    <!-- Breadcrumb -->
+    <div class="bg-green-500 text-white py-2 px-4 ">
+        <div class="container mx-auto ">
+            <span>Trang chủ > Sản phẩm</span>
+        </div>
     </div>
-  </div>
 </div>
 
 <!-- div separate -->
 
 
-
 <!-- Products noi bat -->
 <div class="flex flex-col items-center product-popular">
-  <div class="text-center my-8">
-    <h1 class="text-2xl font-bold text-gray-800">SẢN PHẨM NỔI BẬT DÀNH CHO BẠN</h1>
-    <p class="text-gray-600">Những sản phẩm được yêu thích và tin dùng nhất dành cho bạn</p>
-    <hr class="mt-4 border-t border-gray-800">
-  </div>
-  <!--  -->
-  <div class="d-flex justify-content-start gap-3 my-4 ms-3">
-    <!-- Dropdown Sắp xếp -->
-    <div class="dropdown">
-      <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown">
-        Sắp xếp
-      </button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Mới nhất</a></li>
-        <li><a class="dropdown-item" href="#">Bán chạy</a></li>
-        <li><a class="dropdown-item" href="#">Giá tăng dần</a></li>
-        <li><a class="dropdown-item" href="#">Giá giảm dần</a></li>
-      </ul>
+    <div class="text-center my-8">
+        <h1 class="text-2xl font-bold text-gray-800">SẢN PHẨM NỔI BẬT DÀNH CHO BẠN</h1>
+        <p class="text-gray-600">Những sản phẩm được yêu thích và tin dùng nhất dành cho bạn</p>
+        <hr class="mt-4 border-t border-gray-800">
     </div>
+    <!--  -->
+    <div class="d-flex justify-content-start gap-3 my-4 ms-3">
+        <!-- Dropdown Sắp xếp -->
+        <div class="dropdown">
+            <button class="btn btn-success dropdown-toggle d-flex justify-content-between align-items-center"
+                    type="button" data-bs-toggle="dropdown" id="sortButton" style="width: 230px;">
+                <span> Sắp xếp :</span>
+                <span class="selected-value">Tất cả</span>
+            </button>
 
-    <!-- Dropdown Thương hiệu -->
-    <div class="dropdown">
-      <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown">
-        Thương hiệu
-      </button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Thương hiệu A</a></li>
-        <li><a class="dropdown-item" href="#">Thương hiệu B</a></li>
-        <li><a class="dropdown-item" href="#">Thương hiệu C</a></li>
-      </ul>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#" data-value="all">Tất cả</a></li>
+                <li><a class="dropdown-item" href="#" data-value="sortAZ">Tên A -> Z</a></li>
+                <li><a class="dropdown-item" href="#" data-value="sortZA">Tên Z -> A</a></li>
+                <li><a class="dropdown-item" href="#" data-value="priceDes">Giá tăng dần</a></li>
+                <li><a class="dropdown-item" href="#" data-value="priceInCs">Giá giảm dần</a></li>
+            </ul>
+        </div>
+
+        <!-- Dropdown Thương hiệu -->
+        <div class="dropdown">
+            <button class="btn btn-success dropdown-toggle d-flex justify-content-between align-items-center"
+                    type="button" data-bs-toggle="dropdown" id="brandButton" style="width: 230px;">
+                <span> Thương hiệu :</span>
+                <span class="selected-value">Tất cả</span>
+            </button>
+            <ul class="dropdown-menu">
+                <!-- Tùy chọn "Tất cả" luôn có -->
+                <li><a class="dropdown-item" href="#" data-value="Mặc định">Tất cả</a></li>
+
+                <!-- Duyệt qua danh sách brands -->
+                <li th:each="brand : ${brands}" >
+                    <a class="dropdown-item" href="#" th:text="${brand.nameBrand}" th:attr="data-value=${brand.nameBrand}"></a>
+                </li>
+            </ul>
+
+        </div>
+
+        <!-- Dropdown Giá sản phẩm -->
+        <div class="dropdown">
+            <button class="btn btn-success dropdown-toggle d-flex justify-content-between align-items-center"
+                    type="button" data-bs-toggle="dropdown" id="priceButton" style="width: 230px;">
+                <span> Giá sản phẩm :</span>
+                <span class="selected-value">Tất cả</span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#" data-value="all">Tất cả</a></li>
+                <li><a class="dropdown-item" href="#" data-value="less500">Dưới 500K</a></li>
+                <li><a class="dropdown-item" href="#" data-value="500to1tr">500K - 1 Triệu</a></li>
+                <li><a class="dropdown-item" href="#" data-value="than1trn ">Trên 1 Triệu</a></li>
+            </ul>
+        </div>
     </div>
+    <div class="container px-2 w-full">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            <!-- Product Item -->
+            <div class="item group border border-green-300 hover:border-green-500 hover:border-2 bg-white relative overflow-hidden min-h-[300px] flex flex-col group"
+                th:each="product : ${products}">
+                <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm">-15%</div>
+                <div class="absolute top-2 right-2 bg-green-200 text-green-800 px-2 py-1 text-sm">Tạm hết</div>
 
-    <!-- Dropdown Giá sản phẩm -->
-    <div class="dropdown">
-      <button class="btn btn-success dropdown-toggle" type="button" data-bs-toggle="dropdown">
-        Giá sản phẩm
-      </button>
-      <ul class="dropdown-menu">
-        <li><a class="dropdown-item" href="#">Dưới 500K</a></li>
-        <li><a class="dropdown-item" href="#">500K - 1 Triệu</a></li>
-        <li><a class="dropdown-item" href="#">Trên 1 Triệu</a></li>
-      </ul>
+                <!-- Heart button overlay -->
+                <!-- Heart button overlay -->
+                <div class="heart-overlay absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full  transition-all duration-300 group-hover:translate-x-2 group-hover:opacity-100" >
+                    <button class="heart-button bg-white p-2 rounded-full shadow-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500 " fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Buy button overlay -->
+                <div class="buy-overlay absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-full transition-all duration-300 group-hover:-translate-x-2 group-hover:opacity-100">
+                    <button class="buy-button bg-green-500 text-white px-4 py-2 rounded-full shadow-md transition-all duration-300 hover:bg-green-600">
+                        Mua hàng
+                    </button>
+                </div>
+
+                <img alt="Thịt gà - 1kg" class="w-full h-60 object-cover"
+                     src="https://storage.googleapis.com/a1aa/image/8i4yLd6XdlflaljUcctxSK902Arhp5XGHB7ZB2_VyGo.jpg"/>
+
+
+                <div class="p-3 text-center flex flex-col h-full" style="min-height: 124px">
+                    <p class="text-lg">Dầu Olive hữu cơ Gusti Italia 500ml</p>
+                    <div class="mt-auto">
+                        <div class="flex justify-center items-center mt-2">
+                            <p class="text-red-500 text-xl font-semibold mr-2">330,000₫</p>
+                            <p class="text-gray-500 line-through">440,000₫</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lặp lại các sản phẩm khác -->
+            <div class="item group border border-green-300 hover:border-green-500 hover:border-2 bg-white relative overflow-hidden min-h-[300px] flex flex-col group">
+                <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm">-15%</div>
+                <div class="absolute top-2 right-2 bg-green-200 text-green-800 px-2 py-1 text-sm">Tạm hết</div>
+
+                <!-- Heart button overlay -->
+                <!-- Heart button overlay -->
+                <div class="heart-overlay absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full  transition-all duration-300 group-hover:translate-x-2 group-hover:opacity-100" >
+                    <button class="heart-button bg-white p-2 rounded-full shadow-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500 " fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Buy button overlay -->
+                <div class="buy-overlay absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-full transition-all duration-300 group-hover:-translate-x-2 group-hover:opacity-100">
+                    <button class="buy-button bg-green-500 text-white px-4 py-2 rounded-full shadow-md transition-all duration-300 hover:bg-green-600">
+                        Mua hàng
+                    </button>
+                </div>
+
+                <img alt="Thịt gà - 1kg" class="w-full h-60 object-cover"
+                     src="https://storage.googleapis.com/a1aa/image/8i4yLd6XdlflaljUcctxSK902Arhp5XGHB7ZB2_VyGo.jpg"/>
+
+
+                <div class="p-3 text-center flex flex-col h-full" style="min-height: 124px">
+                    <p class="text-lg">Dầu Olive hữu cơ Gusti Italia 500ml</p>
+                    <div class="mt-auto">
+                        <div class="flex justify-center items-center mt-2">
+                            <p class="text-red-500 text-xl font-semibold mr-2">330,000₫</p>
+                            <p class="text-gray-500 line-through">440,000₫</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item group border border-green-300 hover:border-green-500 hover:border-2 bg-white relative overflow-hidden min-h-[300px] flex flex-col group">
+                <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm">-15%</div>
+                <div class="absolute top-2 right-2 bg-green-200 text-green-800 px-2 py-1 text-sm">Tạm hết</div>
+
+                <!-- Heart button overlay -->
+                <!-- Heart button overlay -->
+                <div class="heart-overlay absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full  transition-all duration-300 group-hover:translate-x-2 group-hover:opacity-100" >
+                    <button class="heart-button bg-white p-2 rounded-full shadow-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500 " fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Buy button overlay -->
+                <div class="buy-overlay absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-full transition-all duration-300 group-hover:-translate-x-2 group-hover:opacity-100">
+                    <button class="buy-button bg-green-500 text-white px-4 py-2 rounded-full shadow-md transition-all duration-300 hover:bg-green-600">
+                        Mua hàng
+                    </button>
+                </div>
+                <img alt="Thịt gà - 1kg" class="w-full h-60 object-cover"
+                     src="https://storage.googleapis.com/a1aa/image/8i4yLd6XdlflaljUcctxSK902Arhp5XGHB7ZB2_VyGo.jpg"/>
+
+
+                <div class="p-3 text-center flex flex-col h-full" style="min-height: 124px">
+                    <p class="text-lg">Dầu Olive hữu cơ Gusti Italia 500ml</p>
+                    <div class="mt-auto">
+                        <div class="flex justify-center items-center mt-2">
+                            <p class="text-red-500 text-xl font-semibold mr-2">330,000₫</p>
+                            <p class="text-gray-500 line-through">440,000₫</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item group border border-green-300 hover:border-green-500 hover:border-2 bg-white relative overflow-hidden min-h-[300px] flex flex-col group">
+                <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm">-15%</div>
+                <div class="absolute top-2 right-2 bg-green-200 text-green-800 px-2 py-1 text-sm">Tạm hết</div>
+
+                <!-- Heart button overlay -->
+                <!-- Heart button overlay -->
+                <div class="heart-overlay absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full  transition-all duration-300 group-hover:translate-x-2 group-hover:opacity-100" >
+                    <button class="heart-button bg-white p-2 rounded-full shadow-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500 " fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Buy button overlay -->
+                <div class="buy-overlay absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-full transition-all duration-300 group-hover:-translate-x-2 group-hover:opacity-100">
+                    <button class="buy-button bg-green-500 text-white px-4 py-2 rounded-full shadow-md transition-all duration-300 hover:bg-green-600">
+                        Mua hàng
+                    </button>
+                </div>
+
+                <img alt="Thịt gà - 1kg" class="w-full h-60 object-cover"
+                     src="https://storage.googleapis.com/a1aa/image/8i4yLd6XdlflaljUcctxSK902Arhp5XGHB7ZB2_VyGo.jpg"/>
+
+
+                <div class="p-3 text-center flex flex-col h-full" style="min-height: 124px">
+                    <p class="text-lg">Dầu Olive hữu cơ Gusti Italia 500ml</p>
+                    <div class="mt-auto">
+                        <div class="flex justify-center items-center mt-2">
+                            <p class="text-red-500 text-xl font-semibold mr-2">330,000₫</p>
+                            <p class="text-gray-500 line-through">440,000₫</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item group border border-green-300 hover:border-green-500 hover:border-2 bg-white relative overflow-hidden min-h-[300px] flex flex-col group">
+                <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm">-15%</div>
+                <div class="absolute top-2 right-2 bg-green-200 text-green-800 px-2 py-1 text-sm">Tạm hết</div>
+
+                <!-- Heart button overlay -->
+                <!-- Heart button overlay -->
+                <div class="heart-overlay absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full  transition-all duration-300 group-hover:translate-x-2 group-hover:opacity-100" >
+                    <button class="heart-button bg-white p-2 rounded-full shadow-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500 " fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Buy button overlay -->
+                <div class="buy-overlay absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-full transition-all duration-300 group-hover:-translate-x-2 group-hover:opacity-100">
+                    <button class="buy-button bg-green-500 text-white px-4 py-2 rounded-full shadow-md transition-all duration-300 hover:bg-green-600">
+                        Mua hàng
+                    </button>
+                </div>
+
+                <img alt="Thịt gà - 1kg" class="w-full h-60 object-cover"
+                     src="https://storage.googleapis.com/a1aa/image/8i4yLd6XdlflaljUcctxSK902Arhp5XGHB7ZB2_VyGo.jpg"/>
+
+
+                <div class="p-3 text-center flex flex-col h-full" style="min-height: 124px">
+                    <p class="text-lg">Dầu Olive hữu cơ Gusti Italia 500ml</p>
+                    <div class="mt-auto">
+                        <div class="flex justify-center items-center mt-2">
+                            <p class="text-red-500 text-xl font-semibold mr-2">330,000₫</p>
+                            <p class="text-gray-500 line-through">440,000₫</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="item group border border-green-300 hover:border-green-500 hover:border-2 bg-white relative overflow-hidden min-h-[300px] flex flex-col group">
+                <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm">-15%</div>
+                <div class="absolute top-2 right-2 bg-green-200 text-green-800 px-2 py-1 text-sm">Tạm hết</div>
+
+                <!-- Heart button overlay -->
+                <!-- Heart button overlay -->
+                <div class="heart-overlay absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full  transition-all duration-300 group-hover:translate-x-2 group-hover:opacity-100" >
+                    <button class="heart-button bg-white p-2 rounded-full shadow-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500 " fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Buy button overlay -->
+                <div class="buy-overlay absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-full transition-all duration-300 group-hover:-translate-x-2 group-hover:opacity-100">
+                    <button class="buy-button bg-green-500 text-white px-4 py-2 rounded-full shadow-md transition-all duration-300 hover:bg-green-600">
+                        Mua hàng
+                    </button>
+                </div>
+
+                <img alt="Thịt gà - 1kg" class="w-full h-60 object-cover"
+                     src="https://storage.googleapis.com/a1aa/image/8i4yLd6XdlflaljUcctxSK902Arhp5XGHB7ZB2_VyGo.jpg"/>
+
+
+                <div class="p-3 text-center flex flex-col h-full" style="min-height: 124px">
+                    <p class="text-lg">Dầu Olive hữu cơ Gusti Italia 500ml</p>
+                    <div class="mt-auto">
+                        <div class="flex justify-center items-center mt-2">
+                            <p class="text-red-500 text-xl font-semibold mr-2">330,000₫</p>
+                            <p class="text-gray-500 line-through">440,000₫</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Phân trang -->
+        <div class="pagination flex justify-center items-center mt-6 space-x-2">
+            <button class="page-button px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300"
+                    onclick="prevPage()">«
+            </button>
+            <span id="page-number" class="px-4 py-2 text-gray-700">1</span>
+            <button class="page-button px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300"
+                    onclick="nextPage()">»
+            </button>
+        </div>
     </div>
-  </div>
-  <div class="container px-2 w-full">
-    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-      <!-- Product Item -->
-      <div class="border border-green-500 bg-white relative overflow-hidden min-h-[300px] flex flex-col">
-        <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm">-15%</div>
-        <div class="absolute top-2 right-2 bg-green-200 text-green-800 px-2 py-1 text-sm">Tạm hết</div>
-
-        <!-- Heart button overlay -->
-        <div class="heart-overlay">
-          <button class="heart-button">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                 stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-          </button>
-        </div>
-        <!-- Buy button overlay -->
-        <div class="buy-overlay">
-          <button class="buy-button">Mua hàng</button>
-        </div>
-        <img alt="Dầu Olive hữu cơ Gusti Italia 500ml" class="w-full h-60 object-cover"
-             src="https://storage.googleapis.com/a1aa/image/8i4yLd6XdlflaljUcctxSK902Arhp5XGHB7ZB2_VyGo.jpg" />
-
-        <div class="p-3 text-center flex flex-col h-full">
-          <p class="text-lg">Dầu Olive hữu cơ Gusti Italia 500ml</p>
-          <div class="mt-auto">
-            <div class="flex justify-center items-center mt-2">
-              <p class="text-red-500 text-xl font-semibold mr-2">330,000₫</p>
-              <p class="text-gray-500 line-through">440,000₫</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Lặp lại các sản phẩm khác -->
-      <div class="border border-green-500 bg-white relative overflow-hidden min-h-[300px] flex flex-col">
-        <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm">-15%</div>
-        <div class="absolute top-2 right-2 bg-green-200 text-green-800 px-2 py-1 text-sm">Tạm hết</div>
-
-        <!-- Heart button overlay -->
-        <div class="heart-overlay">
-          <button class="heart-button">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                 stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-          </button>
-        </div>
-        <!-- Buy button overlay -->
-        <div class="buy-overlay">
-          <button class="buy-button">Mua hàng</button>
-        </div>
-        <img alt="Dầu Olive hữu cơ Gusti Italia 500ml" class="w-full h-60 object-cover"
-             src="https://storage.googleapis.com/a1aa/image/8i4yLd6XdlflaljUcctxSK902Arhp5XGHB7ZB2_VyGo.jpg" />
-
-        <div class="p-3 text-center flex flex-col h-full">
-          <p class="text-lg">Dầu Olive hữu cơ Gusti Italia 500ml</p>
-          <div class="mt-auto">
-            <div class="flex justify-center items-center mt-2">
-              <p class="text-red-500 text-xl font-semibold mr-2">330,000₫</p>
-              <p class="text-gray-500 line-through">440,000₫</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="border border-green-500 bg-white relative overflow-hidden min-h-[300px] flex flex-col">
-        <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm">-15%</div>
-        <div class="absolute top-2 right-2 bg-green-200 text-green-800 px-2 py-1 text-sm">Tạm hết</div>
-
-        <!-- Heart button overlay -->
-        <div class="heart-overlay">
-          <button class="heart-button">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                 stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-          </button>
-        </div>
-        <!-- Buy button overlay -->
-        <div class="buy-overlay">
-          <button class="buy-button">Mua hàng</button>
-        </div>
-        <img alt="Dầu Olive hữu cơ Gusti Italia 500ml" class="w-full h-60 object-cover"
-             src="https://storage.googleapis.com/a1aa/image/8i4yLd6XdlflaljUcctxSK902Arhp5XGHB7ZB2_VyGo.jpg" />
-
-        <div class="p-3 text-center flex flex-col h-full">
-          <p class="text-lg">Dầu Olive hữu cơ Gusti Italia 500ml</p>
-          <div class="mt-auto">
-            <div class="flex justify-center items-center mt-2">
-              <p class="text-red-500 text-xl font-semibold mr-2">330,000₫</p>
-              <p class="text-gray-500 line-through">440,000₫</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="border border-green-500 bg-white relative overflow-hidden min-h-[300px] flex flex-col">
-        <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm">-15%</div>
-        <div class="absolute top-2 right-2 bg-green-200 text-green-800 px-2 py-1 text-sm">Tạm hết</div>
-
-        <!-- Heart button overlay -->
-        <div class="heart-overlay">
-          <button class="heart-button">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                 stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-          </button>
-        </div>
-        <!-- Buy button overlay -->
-        <div class="buy-overlay">
-          <button class="buy-button">Mua hàng</button>
-        </div>
-        <img alt="Dầu Olive hữu cơ Gusti Italia 500ml" class="w-full h-60 object-cover"
-             src="https://storage.googleapis.com/a1aa/image/8i4yLd6XdlflaljUcctxSK902Arhp5XGHB7ZB2_VyGo.jpg" />
-
-        <div class="p-3 text-center flex flex-col h-full">
-          <p class="text-lg">Dầu Olive hữu cơ Gusti Italia 500ml</p>
-          <div class="mt-auto">
-            <div class="flex justify-center items-center mt-2">
-              <p class="text-red-500 text-xl font-semibold mr-2">330,000₫</p>
-              <p class="text-gray-500 line-through">440,000₫</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="border border-green-500 bg-white relative overflow-hidden min-h-[300px] flex flex-col">
-        <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm">-15%</div>
-        <div class="absolute top-2 right-2 bg-green-200 text-green-800 px-2 py-1 text-sm">Tạm hết</div>
-
-        <!-- Heart button overlay -->
-        <div class="heart-overlay">
-          <button class="heart-button">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                 stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-          </button>
-        </div>
-        <!-- Buy button overlay -->
-        <div class="buy-overlay">
-          <button class="buy-button">Mua hàng</button>
-        </div>
-        <img alt="Dầu Olive hữu cơ Gusti Italia 500ml" class="w-full h-60 object-cover"
-             src="https://storage.googleapis.com/a1aa/image/8i4yLd6XdlflaljUcctxSK902Arhp5XGHB7ZB2_VyGo.jpg" />
-
-        <div class="p-3 text-center flex flex-col h-full">
-          <p class="text-lg">Dầu Olive hữu cơ Gusti Italia 500ml</p>
-          <div class="mt-auto">
-            <div class="flex justify-center items-center mt-2">
-              <p class="text-red-500 text-xl font-semibold mr-2">330,000₫</p>
-              <p class="text-gray-500 line-through">440,000₫</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="border border-green-500 bg-white relative overflow-hidden min-h-[300px] flex flex-col">
-        <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm">-15%</div>
-        <div class="absolute top-2 right-2 bg-green-200 text-green-800 px-2 py-1 text-sm">Tạm hết</div>
-
-        <!-- Heart button overlay -->
-        <div class="heart-overlay">
-          <button class="heart-button">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                 stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-          </button>
-        </div>
-        <!-- Buy button overlay -->
-        <div class="buy-overlay">
-          <button class="buy-button">Mua hàng</button>
-        </div>
-        <img alt="Dầu Olive hữu cơ Gusti Italia 500ml" class="w-full h-60 object-cover"
-             src="https://storage.googleapis.com/a1aa/image/8i4yLd6XdlflaljUcctxSK902Arhp5XGHB7ZB2_VyGo.jpg" />
-
-        <div class="p-3 text-center flex flex-col h-full">
-          <p class="text-lg">Dầu Olive hữu cơ Gusti Italia 500ml</p>
-          <div class="mt-auto">
-            <div class="flex justify-center items-center mt-2">
-              <p class="text-red-500 text-xl font-semibold mr-2">330,000₫</p>
-              <p class="text-gray-500 line-through">440,000₫</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="border border-green-500 bg-white relative overflow-hidden min-h-[300px] flex flex-col">
-        <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm">-15%</div>
-        <div class="absolute top-2 right-2 bg-green-200 text-green-800 px-2 py-1 text-sm">Tạm hết</div>
-
-        <!-- Heart button overlay -->
-        <div class="heart-overlay">
-          <button class="heart-button">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                 stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-          </button>
-        </div>
-        <!-- Buy button overlay -->
-        <div class="buy-overlay">
-          <button class="buy-button">Mua hàng</button>
-        </div>
-        <img alt="Dầu Olive hữu cơ Gusti Italia 500ml" class="w-full h-60 object-cover"
-             src="https://storage.googleapis.com/a1aa/image/8i4yLd6XdlflaljUcctxSK902Arhp5XGHB7ZB2_VyGo.jpg" />
-
-        <div class="p-3 text-center flex flex-col h-full">
-          <p class="text-lg">Dầu Olive hữu cơ Gusti Italia 500ml</p>
-          <div class="mt-auto">
-            <div class="flex justify-center items-center mt-2">
-              <p class="text-red-500 text-xl font-semibold mr-2">330,000₫</p>
-              <p class="text-gray-500 line-through">440,000₫</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Phân trang -->
-    <div class="pagination flex justify-center items-center mt-6 space-x-2">
-      <button class="page-button px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300"
-              onclick="prevPage()">«</button>
-      <span id="page-number" class="px-4 py-2 text-gray-700">1</span>
-      <button class="page-button px-3 py-2 border rounded bg-gray-200 hover:bg-gray-300"
-              onclick="nextPage()">»</button>
-    </div>
-  </div>
 </div>
-
-
-
-
-
 
 
 <!-- Footer -->
 <div class="bg-gray-900 text-white footer">
-  <div th:insert="~{/web/fragments/footer}"></div>
+    <div th:insert="~{/web/fragments/footer}"></div>
 </div>
 <!-- Script boostrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -342,6 +360,28 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script src="/assets/js/main.js"></script>
+<script th:inline="javascript">
+    const  categoryProduct = [[${categoryProduct}]];
+    console.log(categoryProduct);
+    const product = [[${products}]];
+    console.log(product);
+    // Lấy tất cả dropdown-menu
+    // document.querySelectorAll(".dropdown-menu .dropdown-item").forEach(item => {
+    //     item.addEventListener("click", function (e) {
+    //         e.preventDefault(); // Ngăn chặn load lại trang
+    //
+    //         // Lấy giá trị đã chọn
+    //         let selectedValue = this.getAttribute("data-value");
+    //
+    //         // Tìm button gần nhất để cập nhật nội dung
+    //         let dropdown = this.closest(".dropdown");
+    //         let button = dropdown.querySelector(".selected-value");
+    //
+    //         // Cập nhật nội dung trong button
+    //         button.textContent = selectedValue;
+    //     });
+    // });
+</script>
 </body>
 
 </html>
