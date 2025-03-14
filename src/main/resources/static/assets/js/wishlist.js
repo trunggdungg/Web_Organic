@@ -14,7 +14,7 @@ function loadWishlist() {
             products.forEach(product => {
                 const productHTML = `
                     <li class="flex items-center space-x-3">
-                        <a href="#" class="flex items-center space-x-3 flex-1 no-underline">
+                        <a href="/product/${product.id}/${product.slug}" class="flex items-center space-x-3 flex-1 no-underline">
                             <img class="w-16 h-16 object-cover rounded-md" src="${product.imageUrl}" alt="${product.name}">
                             <span class="line-clamp-2 text-gray-700 font-medium hover:underline">${product.name}</span>
                         </a>
