@@ -47,7 +47,7 @@
 
 
 <!-- contact -->
-<div class="container mx-auto p-4" >
+<div class="container mx-auto p-4">
     <div class="flex flex-col md:flex-row">
         <!-- Left Column: Images -->
         <div class="w-28 h-[500px] overflow-hidden">
@@ -61,8 +61,8 @@
                 </div>
 
                 <!-- Nút điều hướng -->
-<!--                <div class="swiper-button-prev"></div>-->
-<!--                <div class="swiper-button-next"></div>-->
+                <!--                <div class="swiper-button-prev"></div>-->
+                <!--                <div class="swiper-button-next"></div>-->
             </div>
         </div>
         <!-- Main Image -->
@@ -115,10 +115,12 @@
                     <!-- Lặp qua danh sách biến thể của sản phẩm -->
                     <th:block th:each="variant : ${productVariants}">
                         <button type="button"
-                                class="px-3 py-2 bg-white text-gray-800 border border-gray-400 size-button"
+                                class="px-3 py-2 bg-white text-gray-800 border border-gray-400 size-button variant-btn"
                                 th:classappend="${variantStocks.get(variant.id) <= 0 ? 'out-of-stock relative' : ''}"
                                 th:text="${variant.weight}"
-                        th:data-stock="${variantStocks.get(variant.id)}">
+                                th:data-id="${variant.id}"
+                                th:data-price="${productVariantPrices.get(variant.id)}"
+                                th:data-stock="${variantStocks.get(variant.id)}">
                         </button>
                     </th:block>
                 </div>
@@ -128,20 +130,35 @@
             </div>
             <div class="flex items-center mt-4">
                 <span class="font-semibold mr-2">Số lượng:</span>
-                <button class="px-3 border border-gray-400 h-[35px] text-lg font-bold rounded-l">-</button>
-                <input class="w-16 text-center border-t border-b  h-[35px] text-lg" type="text" value="1"/>
-                <button class="px-3 border border-gray-400 h-[35px] text-lg font-bold rounded-r">+</button>
-                <i class="far fa-heart ml-auto text-2xl text-red-500 cursor-pointer"></i>
+                <button class="px-3 border border-gray-400 h-[35px] text-lg font-bold rounded-l" id="minus-btn">-
+                </button>
+                <input class="w-16 text-center border-t border-b  h-[35px] text-lg" type="text" value="1"
+                       id="quantityProduct"/>
+                <button class="px-3 border border-gray-400 h-[35px] text-lg font-bold rounded-r" id="plus-btn">+
+                </button>
+                <button class="heart-button bg-white p-2 rounded-full shadow-md ml-auto"
+                        th:onclick="'toggleHeart(this, ' + ${product.id} + ')'"
+                        th:data-product-id="${product.id}">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500 " fill="none"
+                         viewBox="0 0 24 24"
+                         stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                    </svg>
+                </button>
+<!--                <i class="far fa-heart ml-auto text-2xl text-red-500 cursor-pointer"   th:onclick="'toggleHeart(this, ' + ${product.id} + ')'"-->
+<!--                   th:data-product-id="${product.id}"></i>-->
             </div>
 
             <div class="flex space-x-4 mt-4">
-                <button class="flex-1 px-4 py-2 bg-green-500 text-white rounded">
+                <button class="flex-1 px-4 py-2 bg-green-500 text-white rounded transition-all duration-300 hover:bg-green-600" id="add-to-cart">
                     Thêm vào giỏ hàng
                 </button>
-                <button class="flex-1 px-4 py-2 bg-red-500 text-white rounded">
+                <button class="flex-1 px-4 py-2 bg-red-500 text-white rounded transition-all duration-300 hover:bg-red-600">
                     Mua ngay
                 </button>
             </div>
+
         </div>
     </div>
     <!-- Product Description -->
@@ -179,8 +196,9 @@
                     </div>
 
                     <div class="d-flex">
-                    <p class="rating-time" th:text="${#temporals.format(review.createdAt, 'dd/MMM/yyyy')}">25/02/2025</p>
-                     <p class="time ms-2" th:text="${#temporals.format(review.createdAt, 'HH:mm')}">20:11</p>
+                        <p class="rating-time" th:text="${#temporals.format(review.createdAt, 'dd/MMM/yyyy')}">
+                            25/02/2025</p>
+                        <p class="time ms-2" th:text="${#temporals.format(review.createdAt, 'HH:mm')}">20:11</p>
                     </div>
                     <div class="rating-star">
                         <th:block th:each="i : ${#numbers.sequence(1, 5)}">
@@ -285,15 +303,18 @@
                  th:each="relatedProduct : ${relatedProducts}">
                 <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm"
                      th:if="${relatedProduct.discount != null and relatedProduct.discount > 0}"
-                     th:text="${'-' + relatedProduct.discount + '% OFF'}">-15%</div>
+                     th:text="${'-' + relatedProduct.discount + '% OFF'}">-15%
+                </div>
                 <div class="absolute top-2 right-2 bg-green-200 text-green-800 px-2 py-1 text-sm"
                      th:if="${productStocks.get(relatedProduct.id) == 0}">Tạm hết
                 </div>
 
                 <!-- Heart button overlay -->
-                <div class="heart-overlay absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full  transition-all duration-300 group-hover:translate-x-2 group-hover:opacity-100" style="z-index: 112">
+                <div class="heart-overlay absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full  transition-all duration-300 group-hover:translate-x-2 group-hover:opacity-100"
+                     style="z-index: 112">
                     <button class="heart-button bg-white p-2 rounded-full shadow-md">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500 " fill="none" viewBox="0 0 24 24"
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500 " fill="none"
+                             viewBox="0 0 24 24"
                              stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
@@ -303,11 +324,12 @@
 
                 <!-- Buy button overlay -->
                 <div class="buy-overlay absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-full  transition-all duration-300 group-hover:-translate-x-2 group-hover:opacity-100">
-                    <button class="buy-button bg-green-500 text-white px-4 py-2 rounded-full shadow-md">Mua hàng</button>
+                    <button class="buy-button bg-green-500 text-white px-4 py-2 rounded-full shadow-md">Mua hàng
+                    </button>
                 </div>
                 <a th:href="|/product/${relatedProduct.id}/${relatedProduct.slug}|">
-                <img th:alt="${relatedProduct.name}" class="w-full h-60 object-cover"
-                     th:src="${relatedProduct.imageUrl}"/>
+                    <img th:alt="${relatedProduct.name}" class="w-full h-60 object-cover"
+                         th:src="${relatedProduct.imageUrl}"/>
                 </a>
 
                 <div class="p-3 text-center flex flex-col h-full" style="height: 124px">
@@ -333,9 +355,11 @@
                 <div class="absolute top-2 right-2 bg-green-200 text-green-800 px-2 py-1 text-sm">Tạm hết</div>
 
                 <!-- Heart button overlay -->
-                <div class="heart-overlay absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full  transition-all duration-300 group-hover:translate-x-2 group-hover:opacity-100" style="z-index: 112">
+                <div class="heart-overlay absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full  transition-all duration-300 group-hover:translate-x-2 group-hover:opacity-100"
+                     style="z-index: 112">
                     <button class="heart-button bg-white p-2 rounded-full shadow-md">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500 " fill="none" viewBox="0 0 24 24"
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500 " fill="none"
+                             viewBox="0 0 24 24"
                              stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                   d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
@@ -345,7 +369,8 @@
 
                 <!-- Buy button overlay -->
                 <div class="buy-overlay absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-full  transition-all duration-300 group-hover:-translate-x-2 group-hover:opacity-100">
-                    <button class="buy-button bg-green-500 text-white px-4 py-2 rounded-full shadow-md">Mua hàng</button>
+                    <button class="buy-button bg-green-500 text-white px-4 py-2 rounded-full shadow-md">Mua hàng
+                    </button>
                 </div>
 
                 <img alt="Thịt gà - 1kg" class="w-full h-60 object-cover"
@@ -390,16 +415,16 @@
     const productStocks = [[${productStocks}]]
     console.log(productStocks)
     const variantStocks = [[${variantStocks}]]
-    console.log(variantStocks)
+    console.log('so luong ', variantStocks)
     const product = [[${product}]]
-    console.log(product)
+    console.log('detail', product)
 
-    const productVariants= [[${productVariants}]]
-    console.log(productVariants)
-    const  relatedProducts = [[${relatedProducts}]]
+    const productVariants = [[${productVariants}]]
+    console.log('bien the', productVariants)
+    const relatedProducts = [[${relatedProducts}]]
     console.log(relatedProducts)
-    const  reviews = [[${reviews}]]
-    console.log(reviews)
+    const reviews = [[${reviews}]]
+    console.log('review ', reviews)
     var swiper = new Swiper(".mySwiper", {
         direction: "vertical", // Hiển thị dọc
         slidesPerView: 5, // Hiển thị tối đa 5 ảnh cùng lúc
@@ -411,6 +436,195 @@
         },
         mousewheel: true, // Cuộn bằng chuột
     });
+
+
+    const minusBtnEl = document.getElementById('minus-btn');
+    const plusBtnEl = document.getElementById('plus-btn');
+    const quantityProductEl = document.getElementById('quantityProduct');
+    minusBtnEl.addEventListener('click', () => {
+        let quantity = parseInt(quantityProductEl.value);
+        if (quantity > 1) {
+            quantityProductEl.value = quantity - 1;
+            console.log(quantityProductEl.value)
+        }
+    });
+
+    plusBtnEl.addEventListener('click', () => {
+        let quantity = parseInt(quantityProductEl.value);
+        quantityProductEl.value = quantity + 1;
+        console.log(quantityProductEl.value)
+    });
+
+    // xử lý khi click vào biến thể
+    document.addEventListener("DOMContentLoaded", function () {
+
+        // Lấy các phần tử hiển thị giá
+        const priceNewElement = document.querySelector('.price-new');
+        const priceOldElement = document.querySelector('.price-old');
+
+        // Lấy tất cả các nút biến thể
+        const variantButtons = document.querySelectorAll('.variant-btn');
+
+        // Thêm sự kiện click cho mỗi nút biến thể
+        variantButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                // Lấy ID biến thể
+                const variantId = parseInt(this.dataset.id);
+
+                // Tìm biến thể tương ứng trong mảng productVariants
+                const selectedVariant = productVariants.find(variant => variant.id === variantId);
+
+                if (selectedVariant) {
+                    // Lấy giá của biến thể
+                    const variantPrice = selectedVariant.price;
+
+                    // Lấy thông tin về giảm giá từ sản phẩm
+                    const discount = selectedVariant.product.discount || 0;
+
+                    // Tính giá sau khi giảm
+                    const discountedPrice = variantPrice - (variantPrice * discount / 100);
+
+                    // Cập nhật giá mới
+                    priceNewElement.textContent = formatCurrency(discountedPrice) + '₫';
+
+                    // Nếu có giảm giá, hiển thị giá cũ
+                    if (discount > 0) {
+                        priceOldElement.style.display = 'inline';
+                        priceOldElement.textContent = formatCurrency(variantPrice) + '₫';
+                    } else {
+                        // Nếu không có giảm giá, ẩn giá cũ
+                        if (priceOldElement) {
+                            priceOldElement.style.display = 'none';
+                        }
+                    }
+
+                    // Cập nhật selected size input
+                    document.getElementById('selectedSizeInput').value = variantId;
+                }
+
+                // Thêm class để hiển thị nút được chọn
+                variantButtons.forEach(btn => btn.classList.remove('selected-variant'));
+                this.classList.add('selected-variant');
+            });
+        });
+
+        // Hàm định dạng số thành chuỗi tiền tệ
+        function formatCurrency(value) {
+            if (!value) return "0";
+            let intPrice = Math.round(value);
+            return intPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        // Tự động chọn biến thể mặc định khi trang tải xong
+        if (variantButtons.length > 0) {
+            // Tìm biến thể mặc định (isDefault = true) hoặc biến thể đầu tiên
+            const defaultVariant = productVariants.find(variant => variant.isDefault === true);
+            const defaultVariantId = defaultVariant ? defaultVariant.id : productVariants[0].id;
+
+            // Tìm nút tương ứng với biến thể mặc định
+            const defaultButton = Array.from(variantButtons).find(
+                button => parseInt(button.dataset.id) === defaultVariantId
+            ) || variantButtons[0];
+
+            // Kích hoạt sự kiện click cho nút
+            defaultButton.click();
+        }
+    });
+</script>
+<script th:inline="javascript">
+    const addToCartEl = document.getElementById('add-to-cart');
+    const productVariantIdEl = document.getElementById('selectedSizeInput');
+
+    addToCartEl.addEventListener('click', async () => {
+        const productVariantId = productVariantIdEl.value;
+        const quantity = parseInt(document.getElementById('quantityProduct').value);
+
+        console.log('id', productVariantId);
+        console.log('so luong', quantity);
+
+        if (!productVariantId) {
+            alertWarning('Vui lòng chọn kích thước');
+            return;
+        }
+
+        // Kiểm tra số lượng tồn kho
+        const selectedVariant = productVariants.find(variant => variant.id === parseInt(productVariantId));
+        if (!selectedVariant) {
+            alertError('Không tìm thấy biến thể sản phẩm');
+            return;
+        }
+
+        // Lấy số lượng tồn kho từ biến variantStocks
+        const variantStock = variantStocks[productVariantId];
+        console.log('Số lượng tồn kho:', variantStock);
+
+        // Kiểm tra nếu sản phẩm hết hàng
+        if (variantStock === 0) {
+            alertError('Sản phẩm đã hết hàng');
+            return;
+        }
+
+        // Kiểm tra số lượng yêu cầu so với tồn kho
+        if (quantity > variantStock) {
+            alertError('Số lượng yêu cầu vượt quá số lượng tồn kho');
+            return;
+        }
+
+        const data = {
+            productVariantId: productVariantId,
+            quantity: quantity
+        };
+
+        try {
+            const loginCheckResponse = await axios.get('/api/auth/check-login');
+        } catch (error) {
+            // Kiểm tra đăng nhập
+            alertWarning('Vui lòng đăng nhập để thêm vào giỏ hàng');
+            if (error.response.status === 401) {
+                return setTimeout(() => {
+                    window.location.href = '/login';
+                }, 1500);
+            }
+        }
+
+        try {
+            // Gửi yêu cầu thêm vào giỏ hàng
+            const response = await axios.post('/api/add-to-cart', data);
+
+            if (response.status === 200) {
+                alertSuccess('Thêm vào giỏ hàng thành công');
+                updateCartHeader();
+            } else {
+                alertError('Thêm vào giỏ hàng thất bại');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alertError('Thêm vào giỏ hàng thất bại');
+        }
+    });
+
+
+//
+    async function updateCartHeader() {
+        try {
+            const response = await fetch("/api/cart-header");
+            if (!response.ok) {
+                throw new Error("Không thể tải giỏ hàng");
+            }
+            const data = await response.json();
+
+            // Cập nhật LocalStorage
+            localStorage.setItem('cartData', JSON.stringify(data));
+
+            // Cập nhật giao diện
+            renderCartItems(data);
+            updateSubtotal(data);
+        } catch (error) {
+            console.error("Lỗi khi cập nhật giỏ hàng:", error);
+        }
+    }
+
+
 </script>
 
 </body>
