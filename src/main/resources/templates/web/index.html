@@ -239,15 +239,17 @@
                         </svg>
                     </button>
                 </div>
-
-                <!-- Buy button overlay -->
-                <div class="buy-overlay absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-full  transition-all duration-300 group-hover:-translate-x-2 group-hover:opacity-100">
-                    <button class="buy-button bg-green-500 text-white px-4 py-2 rounded-full shadow-md">Mua hàng
-                    </button>
-                </div>
-
-                <!-- Ảnh sản phẩm -->
                 <a th:href="|/product/${product.id}/${product.slug}|">
+                <!-- Buy button overlay -->
+                    <div class="buy-overlay absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-full transition-all duration-300 group-hover:-translate-x-2 group-hover:opacity-100">
+                        <button class="buy-button bg-green-500 text-white px-4 py-2 rounded-full shadow-md transition-all duration-300 hover:bg-green-600">
+                            Mua hàng
+                        </button>
+                    </div>
+
+
+                    <!-- Ảnh sản phẩm -->
+
                     <img alt="Thịt gà - 1kg" class="w-full h-60 object-cover"
                          th:src="${product.imageUrl}"/>
 
@@ -359,13 +361,14 @@
                         </svg>
                     </button>
                 </div>
-
+                <a th:href="|/product/${productReadyToEat.id}/${productReadyToEat.slug}|">
                 <!-- Buy button overlay -->
-                <div class="buy-overlay absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-full  transition-all duration-300 group-hover:-translate-x-2 group-hover:opacity-100">
-                    <button class="buy-button bg-green-500 text-white px-4 py-2 rounded-full shadow-md">Mua hàng
+                <div class="buy-overlay absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-full transition-all duration-300 group-hover:-translate-x-2 group-hover:opacity-100">
+                    <button class="buy-button bg-green-500 text-white px-4 py-2 rounded-full shadow-md transition-all duration-300 hover:bg-green-600">
+                        Mua hàng
                     </button>
                 </div>
-                <a th:href="|/product/${productReadyToEat.id}/${productReadyToEat.slug}|">
+
                 <img th:alt="${productReadyToEat.name}" class="w-full h-60 object-cover"
                      th:src="${productReadyToEat.imageUrl}"/>
 
@@ -436,12 +439,14 @@
                     </button>
                 </div>
 
+                <a th:href="|/product/${productNonFood.id}/${productNonFood.slug}|">
                 <!-- Buy button overlay -->
-                <div class="buy-overlay absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-full  transition-all duration-300 group-hover:-translate-x-2 group-hover:opacity-100">
-                    <button class="buy-button bg-green-500 text-white px-4 py-2 rounded-full shadow-md">Mua hàng
+                <div class="buy-overlay absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-full transition-all duration-300 group-hover:-translate-x-2 group-hover:opacity-100">
+                    <button class="buy-button bg-green-500 text-white px-4 py-2 rounded-full shadow-md transition-all duration-300 hover:bg-green-600">
+                        Mua hàng
                     </button>
                 </div>
-                <a th:href="|/product/${productNonFood.id}/${productNonFood.slug}|">
+
                 <img th:alt="${productNonFood.name}" class="w-full h-60 object-cover"
                      th:src="${productNonFood.imageUrl}"/>
 
@@ -512,13 +517,14 @@
                         </svg>
                     </button>
                 </div>
-
+                <a th:href="|/product/${productDiscountMax.id}/${productDiscountMax.slug}|">
                 <!-- Buy button overlay -->
-                <div class="buy-overlay absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-full  transition-all duration-300 group-hover:-translate-x-2 group-hover:opacity-100">
-                    <button class="buy-button bg-green-500 text-white px-4 py-2 rounded-full shadow-md">Mua hàng
+                <div class="buy-overlay absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-full transition-all duration-300 group-hover:-translate-x-2 group-hover:opacity-100">
+                    <button class="buy-button bg-green-500 text-white px-4 py-2 rounded-full shadow-md transition-all duration-300 hover:bg-green-600">
+                        Mua hàng
                     </button>
                 </div>
-                <a th:href="|/product/${productDiscountMax.id}/${productDiscountMax.slug}|">
+
                 <img th:alt="${productDiscountMax.name}" class="w-full h-60 object-cover"
                      th:src="${productDiscountMax.imageUrl}"/>
 
