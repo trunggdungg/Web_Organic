@@ -4,6 +4,7 @@ import com.example.web_organic.entity.*;
 import com.example.web_organic.entity.ProductVariants;
 import com.example.web_organic.entity.Address;
 import com.example.web_organic.entity.CartItem;
+import com.example.web_organic.modal.Enum.Category_Type;
 import com.example.web_organic.modal.Enum.Payment_Status_Enum;
 import com.example.web_organic.modal.Enum.Status_Enum;
 import com.example.web_organic.modal.Enum.User_Role;
@@ -125,7 +126,7 @@ class WebOrganicApplicationTests {
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .publishedAt(LocalDateTime.now())
-                .category(category)
+//                .category(category)
                 .build();
 
             // Save blog
@@ -485,4 +486,14 @@ class WebOrganicApplicationTests {
             System.out.println(product);
         }
     }
+
+    @Test
+    void loadBlogCate(){
+        List<Category> categories = categoryRepository.findByTypeAndStatusTrue(Category_Type.BLOG);
+        for (Category category : categories) {
+            System.out.println(category);
+        }
+    }
+
+
 }
