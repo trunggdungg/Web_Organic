@@ -20,8 +20,8 @@ import java.time.LocalDateTime;
 public class OrderCancellation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    @Column(length = 20) // Đảm bảo độ dài đủ cho "ORD-YYYYMMDD-XXXX"
+    String id;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
