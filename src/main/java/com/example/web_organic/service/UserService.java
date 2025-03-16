@@ -1,4 +1,5 @@
 package com.example.web_organic.service;
+import com.example.web_organic.entity.Address;
 import com.example.web_organic.entity.TokenConfirm;
 import com.example.web_organic.entity.User;
 import com.example.web_organic.modal.Enum.Token_Type;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -136,5 +138,6 @@ public class UserService {
             .message("Xác thực tài khoản thành công")
             .build();
     }
+
 
 }
