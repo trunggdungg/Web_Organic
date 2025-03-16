@@ -79,13 +79,14 @@
                         <p class="text-red-500" th:text="' (' +  ${cartItem.productVariant.weight}+')'">
                             Cải xoăn kale
                         </p>
-
+                        <span  class="idProductVariantId d-none" th:text="${cartItem.productVariant.id}"></span>
+                        <span  class="idProductVariantName d-none" th:text="${cartItem.productVariant.weight}"></span>
 <!--                        <p>ORGANICA / 300g</p>-->
                     </div>
                 </td>
                 <td class="py-4 text-red-500" th:text="${cartItem.productVariant.product.discount != null ?
-    #numbers.formatDecimal(cartItem.productVariant.price - (cartItem.productVariant.price * cartItem.productVariant.product.discount / 100), 0, 'COMMA', 0, 'POINT') + '₫' :
-    #numbers.formatDecimal(cartItem.productVariant.price, 0, 'COMMA', 0, 'POINT') + '₫'}">
+                #numbers.formatDecimal(cartItem.productVariant.price - (cartItem.productVariant.price * cartItem.productVariant.product.discount / 100), 0, 'COMMA', 0, 'POINT') + '₫' :
+                #numbers.formatDecimal(cartItem.productVariant.price, 0, 'COMMA', 0, 'POINT') + '₫'}">
 
                     63,000₫
                 </td>
@@ -98,12 +99,12 @@
 
                 </td>
                 <td class="py-4 text-red-500" th:with="discountedPrice=${cartItem.productVariant.product.discount != null ?
-            cartItem.productVariant.price - (cartItem.productVariant.price * cartItem.productVariant.product.discount / 100) :
-            cartItem.productVariant.price}" th:text="${#numbers.formatDecimal(discountedPrice * cartItem.quantity, 0, 'COMMA', 0, 'POINT')} + '₫'">
+                    cartItem.productVariant.price - (cartItem.productVariant.price * cartItem.productVariant.product.discount / 100) :
+                    cartItem.productVariant.price}" th:text="${#numbers.formatDecimal(discountedPrice * cartItem.quantity, 0, 'COMMA', 0, 'POINT')} + '₫'">
                     63,000₫
                 </td>
                 <td class="py-4">
-                    <button class="text-gray-500" style="margin-left: 20px;" th:onclick="|deleteProduct(${cartItem.id})|">
+                    <button class="text-gray-500" id="btn-delete" th:data-id="${cartItem.id}" style="margin-left: 20px;" th:onclick="|deleteProduct(${cartItem.id})|">
                         <i class="fas fa-trash" >
                         </i>
                     </button>
@@ -120,7 +121,7 @@
             <p class="text-xl text-red-500 " id="total-price" style="margin-left: 55%;" >
                 580,000₫
             </p>
-            <button class="bg-green-500 text-white px-4 py-2 rounded" style="margin-right: 6%;">
+            <button class="bg-green-500 text-white px-4 py-2 rounded" id="btn-cart-order" style="margin-right: 6%;">
                 ĐẶT HÀNG
             </button>
         </div>
@@ -142,10 +143,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script src="/assets/js/main.js"></script>
 <script src="/assets/js/cartApi.js"></script>
-<!--    <script src="/assets/js/cartHeaderApi.js"></script>-->
+<script src="/assets/js/orderProcessing.js"></script>
 <script th:inline="javascript">
     const cartItems = [[${cartItems}]];
-    console.log(cartItems);
+    console.log('cartItems',cartItems);
 
 
 </script>
