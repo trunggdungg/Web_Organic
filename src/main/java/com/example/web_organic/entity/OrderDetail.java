@@ -19,8 +19,8 @@ import java.math.BigDecimal;
 @Table(name = "order_details")
 public class OrderDetail {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    @Column(length = 20) // Đảm bảo độ dài đủ cho "ORD-YYYYMMDD-XXXX"
+    String id;
     BigDecimal unitPrice;
 
     Integer quantity;
