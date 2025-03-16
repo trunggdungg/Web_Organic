@@ -21,8 +21,8 @@ import java.time.LocalDateTime;
 @Table(name = "orders")
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer id;
+    @Column(length = 20) // Đảm bảo độ dài đủ cho "ORD-YYYYMMDD-XXXX"
+     String id;
     @Column(columnDefinition = "TEXT")
     String addressSelect;
     @Column(columnDefinition = "TEXT")
@@ -46,6 +46,10 @@ public class Order {
     @JoinColumn(name = "user_id")
     User user;
 
-    LocalDateTime orderDate;
+    LocalDateTime orderDate;//ngày đặt hàng
+    LocalDateTime deliveryStartDate;//ngày bắt đầu giao hàng
+    LocalDateTime deliveryEndDate;//ngày ket thuc giao hàng
+
+
 
 }
