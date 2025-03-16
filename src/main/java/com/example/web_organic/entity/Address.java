@@ -32,5 +32,8 @@ public class Address {
     @ManyToOne
     @JoinColumn(name = "user_id")
     User user;
-
+    // Thêm ID địa điểm từ GHN để tính thời gian giao hàng
+    Integer provinceId;
+    Integer districtId;
+    String wardCode;
 }
