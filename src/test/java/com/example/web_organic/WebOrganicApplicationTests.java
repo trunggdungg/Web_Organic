@@ -22,10 +22,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @SpringBootTest
 class WebOrganicApplicationTests {
@@ -492,6 +489,20 @@ class WebOrganicApplicationTests {
         List<Category> categories = categoryRepository.findByTypeAndStatusTrue(Category_Type.BLOG);
         for (Category category : categories) {
             System.out.println(category);
+        }
+    }
+
+//    @Test
+//    void loadAddUsser(){
+//        Optional<Address> address = addressRepository.findByUserIdAndIsDefaultTrue(5);
+//        System.out.println(address);
+//    }
+
+    @Test
+    void loadOrrder(){
+        Page<Order> ordersPending = orderRepository.findAllByStatus(Status_Enum.PENDING, PageRequest.of(0, 10));
+        for (Order order : ordersPending) {
+            System.out.println(order);
         }
     }
 
