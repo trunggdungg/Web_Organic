@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="sidebar-logo">
+        <h4 class="m-0 font-semibold text-gray-800">Soybean Admin</h4>
+    </div>
+    <div class="sidebar-menu">
+        <a href="/admin/home" class="sidebar-menu-item active">
+            <i class="fas fa-home"></i>
+            Dashboard
+        </a>
+
+        <!-- Orders Management Section -->
+        <div class="sidebar-section mb-3">
+            <div class="sidebar-section-header">
+                QUẢN LÝ ĐƠN HÀNG
+            </div>
+            <div class="sidebar-submenu">
+                <a  th:href="@{/admin/order}"
+                    th:classappend="${type == null ? 'active' : ''}"
+                    class="sidebar-menu-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    Tất cả đơn hàng
+                </a>
+                <a th:href="@{/admin/order(type='pending')}"
+                   th:classappend="${type == 'pending' ? 'active' : ''}"
+                   class="sidebar-menu-item">
+                    <i class="fas fa-clock"></i>
+                    Đơn chờ xử lý
+                    <span class="badge bg-danger ms-2">5</span>
+                </a>
+                <a th:href="@{/admin/order(type='processing')}"
+                   th:classappend="${type == 'processing' ? 'active' : ''}" class="sidebar-menu-item">
+                    <i class="fas fa-spinner"></i>
+                    Đang xử lý
+                </a>
+                <a th:href="@{/admin/order(type='shipped')}"
+                   th:classappend="${type == 'shipped' ? 'active' : ''}" class="sidebar-menu-item">
+                    <i class="fas fa-truck"></i>
+                    Đang giao hàng
+                </a>
+                <a th:href="@{/admin/order(type='delivered')}"
+                   th:classappend="${type == 'delivered' ? 'active' : ''}" class="sidebar-menu-item">
+                    <i class="fas fa-check-circle"></i>
+                    Đã hoàn thành
+                </a>
+                <a th:href="@{/admin/order(type='canceled')}"
+                   th:classappend="${type == 'canceled' ? 'active' : ''}" class="sidebar-menu-item">
+                    <i class="fas fa-times-circle"></i>
+                    Đã hủy
+                </a>
+            </div>
+        </div>
+
+        <!-- Products Management Section -->
+        <div class="sidebar-section mb-3">
+            <div class="sidebar-section-header">
+                QUẢN LÝ SẢN PHẨM
+            </div>
+            <div class="sidebar-submenu">
+                <a href="products-list.html" class="sidebar-menu-item">
+                    <i class="fas fa-leaf"></i>
+                    Sản phẩm Organic
+                </a>
+                <a href="categories.html" class="sidebar-menu-item">
+                    <i class="fas fa-tags"></i>
+                    Danh mục
+                </a>
+                <a href="inventory.html" class="sidebar-menu-item">
+                    <i class="fas fa-warehouse"></i>
+                    Kho hàng
+                </a>
+                <a href="promotions.html" class="sidebar-menu-item">
+                    <i class="fas fa-percent"></i>
+                    Khuyến mãi
+                </a>
+            </div>
+        </div>
+
+        <!-- Reports Section -->
+        <div class="sidebar-section mb-3">
+            <div class="sidebar-section-header">
+                BÁO CÁO & THỐNG KÊ
+            </div>
+            <div class="sidebar-submenu">
+                <a href="sales-report.html" class="sidebar-menu-item">
+                    <i class="fas fa-chart-line"></i>
+                    Báo cáo doanh số
+                </a>
+                <a href="inventory-report.html" class="sidebar-menu-item">
+                    <i class="fas fa-boxes"></i>
+                    Báo cáo tồn kho
+                </a>
+                <a href="customer-report.html" class="sidebar-menu-item">
+                    <i class="fas fa-users"></i>
+                    Báo cáo khách hàng
+                </a>
+            </div>
+        </div>
+
+        <!-- Settings Section -->
+        <div class="sidebar-section mb-3">
+            <div class="sidebar-section-header">
+                CÀI ĐẶT
+            </div>
+            <div class="sidebar-submenu">
+                <a href="store-settings.html" class="sidebar-menu-item">
+                    <i class="fas fa-store"></i>
+                    Thiết lập cửa hàng
+                </a>
+                <a href="shipping-settings.html" class="sidebar-menu-item">
+                    <i class="fas fa-shipping-fast"></i>
+                    Cấu hình vận chuyển
+                </a>
+                <a href="payment-settings.html" class="sidebar-menu-item">
+                    <i class="fas fa-credit-card"></i>
+                    Cấu hình thanh toán
+                </a>
+            </div>
+        </div>
+
+        <!-- User Management Section -->
+        <div class="sidebar-section">
+            <div class="sidebar-section-header">
+                QUẢN LÝ NGƯỜI DÙNG
+            </div>
+            <div class="sidebar-submenu">
+                <a href="user-list.html" class="sidebar-menu-item">
+                    <i class="fas fa-users"></i>
+                    Danh sách người dùng
+                </a>
+                <a href="user-roles.html" class="sidebar-menu-item">
+                    <i class="fas fa-user-shield"></i>
+                    Phân quyền
+                </a>
+                <a href="user-activity.html" class="sidebar-menu-item">
+                    <i class="fas fa-history"></i>
+                    Lịch sử hoạt động
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
