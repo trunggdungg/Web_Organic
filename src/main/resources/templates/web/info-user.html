@@ -275,8 +275,10 @@
 <!--                 Order 1-->
 
             </div>
+
+<!--            đơn hủy-->
             <div id="cancelled-orders" class="order-tab-content hidden">
-                <div class="border border-gray-200 rounded p-4 mb-4">
+                <div class="border border-gray-200 rounded p-4 mb-4" th:each="orderCanceled : ${orderCanceleds}">
                     <div class="flex justify-between items-center border-b border-gray-200 pb-2 mb-2">
                         <div class="flex items-center">
                             <!--                            <span class="font-bold mr-2">Smart Home Official</span>-->
@@ -286,25 +288,35 @@
                         <div class="text-gray-500">Đã hủy</div>
                     </div>
 
-                    <div class="flex py-4 border-b border-gray-200">
-                        <img src="/api/placeholder/80/80" alt="Product Image" class="w-20 h-20 object-cover mr-4">
+                    <div class="flex py-4 border-b border-gray-200" th:each="detail : ${orderDetailsMap[orderCanceled.id]}">
+                        <img th:src="${detail.productVariant.product.imageUrl}" alt="Product Image" class="w-20 h-20 object-cover mr-4">
                         <div class="flex-1">
-                            <p class="font-medium">Đèn thông minh điều khiển bằng giọng nói</p>
-                            <p class="text-gray-500 text-sm">x1</p>
+                            <p class="font-medium" th:text="${detail.productVariant.product.name}">Sổ tay kế hoạch 2025 bìa cứng 365 ngày</p>
+                            <p class="text-gray-500 text-sm">Phân loại: <span th:text="${detail.productVariant.weight}">Trắng, XL</span></p>
+                            <p class="text-gray-500 text-sm">x <span th:text="${detail.quantity}"></span></p>
+
                         </div>
-                        <div class="text-red-500">₫450.000</div>
+                        <div class="text-red-500" ><span th:text="${#numbers.formatDecimal(detail.subTotal, 0, 'COMMA', 0, 'POINT')}"></span>₫</div>
                     </div>
 
                     <div class="flex justify-between items-center py-4">
-                        <div>
-                            <p class="text-gray-600 text-sm">Lý do hủy: Thay đổi ý định mua hàng</p>
+                        <div >
+                            <p class="text-gray-600 text-sm">Lý do hủy: <span th:text="${orderCancellationMap[orderCanceled.id]?.reason ?: 'Không có lý do'}">Thay đổi ý định mua hàng</span> </p>
                         </div>
                         <div class="text-right">
                             <p class="text-gray-600 mb-2">
-                                <span class="mr-2">Tổng số tiền:</span>
-                                <span class="text-red-500 text-xl font-bold">₫450.000</span>
+                                <span class="mr-2">Đơn hàng:</span>
+                                <span class="text-red-500 text-xl font-bold"><span th:text="${#numbers.formatDecimal(orderCanceled.productCost, 0, 'COMMA', 0, 'POINT')}"></span>₫</span>
                             </p>
-                            <div class="flex space-x-2">
+                            <p class="text-gray-600 mb-2">
+                                <span class="mr-2">Phí vận chuyển:</span>
+                                <span class="text-red-500 text-xl font-bold"><span th:text="${#numbers.formatDecimal(orderCanceled.shippingCost, 0, 'COMMA', 0, 'POINT')}"></span>₫</span>
+                            </p>
+                            <p class="text-gray-600 mb-2">
+                                <span class="mr-2">Tổng số tiền:</span>
+                                <span class="text-red-500 text-xl font-bold"><span th:text="${#numbers.formatDecimal(orderCanceled.total, 0, 'COMMA', 0, 'POINT')}"></span>₫</span>
+                            </p>
+                            <div class=" space-x-2">
                                 <button class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Mua lại
                                 </button>
                             </div>
@@ -312,8 +324,10 @@
                     </div>
                 </div>
             </div>
+
+<!--            đang giao-->
             <div id="to-receive-orders" class="order-tab-content hidden">
-                <div class="border border-gray-200 rounded p-4 mb-4">
+                <div class="border border-gray-200 rounded p-4 mb-4" th:each="orderShipping : ${orderShippings}">
                     <div class="flex justify-between items-center border-b border-gray-200 pb-2 mb-2">
                         <div class="flex items-center">
                             <!--                            <span class="font-bold mr-2">Sách & Văn phòng phẩm</span>-->
@@ -323,49 +337,52 @@
                         <div class="text-blue-500">Đang giao</div>
                     </div>
 
-                    <div class="flex py-4 border-b border-gray-200">
-                        <img src="/api/placeholder/80/80" alt="Product Image" class="w-20 h-20 object-cover mr-4">
+                    <div class="flex py-4 border-b border-gray-200" th:each="detail : ${orderDetailsMap[orderShipping.id]}">
+                        <img th:src="${detail.productVariant.product.imageUrl}" alt="Product Image" class="w-20 h-20 object-cover mr-4">
                         <div class="flex-1">
-                            <p class="font-medium">Sổ tay kế hoạch 2025 bìa cứng 365 ngày</p>
-                            <p class="text-gray-500 text-sm">Phân loại: Xanh dương</p>
-                            <p class="text-gray-500 text-sm">x1</p>
+                            <p class="font-medium" th:text="${detail.productVariant.product.name}">Sổ tay kế hoạch 2025 bìa cứng 365 ngày</p>
+                            <p class="text-gray-500 text-sm">Phân loại: <span th:text="${detail.productVariant.weight}">Trắng, XL</span></p>
+                            <p class="text-gray-500 text-sm">x <span th:text="${detail.quantity}"></span></p>
+
                         </div>
-                        <div class="text-red-500">₫125.000</div>
+                        <div class="text-red-500" ><span th:text="${#numbers.formatDecimal(detail.subTotal, 0, 'COMMA', 0, 'POINT')}"></span>₫</div>
                     </div>
 
-                    <div class="flex py-4 border-b border-gray-200">
-                        <img src="/api/placeholder/80/80" alt="Product Image" class="w-20 h-20 object-cover mr-4">
-                        <div class="flex-1">
-                            <p class="font-medium">Bút bi gel 0.5mm mực đen cao cấp (Bộ 10 cây)</p>
-                            <p class="text-gray-500 text-sm">x1</p>
-                        </div>
-                        <div class="text-red-500">₫85.000</div>
-                    </div>
+
 
                     <div class="flex justify-between items-center py-4">
                         <div>
-                            <p class="text-gray-600 text-sm">Mã đơn hàng: 2502235498756</p>
+                            <p class="text-gray-600 text-sm">Mã đơn hàng: <span th:text="${orderShipping.id}">2502235498756</span> </p>
                             <!--                            <p class="text-gray-600 text-sm">Đơn vị vận chuyển: GiaoHàngNhanh</p>-->
                         </div>
                         <div class="text-right">
                             <p class="text-gray-600 mb-2">
+                                <span class="mr-2">Đơn hàng:</span>
+                                <span class="text-red-500 text-xl font-bold"><span th:text="${#numbers.formatDecimal(orderShipping.productCost, 0, 'COMMA', 0, 'POINT')}"></span>₫</span>
+                            </p>
+                            <p class="text-gray-600 mb-2">
+                                <span class="mr-2">Phí vận chuyển:</span>
+                                <span class="text-red-500 text-xl font-bold"><span th:text="${#numbers.formatDecimal(orderShipping.shippingCost, 0, 'COMMA', 0, 'POINT')}"></span>₫</span>
+                            </p>
+                            <p class="text-gray-600 mb-2">
                                 <span class="mr-2">Tổng số tiền:</span>
-                                <span class="text-red-500 text-xl font-bold">₫210.000</span>
+                                <span class="text-red-500 text-xl font-bold"><span th:text="${#numbers.formatDecimal(orderShipping.total, 0, 'COMMA', 0, 'POINT')}"></span>₫</span>
                             </p>
                             <div class="flex space-x-2">
                                 <!--                                <button class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Theo dõi-->
                                 <!--                                    đơn hàng-->
                                 <!--                                </button>-->
-                                <button class="border border-red-500 text-red-500 px-4 py-2 rounded hover:bg-red-50">
-                                    Đã nhận hàng
-                                </button>
+<!--                                <button class="border border-red-500 text-red-500 px-4 py-2 rounded hover:bg-red-50">-->
+<!--                                    Đã nhận hàng-->
+<!--                                </button>-->
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+<!--            đơn hoàn thành-->
             <div id="completed-orders" class="order-tab-content hidden">
-                <div class="border border-gray-200 rounded p-4 mb-4">
+                <div class="border border-gray-200 rounded p-4 mb-4" th:each="orderCompleted : ${orderCompleteds}">
                     <div class="flex justify-between items-center border-b border-gray-200 pb-2 mb-2">
                         <div class="flex items-center">
                             <!--                            <span class="font-bold mr-2">TechShop Việt Nam</span>-->
@@ -375,22 +392,31 @@
                         <div class="text-red-500">Hoàn thành</div>
                     </div>
 
-                    <div class="flex py-4 border-b border-gray-200">
-                        <img src="/api/placeholder/80/80" alt="Product Image" class="w-20 h-20 object-cover mr-4">
+                    <div class="flex py-4 border-b border-gray-200" th:each="detail : ${orderDetailsMap[orderCompleted.id]}">
+                        <img th:src="${detail.productVariant.product.imageUrl}" alt="Product Image" class="w-20 h-20 object-cover mr-4">
                         <div class="flex-1">
-                            <p class="font-medium">Tai nghe không dây Bluetooth 5.0 chống ồn âm thanh HiFi</p>
-                            <p class="text-gray-500 text-sm">Phân loại: Đen</p>
-                            <p class="text-gray-500 text-sm">x1</p>
+                            <p class="font-medium" th:text="${detail.productVariant.product.name}">Sổ tay kế hoạch 2025 bìa cứng 365 ngày</p>
+                            <p class="text-gray-500 text-sm">Phân loại: <span th:text="${detail.productVariant.weight}">Trắng, XL</span></p>
+                            <p class="text-gray-500 text-sm">x <span th:text="${detail.quantity}"></span></p>
+
                         </div>
-                        <div class="text-red-500">₫899.000</div>
+                        <div class="text-red-500" ><span th:text="${#numbers.formatDecimal(detail.subTotal, 0, 'COMMA', 0, 'POINT')}"></span>₫</div>
                     </div>
 
                     <div class="flex justify-between items-center py-4">
                         <div></div>
                         <div class="text-right">
                             <p class="text-gray-600 mb-2">
+                                <span class="mr-2">Đơn hàng:</span>
+                                <span class="text-red-500 text-xl font-bold"><span th:text="${#numbers.formatDecimal(orderCompleted.productCost, 0, 'COMMA', 0, 'POINT')}"></span>₫</span>
+                            </p>
+                            <p class="text-gray-600 mb-2">
+                                <span class="mr-2">Phí vận chuyển:</span>
+                                <span class="text-red-500 text-xl font-bold"><span th:text="${#numbers.formatDecimal(orderCompleted.shippingCost, 0, 'COMMA', 0, 'POINT')}"></span>₫</span>
+                            </p>
+                            <p class="text-gray-600 mb-2">
                                 <span class="mr-2">Tổng số tiền:</span>
-                                <span class="text-red-500 text-xl font-bold">₫899.000</span>
+                                <span class="text-red-500 text-xl font-bold"><span th:text="${#numbers.formatDecimal(orderCompleted.total, 0, 'COMMA', 0, 'POINT')}"></span>₫</span>
                             </p>
                             <div class="flex space-x-2">
                                 <!--                                <button class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Liên hệ-->
@@ -406,9 +432,9 @@
                     </div>
                 </div>
             </div>
-
+            <!--chò giao hàng-->
             <div class="order-tab-content hidden" id="to-ship-orders">
-                <div class="border border-gray-200 rounded p-4 mb-4">
+                <div class="border border-gray-200 rounded p-4 mb-4" th:each="orderProcessing : ${orderProcessings}">
                     <div class="flex justify-between items-center border-b border-gray-200 pb-2 mb-2">
                         <div class="flex items-center">
                             <!--                            <span class="font-bold mr-2">Fresh Food Express</span>-->
@@ -418,77 +444,44 @@
                         <div class="text-green-500">Chờ giao hàng</div>
                     </div>
 
-                    <div class="flex py-4 border-b border-gray-200">
-                        <img src="/api/placeholder/80/80" alt="Product Image" class="w-20 h-20 object-cover mr-4">
+                    <div class="flex py-4 border-b border-gray-200" th:each="detail : ${orderDetailsMap[orderProcessing.id]}">
+                        <img th:src="${detail.productVariant.product.imageUrl}" alt="Product Image" class="w-20 h-20 object-cover mr-4">
                         <div class="flex-1">
-                            <p class="font-medium">Combo hoa quả tươi 4kg - cam, táo, lê, kiwi</p>
-                            <p class="text-gray-500 text-sm">x1</p>
+                            <p class="font-medium" th:text="${detail.productVariant.product.name}">Combo hoa quả tươi 4kg - cam, táo, lê, kiwi</p>
+                            <p class="text-gray-500 text-sm">Phân loại: <span th:text="${detail.productVariant.weight}">Trắng, XL</span> </p>
+                            <p class="text-gray-500 text-sm">x <span th:text="${detail.quantity}"></span></p>
                         </div>
-                        <div class="text-red-500">₫350.000</div>
+                        <div class="text-red-500" ><span th:text="${#numbers.formatDecimal(detail.subTotal, 0, 'COMMA', 0, 'POINT')}"></span>₫</div>
                     </div>
 
                     <div class="flex justify-between items-center py-4">
                         <div>
-                            <p class="text-gray-600 text-sm">Thời gian dự kiến giao: 27/02/2025 - 28/02/2025</p>
+                            <p class="text-gray-600 text-sm">Thời gian dự kiến giao: <span th:text="${#temporals.format(orderProcessing.getDeliveryStartDate(), 'dd/MMM/yyyy')}"> 27/02/2025
+                            </span> - <span th:text="${#temporals.format(orderProcessing.getDeliveryEndDate(), 'dd/MMM/yyyy')}"> 28/02/2025</span></p>
                         </div>
                         <div class="text-right">
                             <p class="text-gray-600 mb-2">
-                                <span class="mr-2">Tổng số tiền:</span>
-                                <span class="text-red-500 text-xl font-bold">₫350.000</span>
+                                <span class="mr-2">Đơn hàng:</span>
+                                <span class="text-red-500 text-xl font-bold"><span th:text="${#numbers.formatDecimal(orderProcessing.productCost, 0, 'COMMA', 0, 'POINT')}"></span>₫</span>
                             </p>
+                            <p class="text-gray-600 mb-2">
+                                <span class="mr-2">Phí vận chuyển:</span>
+                                <span class="text-red-500 text-xl font-bold"><span th:text="${#numbers.formatDecimal(orderProcessing.shippingCost, 0, 'COMMA', 0, 'POINT')}"></span>₫</span>
+                            </p>
+                            <p class="text-gray-600 mb-2">
+                                <span class="mr-2">Tổng số tiền:</span>
+                                <span class="text-red-500 text-xl font-bold"><span th:text="${#numbers.formatDecimal(orderProcessing.total, 0, 'COMMA', 0, 'POINT')}"></span>₫</span>
+                            </p>
+
                             <div class="flex space-x-2">
-                                <button class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Hủy
-                                </button>
-                                <button class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Liên hệ
-                                    người bán
-                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Pending Payment Tab Content -->
-<!--            <div id="pending-payment-orders" class="order-tab-content hidden">-->
-<!--                &lt;!&ndash; Order &ndash;&gt;-->
-<!--                <div class="border border-gray-200 rounded p-4 mb-4">-->
-<!--                    <div class="flex justify-between items-center border-b border-gray-200 pb-2 mb-2">-->
-<!--                        <div class="flex items-center">-->
-<!--                            &lt;!&ndash;                            <span class="font-bold mr-2">Fashion Center</span>&ndash;&gt;-->
-<!--                            <a href="#" class="text-blue-500 ml-2"><i class="fas fa-comment-dots mr-1"></i> Chat</a>-->
-<!--                            &lt;!&ndash;                            <a href="#" class="text-blue-500 ml-2"><i class="fas fa-store mr-1"></i> Xem shop</a>&ndash;&gt;-->
-<!--                        </div>-->
-<!--                        <div class="text-orange-500">Chờ thanh toán</div>-->
-<!--                    </div>-->
 
-<!--                    <div class="flex py-4 border-b border-gray-200">-->
-<!--                        <img src="/api/placeholder/80/80" alt="Product Image" class="w-20 h-20 object-cover mr-4">-->
-<!--                        <div class="flex-1">-->
-<!--                            <p class="font-medium">Áo thun nam form rộng chất cotton cao cấp</p>-->
-<!--                            <p class="text-gray-500 text-sm">Phân loại: Trắng, XL</p>-->
-<!--                            <p class="text-gray-500 text-sm">x2</p>-->
-<!--                        </div>-->
-<!--                        <div class="text-red-500">₫258.000</div>-->
-<!--                    </div>-->
 
-<!--                    <div class="flex justify-between items-center py-4">-->
-<!--                        <div></div>-->
-<!--                        <div class="text-right">-->
-<!--                            <p class="text-gray-600 mb-2">-->
-<!--                                <span class="mr-2">Tổng số tiền:</span>-->
-<!--                                <span class="text-red-500 text-xl font-bold">₫258.000</span>-->
-<!--                            </p>-->
-<!--                            <div class="flex space-x-2">-->
-<!--                                <button class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Hủy-->
-<!--                                </button>-->
-<!--                                <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Thanh-->
-<!--                                    toán-->
-<!--                                </button>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-
+        <!--           đơn chờ xác nhận-->
             <div id="pending-waiting-confirm-orders" class="order-tab-content hidden">
                 <div class="border border-gray-200 rounded p-4 mb-4" th:each="orderPending : ${orderPendings}">
                     <div class="flex justify-between items-center border-b border-gray-200 pb-2 mb-2">
@@ -500,24 +493,33 @@
                         <div class="text-orange-500">Chờ xác nhận</div>
                     </div>
 
-                    <div class="flex py-4 border-b border-gray-200">
-                        <img src="/api/placeholder/80/80" alt="Product Image" class="w-20 h-20 object-cover mr-4">
+                    <div class="flex py-4 border-b border-gray-200" th:each="detail : ${orderDetailsMap[orderPending.id]}">
+                        <img th:src="${detail.productVariant.product.imageUrl}" alt="Product Image" class="w-20 h-20 object-cover mr-4">
                         <div class="flex-1">
-                            <p class="font-medium" >Áo thun nam form rộng chất cotton cao cấp</p>
-                            <p class="text-gray-500 text-sm">Phân loại: Trắng, XL</p>
-                            <p class="text-gray-500 text-sm">x2</p>
+                            <p class="font-medium"  th:text="${detail.productVariant.product.name}">Áo thun nam form rộng chất cotton cao cấp</p>
+                            <p class="text-gray-500 text-sm">Phân loại: <span th:text="${detail.productVariant.weight}">Trắng, XL</span> </p>
+                            <p class="text-gray-500 text-sm" >x <span th:text="${detail.quantity}"></span> </p>
                         </div>
-                        <div class="text-red-500">₫258.000</div>
+                        <div class="text-red-500"><span th:text="${#numbers.formatDecimal(detail.subTotal, 0, 'COMMA', 0, 'POINT')}"></span>₫  </div>
                     </div>
 
                     <div class="flex justify-between items-center py-4">
                         <div></div>
                         <div class="text-right">
                             <p class="text-gray-600 mb-2">
-                                <span class="mr-2">Tổng số tiền:</span>
-                                <span class="text-red-500 text-xl font-bold">₫258.000</span>
+                                <span class="mr-2">Đơn hàng:</span>
+                                <span class="text-red-500 text-xl font-bold"><span th:text="${#numbers.formatDecimal(orderPending.productCost, 0, 'COMMA', 0, 'POINT')}"></span>₫</span>
                             </p>
-                            <div class="flex space-x-2">
+                            <p class="text-gray-600 mb-2">
+                                <span class="mr-2">Phí vận chuyển:</span>
+                                <span class="text-red-500 text-xl font-bold"><span th:text="${#numbers.formatDecimal(orderPending.shippingCost, 0, 'COMMA', 0, 'POINT')}"></span>₫</span>
+                            </p>
+                            <p class="text-gray-600 mb-2">
+                                <span class="mr-2">Tổng số tiền:</span>
+                                <span class="text-red-500 text-xl font-bold"><span th:text="${#numbers.formatDecimal(orderPending.total, 0, 'COMMA', 0, 'POINT')}"></span>₫</span>
+                            </p>
+<!--                            thêm flex vaào là dc-->
+                            <div class=" space-x-2">
                                 <button class="border border-gray-300 px-4 py-2 rounded hover:bg-gray-100">Hủy
                                 </button>
 
@@ -632,6 +634,10 @@
     console.log("orderCompleteds", orderCompleteds);
     const orderCanceleds = [[${orderCanceleds}]];
     console.log("orderCanceleds", orderCanceleds);
+    const orderDetails = [[${orderDetailsMap}]];
+    console.log("orderDetails", orderDetails);
+    const orderCancellationMap = [[${orderCancellationMap}]];
+    console.log("orderCancellationMap", orderCancellationMap);
     document.addEventListener('DOMContentLoaded', function () {
         // Lấy tất cả các tab và nội dung tab
         const tabs = document.querySelectorAll('#order-tabs a');
