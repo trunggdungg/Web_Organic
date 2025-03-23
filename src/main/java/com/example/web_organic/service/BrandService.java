@@ -16,4 +16,8 @@ public class BrandService {
     public List<Brand> getAllBrands() {
         return brandRepository.findAll();
     }
+
+    public List<Brand> getBrandByStatus() {
+        return brandRepository.findByStatus(true);
+    }
 }
