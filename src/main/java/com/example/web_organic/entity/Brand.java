@@ -19,4 +19,6 @@ public class Brand {
     Integer id;
     String logo;
     String nameBrand;
+    String slug;
+    Boolean status;
 }
