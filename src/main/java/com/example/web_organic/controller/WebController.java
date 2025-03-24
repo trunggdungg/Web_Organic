@@ -85,47 +85,49 @@ public class WebController {
     }
 
     @GetMapping("/product")
-    public String getProductPage(@RequestParam(required = false,defaultValue = "1") int page,
-                                 @RequestParam(required = false,defaultValue = "10") int pageSize,
+    public String getProductPage(@RequestParam(required = false, defaultValue = "1") int page,
+                                 @RequestParam(required = false, defaultValue = "10") int pageSize,
                                  @RequestParam(required = false) String type,
+                                 @RequestParam(required = false, defaultValue = "all") String sort,
+                                 @RequestParam(required = false, defaultValue = "all") String brand,
+                                 @RequestParam(required = false, defaultValue = "all") String price,
                                  Model model) {
-        List<Brand> brands = brandService.getBrandByStatus();
 
-        Map<Integer, Integer> productStocks = new HashMap<>();  // Thêm thông tin stock và giá cho mỗi sản phẩm
+        List<Brand> brands = brandService.getBrandByStatus();
+        Map<Integer, Integer> productStocks = new HashMap<>();
         Map<Integer, BigDecimal> productVariantPrices = new HashMap<>();
-        // Hàm dùng chung để thêm dữ liệu vào productStocks & productVariantPrices
-        Consumer<Product> addProductInfo = product -> {
-            int productId = product.getId();
-            productStocks.putIfAbsent(productId, productService.getProductStock(productId)); // Tránh ghi đè nếu đã có
-            productVariantPrices.putIfAbsent(productId, productService.getProductVariantPrice(productId)); // Tránh ghi đè nếu đã có
-        };
-        // Kiêm tra xem có category hay không
+
         Category selectedCategory = null;
         if (type != null) {
             selectedCategory = categoryService.getCategoryBySlug(type);
         }
 
-        // Lấy danh sách sản phẩm theo trang
-        Page<Product> productPage;
-        if (selectedCategory != null) {
-            productPage = productService.getProductsByCategory(selectedCategory, page - 1, pageSize);
-        } else {
-            productPage = productService.getAllProducts(page - 1, pageSize);
-        }
+        // Lọc sản phẩm với Specification
+        Page<Product> productPage = productService.getFilteredProducts(selectedCategory, sort, brand, price, page - 1, pageSize);
 
-        // Lấy stock và giá cho sản phẩm
-        productPage.getContent().forEach(addProductInfo);
+        // Lấy stock và giá của sản phẩm
+        productPage.getContent().forEach(product -> {
+            int productId = product.getId();
+            productStocks.putIfAbsent(productId, productService.getProductStock(productId));
+            productVariantPrices.putIfAbsent(productId, productService.getProductVariantPrice(productId));
+        });
 
-        // Thêm thông tin stock và giá cho mỗi sản phẩm
         model.addAttribute("products", productPage.getContent());
         model.addAttribute("productStocks", productStocks);
         model.addAttribute("productVariantPrices", productVariantPrices);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", productPage.getTotalPages());
         model.addAttribute("brands", brands);
+        model.addAttribute("selectedCategory", selectedCategory);
+
+        // Nếu là request AJAX, chỉ trả về phần danh sách sản phẩm
+//        if (page > 1 || !"all".equals(sort) || !"all".equals(brand) || !"all".equals(price)) {
+//            return "/web/product :: productList";
+//        }
 
         return "/web/product";
     }
+
 
     @GetMapping("/blog")
     public String getBlogPage(@RequestParam(required = false, defaultValue = "1") int page,
