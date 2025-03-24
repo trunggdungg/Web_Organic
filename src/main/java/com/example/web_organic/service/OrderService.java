@@ -39,7 +39,6 @@ public class OrderService {
     private OrderDetailService orderDetailService;
 
 
-
     @Transactional
     public Order createOrder(OrderRequest orderRequest) {
         User currentUser = (User) httpSession.getAttribute("CURRENT_USER");
