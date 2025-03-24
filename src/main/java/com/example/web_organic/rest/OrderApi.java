@@ -41,12 +41,7 @@ public class OrderApi {
     }
 
 
-    // Cập nhật trạng thái đơn hàng COD
-    @PutMapping("/confirm/order/{orderId}")
-    public ResponseEntity<?> confirmOrder(@PathVariable String orderId,  @RequestParam boolean customerReceived) {
-        orderService.confirmOrder(orderId, customerReceived);
-        return ResponseEntity.ok("Cập nhật trạng thái đơn hàng thành công!");
-    }
+
 
     // Lấy QR code cho đơn hàng (bỏ)?
     @GetMapping("/order/{orderId}/generate-qr")
