@@ -136,5 +136,13 @@ public class ProductService {
         return productRepository.findAll(finalSpec, pageable).getContent();
     }
 
+//specification
+public Page<Product> getFilteredProducts(Category category, String sort, String brand, String price, int page, int pageSize) {
+    Specification<Product> spec = Specification.where(ProductSpecification.filterByCategory(category))
+        .and(ProductSpecification.filterByBrand(brand))
+        .and(ProductSpecification.filterByPrice(price))
+        .and(ProductSpecification.sortBy(sort));
 
+    return productRepository.findAll(spec, PageRequest.of(page, pageSize));
+}
 }
