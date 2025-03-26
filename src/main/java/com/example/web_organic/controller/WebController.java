@@ -275,6 +275,8 @@ public class WebController {
             orderDetailsMap.put(order.getId(), details);
         }
 
+        //Lấy thông tin địa chỉ của user
+        List<Address> addresses = addressService.getAddressByUserId(user.getId());
         // Gửi dữ liệu đến View
         model.addAttribute("orderPendings", orderPending);
         model.addAttribute("orderProcessings", orderProcessing);
@@ -283,6 +285,7 @@ public class WebController {
         model.addAttribute("orderCanceleds", orderCanceled);
         model.addAttribute("orderDetailsMap", orderDetailsMap); // Truyền Map vào Thymeleaf
         model.addAttribute("orderCancellationMap", orderCancellationMap); // Truyền Map vào Thymeleaf
+        model.addAttribute("addresses", addresses);
         model.addAttribute("user", user);
         return "/web/info-user";
     }
