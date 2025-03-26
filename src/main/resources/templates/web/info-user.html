@@ -156,30 +156,30 @@
             <div class="max-w-4xl mx-auto p-4 bg-white">
                 <div class="flex justify-between items-center mb-4">
                     <h1 class="text-xl font-semibold">Địa chỉ của tôi</h1>
-                    <button id="add-address-btn" class="bg-red-500 text-white px-4 py-2 rounded">
+                    <button id="add-address-btn" class="bg-red-500 text-white px-4 py-2 rounded"   data-bs-toggle="modal" data-bs-target="#new-address-modal">
                         + Thêm địa chỉ mới
                     </button>
                 </div>
                 <div>
                     <h2 class="text-lg font-semibold mb-2">Địa chỉ</h2>
-                    <div class="border-t border-gray-300 pt-4">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <h3 class="text-lg font-semibold">Trung Dũng</h3>
-                                <p class="text-gray-600">(+84) 342 769 006</p>
-                                <p class="text-gray-600">Trung Tâm Dạy Nghề & Giáo Dục Thường Xuyên Huyện An Phú,
-                                    Đường Không Tên</p>
-                                <p class="text-gray-600">Thị Trấn An Phú, Huyện An Phú, An Giang</p>
-                                <span class="inline-block bg-red-500 text-white px-2 py-1 text-sm rounded mt-2">Mặc định</span>
-                            </div>
-                            <div class="flex flex-col items-end">
-                                <a href="#" class="text-blue-500 mb-2">Cập nhật</a>
-                                <a href="#" class="text-blue-500 mb-2">Xóa</a>
-                                <button class="border border-gray-300 text-gray-700 px-4 py-2 rounded">Thiết lập mặc
-                                    định
-                                </button>
-                            </div>
-                        </div>
+                    <div class="border-t border-gray-300 pt-4" id="address-list">
+<!--                        <div class="flex justify-between items-start mt-4" th:each="address : ${addresses}">-->
+<!--                            <div>-->
+<!--                                <h3 class="text-lg font-semibold" > <span th:text="${address.fullName}"></span>   <span class="inline-block bg-red-500 text-white px-2 py-1 text-sm rounded mt-2 ml-5" th:if="${address.isDefault == true}">Mặc định</span></h3>-->
+<!--                                <p class="text-gray-600">(+84) <span th:text="${address.phone}"> 342 769 006</span></p>-->
+<!--                                <p class="text-gray-600" th:text="${address.getAddressDetail()}">Trung Tâm Dạy Nghề & Giáo Dục Thường Xuyên Huyện An Phú,-->
+<!--                                    Đường Không Tên</p>-->
+<!--                                <p class="text-gray-600" th:text="${address.addressSelected}">Thị Trấn An Phú, Huyện An Phú, An Giang</p>-->
+
+<!--                            </div>-->
+<!--                            <div class="flex flex-col items-end">-->
+<!--                                <a href="#" class="text-blue-500 mb-2">Cập nhật</a>-->
+<!--                                <a href="#" class="text-blue-500 mb-2">Xóa</a>-->
+<!--                                <button class="border border-gray-300 text-gray-700 px-4 py-2 rounded">Thiết lập mặc-->
+<!--                                    định-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                        </div>-->
                     </div>
                 </div>
             </div>
@@ -561,45 +561,46 @@
         </div>
 
         <!-- Modal địa chỉ mới -->
-        <div id="new-address-modal"
-             class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
-            <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl">
-                <h1 class="text-xl font-semibold mb-4">Địa Chỉ Mới</h1>
-                <form>
-                    <div class="grid grid-cols-1 gap-4 mb-4">
-                        <div class="grid grid-cols-2 gap-4">
-                            <input type="text" placeholder="Họ và tên" class="border border-gray-300 p-3 w-full">
-                            <input type="text" placeholder="Số điện thoại"
-                                   class="border border-gray-300 p-3 w-full">
-                        </div>
-                        <div class="grid grid-cols-3 gap-4">
-                            <select class="border border-gray-300 p-3 w-full">
-                                <option>Tỉnh/Thành phố</option>
-                            </select>
-                            <select class="border border-gray-300 p-3 w-full">
-                                <option>Quận/Huyện</option>
-                            </select>
-                            <select class="border border-gray-300 p-3 w-full">
-                                <option>Phường/Xã</option>
-                            </select>
-                        </div>
-                        <div>
-                                <textarea placeholder="Địa chỉ cụ thể"
-                                          class="border border-gray-300 p-3 w-full h-24"></textarea>
-                        </div>
+        <div class="modal fade" id="new-address-modal" tabindex="-1" aria-labelledby="modalAddressLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalAddressLabel">Địa Chỉ Mới</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="flex items-center mb-4">
-                        <input type="checkbox" id="defaultAddress" class="mr-2">
-                        <label for="defaultAddress" class="text-sm">Đặt làm địa chỉ mặc định</label>
+                    <div class="modal-body">
+                        <form id="new-address-form">
+                            <div class="grid grid-cols-1 gap-4 mb-4">
+                                <div class="grid grid-cols-2 gap-4">
+                                    <input type="text" placeholder="Họ và tên" class="form-control" required>
+                                    <input type="text" placeholder="Số điện thoại" class="form-control" required>
+                                </div>
+                                <div class="grid grid-cols-3 gap-4">
+                                    <select id="province-select" class="form-select" required>
+                                        <option value="">Tỉnh/Thành phố</option>
+                                    </select>
+                                    <select id="district-select" class="form-select" required>
+                                        <option value="">Quận/Huyện</option>
+                                    </select>
+                                    <select id="ward-select" class="form-select" required>
+                                        <option value="">Phường/Xã</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <textarea placeholder="Địa chỉ cụ thể" class="form-control" required></textarea>
+                                </div>
+                            </div>
+                            <div class="form-check mb-4">
+                                <input type="checkbox" class="form-check-input" id="defaultAddress">
+                                <label class="form-check-label" for="defaultAddress">Đặt làm địa chỉ mặc định</label>
+                            </div>
+                        </form>
                     </div>
-                    <div class="flex justify-between">
-                        <button type="button" id="back-modal-btn" class="border border-gray-300 px-4 py-2">Trở lại
-                        </button>
-                        <button type="submit" id="submit-new-address" class="bg-red-500 text-white px-4 py-2">HOÀN
-                            THÀNH
-                        </button>
+                    <div class="modal-footer">
+                        <button type="button" id="back-modal-btn" class="btn btn-secondary" data-bs-dismiss="modal">Trở lại</button>
+                        <button type="submit" id="submit-new-address" form="new-address-form" class="btn btn-primary">HOÀN THÀNH</button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
@@ -611,17 +612,20 @@
 <div class="bg-gray-900 text-white footer">
     <div th:insert="~{/web/fragments/footer}"></div>
 </div>
+
+<!-- JS carousel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <!-- Script boostrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 
-<!-- JS carousel -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script src="/assets/js/main.js"></script>
 
 <script src="/assets/js/modal.js"></script>
+<script src="/assets/js/loadProvin-District-Ward.js" ></script>
+
 
 <script th:inline="javascript">
     const orderPendings = [[${orderPendings}]];
@@ -638,6 +642,8 @@
     console.log("orderDetails", orderDetails);
     const orderCancellationMap = [[${orderCancellationMap}]];
     console.log("orderCancellationMap", orderCancellationMap);
+    let addresses = [[${addresses}]];
+    console.log("addresses", addresses);
     document.addEventListener('DOMContentLoaded', function () {
         // Lấy tất cả các tab và nội dung tab
         const tabs = document.querySelectorAll('#order-tabs a');
@@ -709,7 +715,7 @@
         }
     });
 </script>
-
+<script src="/assets/js/address-info.js"></script>
 </body>
 
 </html>
