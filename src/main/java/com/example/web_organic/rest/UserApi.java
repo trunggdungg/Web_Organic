@@ -3,6 +3,7 @@ package com.example.web_organic.rest;
 import com.example.web_organic.entity.User;
 import com.example.web_organic.modal.request.LoginRequest;
 import com.example.web_organic.modal.request.RegisterRequest;
+import com.example.web_organic.modal.request.ResetPassWordRequest;
 import com.example.web_organic.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -57,6 +58,12 @@ public class UserApi {
         // Trả về thông tin user, có thể dùng DTO nếu cần
 //        UserResponse userResponse = new UserResponse(user.getId(), user.getEmail(), user.getFullName(), user.getAvatar());
         return ResponseEntity.ok(user);
+    }
+
+    @PutMapping("/change-password")
+    public ResponseEntity<?> resetPassword(@RequestBody ResetPassWordRequest resetPassWordRequest) {
+        userService.resetPassword(resetPassWordRequest);
+        return ResponseEntity.ok().build();
     }
 
 }
