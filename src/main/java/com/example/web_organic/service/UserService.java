@@ -6,6 +6,7 @@ import com.example.web_organic.modal.Enum.Token_Type;
 import com.example.web_organic.modal.Enum.User_Role;
 import com.example.web_organic.modal.request.LoginRequest;
 import com.example.web_organic.modal.request.RegisterRequest;
+import com.example.web_organic.modal.request.ResetPassWordRequest;
 import com.example.web_organic.modal.response.TokenConfirmMessageResponse;
 import com.example.web_organic.repository.TokenRepository;
 import com.example.web_organic.repository.UserRepository;
@@ -140,4 +141,17 @@ public class UserService {
     }
 
 
+    public void resetPassword(ResetPassWordRequest resetPassWordRequest) {
+        User user = (User) httpSession.getAttribute("CURRENT_USER");
+        if (user == null) {
+            throw new RuntimeException("User not logged in");
+        }
+
+        if (!bCryptPasswordEncoder.matches(resetPassWordRequest.getPasswordCurrent(), user.getPassword())) {
+            throw new RuntimeException("Current password is incorrect");
+        }
+
+        user.setPassword(bCryptPasswordEncoder.encode(resetPassWordRequest.getPasswordNew()));
+        userRepository.save(user);
+    }
 }
