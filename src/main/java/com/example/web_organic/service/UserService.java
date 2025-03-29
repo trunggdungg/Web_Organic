@@ -7,6 +7,7 @@ import com.example.web_organic.modal.Enum.User_Role;
 import com.example.web_organic.modal.request.LoginRequest;
 import com.example.web_organic.modal.request.RegisterRequest;
 import com.example.web_organic.modal.request.ResetPassWordRequest;
+import com.example.web_organic.modal.request.UpSertUserRequestAdmin;
 import com.example.web_organic.modal.response.TokenConfirmMessageResponse;
 import com.example.web_organic.repository.TokenRepository;
 import com.example.web_organic.repository.UserRepository;
@@ -15,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -152,6 +155,28 @@ public class UserService {
         }
 
         user.setPassword(bCryptPasswordEncoder.encode(resetPassWordRequest.getPasswordNew()));
+        userRepository.save(user);
+    }
+
+    public Page<User> getAllUsers(int page, int pageSize) {
+        return userRepository.findAll(PageRequest.of(page - 1, pageSize));
+    }
+
+    public void create(UpSertUserRequestAdmin upSertUserRequestAdmin) {
+        Optional<User> userOptional = userRepository.findByEmail(upSertUserRequestAdmin.getEmail());
+        if (userOptional.isPresent()) {
+            throw new RuntimeException("Email is already taken");
+        }
+        User user = User.builder()
+            .fullName(upSertUserRequestAdmin.getFullName())
+            .email(upSertUserRequestAdmin.getEmail())
+            .password(bCryptPasswordEncoder.encode(upSertUserRequestAdmin.getPassword()))
+            .role(upSertUserRequestAdmin.getRole())
+            .isActivated(true)
+            .avatar("/static/assets/img/avatar-trang-4.jpg")
+            .createdAt(LocalDateTime.now())
+            .updatedAt(LocalDateTime.now())
+            .build();
         userRepository.save(user);
     }
 }
