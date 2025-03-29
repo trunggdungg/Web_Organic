@@ -6,5 +6,6 @@ public enum Status_Enum {
     SHIPPED,     // Đơn hàng đã được gửi đi
     DELIVERED,   // Đơn hàng đã giao thành công
     COMPLETED,   // Đơn hàng đã hoàn thành
-    CANCELED     // Đơn hàng đã bị hủy
+    CANCELED ,    // Đơn hàng đã bị hủy
+    RETURNED     // Đơn hàng đã được trả lại
 }
