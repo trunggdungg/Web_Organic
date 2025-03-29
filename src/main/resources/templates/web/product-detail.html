@@ -22,12 +22,21 @@
 
     <!-- cdn fontawesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+<!--    phan trang-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.css">
 
     <!-- link CSS -->
     <link rel="stylesheet" href="/assets/css/style.css">
 
+    <style>
+        .rating .star i {
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
 
+
+    </style>
 </head>
 
 <body class="font-sans">
@@ -186,64 +195,69 @@
         </div>
         <div class="review-list">
             <!-- Bình luận giả -->
-            <div class="rating-item d-flex" th:each="review : ${reviews}">
-                <div class="rating-avatar">
-                    <img th:src="${review.user.avatar}" th:alt="${review.user.fullName}">
-                </div>
-                <div class="rating-info ms-3">
-                    <div class="d-flex">
-                        <p class="rating-name" th:text="${review.user.fullName}">Nguyễn Văn A</p>
-                    </div>
+<!--            <div class="rating-item d-flex position-relative" th:each="review : ${reviews}">-->
+<!--                <div class="rating-avatar position-absolute" style="top: 3px; left: 5px;">-->
+<!--                    <img th:src="${review.user.avatar}" th:alt="${review.user.fullName}">-->
+<!--                </div>-->
+<!--                <div class="rating-info ms-3" style="margin-left: 80px !important;">-->
+<!--                    <div class="d-flex">-->
+<!--                        <p class="rating-name" th:text="${review.user.fullName}">Nguyễn Văn A</p>-->
+<!--                    </div>-->
 
-                    <div class="d-flex">
-                        <p class="rating-time" th:text="${#temporals.format(review.createdAt, 'dd/MMM/yyyy')}">
-                            25/02/2025</p>
-                        <p class="time ms-2" th:text="${#temporals.format(review.createdAt, 'HH:mm')}">20:11</p>
-                    </div>
-                    <div class="rating-star">
-                        <th:block th:each="i : ${#numbers.sequence(1, 5)}">
-                            <i th:class="${i <= review.rating} ? 'fa fa-star' : 'fa fa-star empty-star'"></i>
-                        </th:block>
-                    </div>
+<!--                    <div class="d-flex">-->
+<!--                        <p class="rating-time" th:text="${#temporals.format(review.createdAt, 'dd/MMM/yyyy')}">-->
+<!--                            25/02/2025</p>-->
+<!--                        <p class="time ms-2" th:text="${#temporals.format(review.createdAt, 'HH:mm')}">20:11</p>-->
+<!--                    </div>-->
+<!--                    <div class="rating-star">-->
+<!--                        <th:block th:each="i : ${#numbers.sequence(1, 5)}">-->
+<!--                            <i th:class="${i <= review.rating} ? 'fa fa-star' : 'fa fa-star empty-star'"></i>-->
+<!--                        </th:block>-->
+<!--                    </div>-->
 
-                    <p class="rating-content" th:text="${review.content}">Sản phẩm rất tốt!</p>
-                    <span class="show-more" onclick="toggleExpand(this.previousElementSibling)">Xem thêm</span>
+<!--                    <p class="rating-content" th:text="${review.content}">Sản phẩm rất tốt!</p>-->
+<!--                    <span class="show-more" onclick="toggleExpand(this.previousElementSibling)">Xem thêm</span>-->
 
-                    <div>
-                        <span class="text-primary">Sửa</span> |
-                        <span class="text-danger">Xóa</span>
-                    </div>
-                </div>
-            </div>
+<!--                    <div>-->
+<!--                        <span class="text-primary">Sửa</span> |-->
+<!--                        <span class="text-danger">Xóa</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
 
-            <div class="rating-item d-flex">
-                <div class="rating-avatar">
-                    <img src="https://via.placeholder.com/50" alt="Trần Thị B">
-                </div>
-                <div class="rating-info ms-3">
-                    <div class="d-flex">
-                        <p class="rating-name">Trần Thị B</p>
-                        <p class="rating-time ms-2">24/02/2025</p>
-                    </div>
-                    <div class="rating-star">
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star"></i>
-                        <i class="fa fa-star empty-star"></i>
-                        <i class="fa fa-star empty-star"></i>
-                        <i class="fa fa-star empty-star"></i>
-                    </div>
-                    <p class="rating-content">Chất lượng trung bình.</p>
-                    <div>
-                        <span class="text-primary">Sửa</span> |
-                        <span class="text-danger">Xóa</span>
-                    </div>
-                </div>
-            </div>
+<!--            <div class="rating-item d-flex">-->
+<!--                <div class="rating-avatar">-->
+<!--                    <img src="https://via.placeholder.com/50" alt="Trần Thị B">-->
+<!--                </div>-->
+<!--                <div class="rating-info ms-3">-->
+<!--                    <div class="d-flex">-->
+<!--                        <p class="rating-name">Trần Thị B</p>-->
+<!--                        <p class="rating-time ms-2">24/02/2025</p>-->
+<!--                    </div>-->
+<!--                    <div class="rating-star">-->
+<!--                        <i class="fa fa-star"></i>-->
+<!--                        <i class="fa fa-star"></i>-->
+<!--                        <i class="fa fa-star empty-star"></i>-->
+<!--                        <i class="fa fa-star empty-star"></i>-->
+<!--                        <i class="fa fa-star empty-star"></i>-->
+<!--                    </div>-->
+<!--                    <p class="rating-content">Chất lượng trung bình.</p>-->
+<!--                    <div>-->
+<!--                        <span class="text-primary">Sửa</span> |-->
+<!--                        <span class="text-danger">Xóa</span>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
+        <div class="flex justify-center mt-4">
+            <ul id="review-pagination" class="flex space-x-2">
+                <!-- Nội dung phân trang sẽ được thêm bằng JS -->
+            </ul>
+        </div>
+
     </div>
 </section>
 <!-- modal bình luận -->
-<!--modal danh gia-->
 <div class="modal fade" id="modalReview" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -256,19 +270,20 @@
                 <div class="d-flex flex-column justify-content-center align-items-center mb-3">
                     <div class="rating">
                             <span class="star" data-rating="1">
-                                <i class="fa-regular fa-star" style="color: #FFD43B;"></i>
+                            <i class="fa-solid fa-star" style="color: #cad1dd;"></i>
                             </span>
                         <span class="star" data-rating="2">
-                                <i class="fa-regular fa-star" style="color: #FFD43B;"></i>
+                            <i class="fa-solid fa-star" style="color: #cad1dd;"></i>
+<!--                                <i class="fa-regular fa-star" style="color: #FFD43B;"></i>-->
                             </span>
                         <span class="star" data-rating="3">
-                                <i class="fa-regular fa-star" style="color: #FFD43B;"></i>
+                               <i class="fa-solid fa-star" style="color: #cad1dd;"></i>
                             </span>
                         <span class="star" data-rating="4">
-                                <i class="fa-regular fa-star" style="color: #FFD43B;"></i>
+                               <i class="fa-solid fa-star" style="color: #cad1dd;"></i>
                             </span>
                         <span class="star" data-rating="5">
-                                <i class="fa-regular fa-star" style="color: #FFD43B;"></i>
+                               <i class="fa-solid fa-star" style="color: #cad1dd;"></i>
                             </span>
 
                     </div>
@@ -400,6 +415,10 @@
 <div class="bg-gray-900 text-white footer">
     <div th:insert="~{/web/fragments/footer}"></div>
 </div>
+
+<!--cdn axios-->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 <!-- Script boostrap -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
@@ -408,22 +427,26 @@
 <!-- JS carousel -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+<!--phan trang-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.min.js"></script>
 <script src="/assets/js/main.js"></script>
 <script src="/assets/js/clickchooseweight.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+
+
 <script th:inline="javascript">
     const productStocks = [[${productStocks}]]
     console.log(productStocks)
     const variantStocks = [[${variantStocks}]]
     console.log('so luong ', variantStocks)
-    const product = [[${product}]]
+    let product = [[${product}]]
     console.log('detail', product)
 
     const productVariants = [[${productVariants}]]
     console.log('bien the', productVariants)
     const relatedProducts = [[${relatedProducts}]]
     console.log(relatedProducts)
-    const reviews = [[${reviews}]]
+    let reviews = [[${reviews}]]
     console.log('review ', reviews)
     var swiper = new Swiper(".mySwiper", {
         direction: "vertical", // Hiển thị dọc
@@ -626,7 +649,7 @@
 
 
 </script>
-
+<script src="/assets/js/product-review.js"></script>
 </body>
 
 </html>
