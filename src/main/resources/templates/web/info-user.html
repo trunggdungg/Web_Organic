@@ -8,6 +8,7 @@
 
     <!-- Script -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
     <!-- icon fontawesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <!-- Boostrap -->
@@ -56,7 +57,7 @@
                  src="https://storage.googleapis.com/a1aa/image/8SI-01SR79j2roiL50GROAG0X_tLv1__s0eZ6j5WF9c.jpg"
                  width="40"/>
             <div class="ml-4">
-                <p class="font-bold">dngtrung973</p>
+                <p class="font-bold" th:text="${user.fullName}">dngtrung973</p>
                 <a class="text-blue-500" href="#">Sửa Hồ Sơ</a>
             </div>
         </div>
@@ -201,18 +202,18 @@
             <h1 class="text-2xl font-bold mb-4">Đổi Mật Khẩu</h1>
             <p class="text-gray-600 mb-6">Thay đổi mật khẩu để bảo mật tài khoản</p>
             <div class="mb-4">
-                <label class="block text-gray-700 mb-2">Mật khẩu hiện tại</label>
-                <input class="w-full border border-gray-300 p-2 rounded" type="password"/>
+                <label class="block text-gray-700 mb-2" >Mật khẩu hiện tại</label>
+                <input class="w-full border border-gray-300 p-2 rounded" id="passWordCurrent" type="password"/>
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 mb-2">Mật khẩu mới</label>
-                <input class="w-full border border-gray-300 p-2 rounded" type="password"/>
+                <input class="w-full border border-gray-300 p-2 rounded" id="passWordNew" type="password"/>
             </div>
             <div class="mb-4">
                 <label class="block text-gray-700 mb-2">Xác nhận mật khẩu mới</label>
-                <input class="w-full border border-gray-300 p-2 rounded" type="password"/>
+                <input class="w-full border border-gray-300 p-2 rounded" id="passWordNewConfirm" type="password"/>
             </div>
-            <button class="bg-red-500 text-white px-4 py-2 rounded">Xác Nhận</button>
+            <button class="bg-red-500 text-white px-4 py-2 rounded" id="btnConfirm">Xác Nhận</button>
         </div>
 
         <!-- Orders Content (Hidden by default) -->
@@ -572,8 +573,8 @@
                         <form id="new-address-form">
                             <div class="grid grid-cols-1 gap-4 mb-4">
                                 <div class="grid grid-cols-2 gap-4">
-                                    <input type="text" placeholder="Họ và tên" class="form-control" required>
-                                    <input type="text" placeholder="Số điện thoại" class="form-control" required>
+                                    <input type="text" placeholder="Họ và tên" id="nameAdd" class="form-control" required>
+                                    <input type="text" placeholder="Số điện thoại" id="phoneAdd" class="form-control" required>
                                 </div>
                                 <div class="grid grid-cols-3 gap-4">
                                     <select id="province-select" class="form-select" required>
@@ -587,7 +588,7 @@
                                     </select>
                                 </div>
                                 <div>
-                                    <textarea placeholder="Địa chỉ cụ thể" class="form-control" required></textarea>
+                                    <textarea placeholder="Địa chỉ cụ thể" id="addDt" class="form-control" required></textarea>
                                 </div>
                             </div>
                             <div class="form-check mb-4">
@@ -596,10 +597,12 @@
                             </div>
                         </form>
                     </div>
+                    <form id="addressForm">
                     <div class="modal-footer">
                         <button type="button" id="back-modal-btn" class="btn btn-secondary" data-bs-dismiss="modal">Trở lại</button>
                         <button type="submit" id="submit-new-address" form="new-address-form" class="btn btn-primary">HOÀN THÀNH</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -612,7 +615,8 @@
 <div class="bg-gray-900 text-white footer">
     <div th:insert="~{/web/fragments/footer}"></div>
 </div>
-
+<!--cdn axios-->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <!-- JS carousel -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <!-- Script boostrap -->
@@ -622,12 +626,14 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script src="/assets/js/main.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 
 <script src="/assets/js/modal.js"></script>
 <script src="/assets/js/loadProvin-District-Ward.js" ></script>
-
+<script src="/assets/js/auth.js"></script>
 
 <script th:inline="javascript">
+
     const orderPendings = [[${orderPendings}]];
     console.log("orderPendings", orderPendings);
     const orderProcessings = [[${orderProcessings}]];
@@ -715,6 +721,7 @@
         }
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="/assets/js/address-info.js"></script>
 </body>
 
