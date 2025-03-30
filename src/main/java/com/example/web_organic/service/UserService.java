@@ -2,6 +2,9 @@ package com.example.web_organic.service;
 import com.example.web_organic.entity.Address;
 import com.example.web_organic.entity.TokenConfirm;
 import com.example.web_organic.entity.User;
+import com.example.web_organic.exception.GlobalExceptionHandler;
+import com.example.web_organic.exception.MethodNotAllowedException;
+import com.example.web_organic.exception.UnauthorizedException;
 import com.example.web_organic.modal.Enum.Token_Type;
 import com.example.web_organic.modal.Enum.User_Role;
 import com.example.web_organic.modal.request.LoginRequest;
@@ -18,9 +21,12 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.nio.file.AccessDeniedException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -159,10 +165,11 @@ public class UserService {
     }
 
     public Page<User> getAllUsers(int page, int pageSize) {
-        return userRepository.findAll(PageRequest.of(page - 1, pageSize));
+        Pageable pageable = PageRequest.of(page - 1, pageSize, Sort.by(Sort.Direction.DESC, "createdAt"));
+        return userRepository.findAllUser(pageable);
     }
 
-    public void create(UpSertUserRequestAdmin upSertUserRequestAdmin) {
+    public User create(UpSertUserRequestAdmin upSertUserRequestAdmin) {
         Optional<User> userOptional = userRepository.findByEmail(upSertUserRequestAdmin.getEmail());
         if (userOptional.isPresent()) {
             throw new RuntimeException("Email is already taken");
@@ -172,11 +179,46 @@ public class UserService {
             .email(upSertUserRequestAdmin.getEmail())
             .password(bCryptPasswordEncoder.encode(upSertUserRequestAdmin.getPassword()))
             .role(upSertUserRequestAdmin.getRole())
-            .isActivated(true)
-            .avatar("/static/assets/img/avatar-trang-4.jpg")
+            .isActivated(upSertUserRequestAdmin.getIsActive())
+            .avatar("/assets/img/avatar-trang-4.jpg")
             .createdAt(LocalDateTime.now())
             .updatedAt(LocalDateTime.now())
             .build();
-        userRepository.save(user);
+      return userRepository.save(user);
+
     }
+    public User update(UpSertUserRequestAdmin upSertUserRequestAdmin) {
+     User user = (User) httpSession.getAttribute("CURRENT_USER");
+        if (user == null) {
+            throw new RuntimeException("User not logged in");
+        }
+
+        // Nếu không phải admin,chi cần kiểm tra người dùng đang đăng nhập có phải là admin hay không
+        if (!user.getRole().equals(User_Role.ADMIN)) {
+                throw new RuntimeException("Ban khong co quyen thuc hien chuc nang nay");
+        }
+
+        user.setFullName(upSertUserRequestAdmin.getFullName());
+        user.setRole(upSertUserRequestAdmin.getRole());
+        user.setEmail(upSertUserRequestAdmin.getEmail());
+        user.setPassword(bCryptPasswordEncoder.encode(upSertUserRequestAdmin.getPassword()));
+        user.setIsActivated(upSertUserRequestAdmin.getIsActive());
+        user.setUpdatedAt(LocalDateTime.now());
+
+        return userRepository.save(user);
+    }
+
+
+    public void delete(int id) {
+        User user = (User) httpSession.getAttribute("CURRENT_USER");
+        if (user == null) {
+            throw new UnauthorizedException("Bạn chưa đăng nhập");
+        }
+        if (!user.getRole().equals(User_Role.ADMIN)) {
+            throw new MethodNotAllowedException("Bạn không có quyền thực hiện chức năng này");
+        }
+        userRepository.deleteById(id);
+    }
+
+
 }
