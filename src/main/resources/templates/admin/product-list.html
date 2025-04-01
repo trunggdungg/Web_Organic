@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sản phẩm - Admin Dashboard</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="/admin-assets/css/style.css">
+
+</head>
+<body class="bg-gray-100">
+<div th:insert="~{/admin/fragments/nav}"></div>
+<!-- Sidebar -->
+
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="container-fluid py-4">
+        <!-- Page Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="text-2xl font-semibold">Quản lý sản phẩm</h2>
+                <p class="text-gray-500">Quản lý tất cả sản phẩm organic</p>
+            </div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-outline-primary" onclick="exportProducts()">
+                    <i class="fas fa-download me-2"></i>Xuất Excel
+                </button>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal"
+                        id="btn-add-modal">
+                    <i class="fas fa-plus me-2"></i>Thêm sản phẩm
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <p class="text-gray-500 mb-1">Tổng sản phẩm</p>
+                                <h3 class="text-2xl font-bold">156</h3>
+                            </div>
+                            <div class="rounded-circle bg-primary bg-opacity-10 p-3">
+                                <i class="fas fa-box text-primary"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <p class="text-gray-500 mb-1">Đang giảm giá</p>
+                                <h3 class="text-2xl font-bold">12</h3>
+                            </div>
+                            <div class="rounded-circle bg-success bg-opacity-10 p-3">
+                                <i class="fas fa-percent text-success"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <p class="text-gray-500 mb-1">Sản phẩm nổi bật</p>
+                                <h3 class="text-2xl font-bold">8</h3>
+                            </div>
+                            <div class="rounded-circle bg-warning bg-opacity-10 p-3">
+                                <i class="fas fa-star text-warning"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <p class="text-gray-500 mb-1">Mới trong tháng</p>
+                                <h3 class="text-2xl font-bold">15</h3>
+                            </div>
+                            <div class="rounded-circle bg-info bg-opacity-10 p-3">
+                                <i class="fas fa-plus-circle text-info"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product List Card -->
+        <div class="card">
+            <div class="card-body">
+                <!-- Filters -->
+                <div class="row g-3 mb-4">
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" placeholder="Tìm kiếm sản phẩm..." id="searchInput">
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select" id="categoryFilter">
+                            <option value="">Tất cả danh mục</option>
+                            <option value="rau-cu">Rau củ</option>
+                            <option value="trai-cay">Trái cây</option>
+                            <option value="ngu-coc">Ngũ cốc</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select" id="brandFilter">
+                            <option value="">Tất cả thương hiệu</option>
+                            <option value="organic-farm">Organic Farm</option>
+                            <option value="green-life">Green Life</option>
+                            <option value="natural-food">Natural Food</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <select class="form-select" id="statusFilter">
+                            <option value="">Tất cả trạng thái</option>
+                            <option value="active">Hoạt động</option>
+                            <option value="inactive">Không hoạt động</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-outline-secondary w-100" onclick="resetFilters()">
+                                <i class="fas fa-redo me-2"></i>Đặt lại
+                            </button>
+                            <button class="btn btn-primary w-100" onclick="applyFilters()">
+                                <i class="fas fa-filter me-2"></i>Lọc
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <table id="productTable" class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>
+                            <input type="checkbox" class="form-check-input" id="selectAll">
+                        </th>
+                        <th>Hình ảnh</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Thương hiệu</th>
+                        <th>Danh mục</th>
+                        <th>Mô tả</th>
+                        <th>Trạng thái</th>
+                        <th>Giảm giá</th>
+                        <th>Nổi bật</th>
+                        <th>Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody id="product-list">
+<!--                    <tr th:each="product : ${products.getContent()}">-->
+<!--                        <td class="align-middle"><input type="checkbox" class="form-check-input product-select"></td>-->
+<!--                        <td class="align-middle"><img th:src="${product.imageUrl}" alt="Product" class="product-image w-50 h-50"></td>-->
+<!--                        <td class="align-middle" th:text="${product.name}">Rau cải xanh organic</td>-->
+<!--                        <td class="align-middle" th:text="${product.brand.nameBrand}">Organic Farm</td>-->
+<!--                        <td class="align-middle" th:text="${product.category.name}">Rau củ</td>-->
+<!--                        <td class="align-middle">-->
+<!--                            <span th:if="${product.status}" class="status-active">Hoạt động</span>-->
+<!--                            <span th:if="${!product.status}" class="status-inactive">Không hoạt động</span>-->
+<!--                        </td>-->
+
+<!--                        <td class="align-middle"><span class="discount-badge" th:text="${product.discount}+ '%'">-15%</span></td>-->
+<!--                        <td class="align-middle"><span class="featured-badge">Nổi bật</span></td>-->
+<!--                        <td class="align-middle">-->
+<!--                            <div class="d-flex gap-2">-->
+<!--                                <button class="btn btn-sm btn-info" onclick="openModalUpdateProduct(${product.id})"-->
+<!--                                        title="Chỉnh sửa">-->
+<!--                                    <i class="fas fa-edit"></i>-->
+<!--                                </button>-->
+<!--                                <button class="btn btn-sm btn-danger" onclick="deleteProductAdmin(${product.id})" title="Xóa">-->
+<!--                                    <i class="fas fa-trash"></i>-->
+<!--                                </button>-->
+<!--                            </div>-->
+<!--                        </td>-->
+<!--                    </tr>-->
+
+                    </tbody>
+                </table>
+
+                <!-- Bulk Actions -->
+                <div class="d-flex justify-content-between align-items-center mt-3">
+                    <div class="bulk-actions" style="display: none;">
+                        <button class="btn btn-sm btn-outline-primary me-2" onclick="bulkAction('activate')">
+                            <i class="fas fa-check-circle me-2"></i>Kích hoạt
+                        </button>
+                        <button class="btn btn-sm btn-outline-warning me-2" onclick="bulkAction('deactivate')">
+                            <i class="fas fa-ban me-2"></i>Vô hiệu hóa
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="bulkAction('delete')">
+                            <i class="fas fa-trash me-2"></i>Xóa
+                        </button>
+                    </div>
+                    <div class="flex justify-center items-center w-full mt-4" th:if="${totalPages > 1}">
+                        <ul class="flex space-x-2">
+                            <!-- Nút "Trước" (Disabled nếu trang hiện tại là 1) -->
+                            <li th:classappend="${currentPage == 1} ? 'opacity-50 pointer-events-none' : ''">
+                                <a th:href="@{/admin/product(page=${currentPage - 1})}"
+                                   class="px-4 py-2 border rounded-md">Trước</a>
+                            </li>
+
+                            <!-- Số trang -->
+                            <li th:each="i : ${#numbers.sequence(1, totalPages)}">
+                                <a th:href="@{/admin/user-list(page=${i})}"
+                                   th:text="${i}"
+                                   th:classappend="${i == currentPage} ? 'border px-2 py-2 rounded-md bg-blue-500 text-white' : 'border px-2 py-2 rounded-md'">
+                                </a>
+                            </li>
+
+                            <!-- Nút "Sau" (Disabled nếu trang hiện tại là trang cuối) -->
+                            <li th:classappend="${currentPage == totalPages} ? 'opacity-50 pointer-events-none' : ''">
+                                <a th:href="@{/admin/product(page=${currentPage + 1})}"
+                                   class="px-4 py-2 border rounded-md">Sau</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Product Modal -->
+<div class="modal modal-slide-right fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-slide-right">
+        <div class="modal-content">
+            <div class="modal-header ">
+                <h5 class="modal-title" id="productModalLabel">Thêm sản phẩm mới</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="productForm">
+                    <div class="mb-3">
+                        <label class="form-label">Hình ảnh sản phẩm</label>
+                        <div class="d-flex align-items-center">
+                            <input type="file" class="form-control me-2" name="image" accept="image/*" id="imageProduct" required>
+                            <button type="button" class="btn-close" id="btn-delete-image"  aria-label="Close"></button>
+
+                        </div>
+                        <button type="button" class="btn btn-secondary mt-2" id="btn-show-uploaded-images">Chọn ảnh đã tải</button>
+                    </div>
+                    <!-- Khu vực hiển thị ảnh đã chọn -->
+                    <div id="selected-image-preview" class="mb-2">
+                        <img id="selected-image" src="" class="img-fluid" style="max-height: 200px; display: none;">
+                    </div>
+                    <!-- Modal chọn ảnh đã tải -->
+                    <div class="modal fade" id="uploadedImagesModal" tabindex="-1">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Chọn ảnh đã tải</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row" id="uploaded-images-container">
+                                        <!-- Ảnh sẽ được load động ở đây -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="mb-3">
+                        <label class="form-label">Tên sản phẩm</label>
+                        <input type="text" class="form-control" name="name" id="nameProduct" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Thương hiệu</label>
+                        <select class="form-select" name="brand" id="brandProduct" required>
+                            <option value="">Chọn thương hiệu</option>
+                            <option th:each="brand : ${brands}" th:value="${brand.id}" th:text="${brand.nameBrand}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Danh mục</label>
+                        <select class="form-select" name="category" id="categoryProduct" required>
+                            <option value="">Chọn danh mục</option>
+                            <option th:each="category : ${categories}" th:value="${category.id}" th:text="${category.name}"></option>
+
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Trạng thái</label>
+                        <select class="form-select" name="status" id="statusProduct" required>
+                            <option value="active">Hoạt động</option>
+                            <option value="inactive">Không hoạt động</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Giảm giá (%)</label>
+                        <input type="number" class="form-control" name="discount" id="discountProduct" min="0" max="100" value="0">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Mô tả</label>
+                        <textarea class="form-control" name="description" id="descriptionProduct" rows="4" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" name="is_featured" id="isFeatured">
+                            <label class="form-check-label" for="isFeatured">Sản phẩm nổi bật</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                <button type="button" class="btn btn-primary"  id="btn-save-product">Lưu thay đổi</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Mobile Menu Toggle Button -->
+<button class="btn btn-primary d-md-none position-fixed bottom-4 right-4 rounded-circle shadow" style="z-index: 1001;"
+        onclick="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+</button>
+
+<!-- Required Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<script src="/admin-assets/js/main.js"></script>
+<script th:inline="javascript">
+    let  products = [[${products}]];
+    console.log("products", products);
+
+    document.getElementById('btn-delete-image').addEventListener('click', () => {
+        document.getElementById('imageProduct').value = '';
+    });
+    window.resetFilters = function () {
+        document.getElementById('searchInput').value = '';
+        document.getElementById('categoryFilter').value = '';
+        document.getElementById('brandFilter').value = '';
+        document.getElementById('statusFilter').value = '';
+        applyFilters();
+    };
+
+    window.applyFilters = function () {
+        const search = document.getElementById('searchInput').value.toLowerCase();
+        const category = document.getElementById('categoryFilter').value;
+        const brand = document.getElementById('brandFilter').value;
+        const status = document.getElementById('statusFilter').value;
+
+        // Implement your filter logic here
+        console.log('Applying filters:', {search, category, brand, status});
+    };
+
+    window.bulkAction = function (action) {
+        const selectedProducts = Array.from(document.querySelectorAll('.product-select:checked'))
+            .map(checkbox => checkbox.closest('tr').querySelector('td:nth-child(2)').textContent);
+
+        console.log(`Performing ${action} on products:`, selectedProducts);
+        // Implement your bulk action logic here
+    };
+
+    window.exportProducts = function () {
+        console.log('Exporting products to Excel...');
+        // Implement your export logic here
+    };
+
+
+
+    // Initialize with all submenus closed
+    document.querySelectorAll('.sidebar-submenu').forEach(submenu => {
+        submenu.classList.remove('show');
+    });
+
+
+    // Initialize bulk actions
+    document.getElementById('selectAll').addEventListener('change', function () {
+        const checkboxes = document.querySelectorAll('.product-select');
+        checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+        updateBulkActionsVisibility();
+    });
+
+    document.querySelectorAll('.product-select').forEach(checkbox => {
+        checkbox.addEventListener('change', updateBulkActionsVisibility);
+    });
+
+
+    // Helper function for bulk actions visibility
+    function updateBulkActionsVisibility() {
+        const checkedCount = document.querySelectorAll('.product-select:checked').length;
+        const bulkActions = document.querySelector('.bulk-actions');
+        bulkActions.style.display = checkedCount > 0 ? 'block' : 'none';
+    }
+</script>
+<script src="/admin-assets/js/product.js"></script>
+
+
+</body>
+</html>
