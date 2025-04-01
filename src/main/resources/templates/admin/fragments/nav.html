@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -14,7 +14,7 @@
         <h4 class="m-0 font-semibold text-gray-800">Soybean Admin</h4>
     </div>
     <div class="sidebar-menu">
-        <a href="/admin/home" class="sidebar-menu-item active">
+        <a href="/admin/home" class="sidebar-menu-item ">
             <i class="fas fa-home"></i>
             Dashboard
         </a>
@@ -26,7 +26,7 @@
             </div>
             <div class="sidebar-submenu">
                 <a  th:href="@{/admin/order}"
-                    th:classappend="${type == null ? 'active' : ''}"
+
                     class="sidebar-menu-item">
                     <i class="fas fa-shopping-cart"></i>
                     Tất cả đơn hàng
@@ -48,8 +48,8 @@
                     <i class="fas fa-truck"></i>
                     Đang giao hàng
                 </a>
-                <a th:href="@{/admin/order(type='delivered')}"
-                   th:classappend="${type == 'delivered' ? 'active' : ''}" class="sidebar-menu-item">
+                <a th:href="@{/admin/order(type='completed')}"
+                   th:classappend="${type == 'completed' ? 'active' : ''}" class="sidebar-menu-item">
                     <i class="fas fa-check-circle"></i>
                     Đã hoàn thành
                 </a>
@@ -67,15 +67,15 @@
                 QUẢN LÝ SẢN PHẨM
             </div>
             <div class="sidebar-submenu">
-                <a href="products-list.html" class="sidebar-menu-item">
+                <a href="/admin/product" class="sidebar-menu-item">
                     <i class="fas fa-leaf"></i>
                     Sản phẩm Organic
                 </a>
-                <a href="categories.html" class="sidebar-menu-item">
+                <a href="/admin/category" class="sidebar-menu-item">
                     <i class="fas fa-tags"></i>
                     Danh mục
                 </a>
-                <a href="inventory.html" class="sidebar-menu-item">
+                <a href="/admin/product-variant" class="sidebar-menu-item">
                     <i class="fas fa-warehouse"></i>
                     Kho hàng
                 </a>
@@ -83,6 +83,23 @@
                     <i class="fas fa-percent"></i>
                     Khuyến mãi
                 </a>
+            </div>
+        </div>
+
+        <div class="sidebar-section mb-3">
+            <div class="sidebar-section-header">
+                    QUẢN LÝ BÀI VIẾT
+            </div>
+            <div class="sidebar-submenu">
+                <a href="products-list.html" class="sidebar-menu-item">
+                    <i class="fas fa-leaf"></i>
+                   Danh sách bài viết
+                </a>
+                <a href="/admin/create-blog" class="sidebar-menu-item">
+                    <i class="fas fa-tags"></i>
+                  Tạo bài viết
+                </a>
+
             </div>
         </div>
 
@@ -134,7 +151,7 @@
                 QUẢN LÝ NGƯỜI DÙNG
             </div>
             <div class="sidebar-submenu">
-                <a href="user-list.html" class="sidebar-menu-item">
+                <a href="/admin/user-list" class="sidebar-menu-item">
                     <i class="fas fa-users"></i>
                     Danh sách người dùng
                 </a>
@@ -150,5 +167,23 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let currentPath = window.location.pathname; // Lấy đường dẫn hiện tại
+        let menuItem = document.querySelector(`a[href='/admin/order']`);
+        if (menuItem && window.location.pathname === "/admin/order" && !window.location.search) {
+            menuItem.classList.add("active");
+        }
+
+        let menuHome = document.querySelector(`a[href='/admin/home']`);
+        if (menuHome && currentPath === "/admin/home") {
+            menuHome.classList.add("active");
+        }
+    });
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/assets/js/sweet.js/"></script>
 </body>
 </html>
