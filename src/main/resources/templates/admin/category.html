@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Danh mục sản phẩm - Admin Dashboard</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="/admin-assets/css/style.css">
+
+
+</head>
+<body class="bg-gray-100">
+<!-- Sidebar -->
+<div th:insert="~{/admin/fragments/nav}"></div>
+
+<!-- Main Content -->
+<div class="main-content">
+  <div class="container-fluid py-4">
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h2 class="text-2xl font-semibold">Quản lý danh mục</h2>
+        <p class="text-gray-500">Quản lý tất cả danh mục sản phẩm</p>
+      </div>
+      <div class="d-flex gap-2">
+        <button class="btn btn-outline-primary" onclick="exportCategories()">
+          <i class="fas fa-download me-2"></i>Xuất Excel
+        </button>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#categoryModal" id="btn-add-modal">
+          <i class="fas fa-plus me-2"></i>Thêm danh mục
+        </button>
+      </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row g-4 mb-4">
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <p class="text-gray-500 mb-1">Tổng danh mục</p>
+                <h3 class="text-2xl font-bold">24</h3>
+              </div>
+              <div class="rounded-circle bg-primary bg-opacity-10 p-3">
+                <i class="fas fa-tags text-primary"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <p class="text-gray-500 mb-1">Hoạt động</p>
+                <h3 class="text-2xl font-bold">20</h3>
+              </div>
+              <div class="rounded-circle bg-success bg-opacity-10 p-3">
+                <i class="fas fa-check-circle text-success"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <p class="text-gray-500 mb-1">Không hoạt động</p>
+                <h3 class="text-2xl font-bold">4</h3>
+              </div>
+              <div class="rounded-circle bg-danger bg-opacity-10 p-3">
+                <i class="fas fa-times-circle text-danger"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center">
+              <div>
+                <p class="text-gray-500 mb-1">Mới trong tháng</p>
+                <h3 class="text-2xl font-bold">3</h3>
+              </div>
+              <div class="rounded-circle bg-info bg-opacity-10 p-3">
+                <i class="fas fa-plus-circle text-info"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Category List Card -->
+    <div class="card">
+      <div class="card-body">
+        <!-- Filters -->
+        <div class="row g-3 mb-4">
+          <div class="col-md-3">
+            <input type="text" class="form-control" placeholder="Tìm kiếm danh mục..." id="searchInput">
+          </div>
+          <div class="col-md-2">
+            <select class="form-select" id="typeFilter">
+              <option value="">Tất cả loại</option>
+              <option value="product">Sản phẩm</option>
+              <option value="service">Dịch vụ</option>
+              <option value="blog">Blog</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <select class="form-select" id="statusFilter">
+              <option value="">Tất cả trạng thái</option>
+              <option value="active">Hoạt động</option>
+              <option value="inactive">Không hoạt động</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <div class="d-flex gap-2">
+              <button class="btn btn-outline-secondary w-100" onclick="resetFilters()">
+                <i class="fas fa-redo me-2"></i>Đặt lại
+              </button>
+              <button class="btn btn-primary w-100" onclick="applyFilters()">
+                <i class="fas fa-filter me-2"></i>Lọc
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <table id="categoryTable" class="table table-striped">
+          <thead>
+          <tr>
+            <th>
+              <input type="checkbox" class="form-check-input" id="selectAll">
+            </th>
+            <th>ID</th>
+            <th>Tên danh mục</th>
+            <th>Slug</th>
+            <th>Loại</th>
+            <th>Trạng thái</th>
+            <th>Ngày tạo</th>
+            <th>Ngày cập nhật</th>
+            <th>Thao tác</th>
+          </tr>
+          </thead>
+          <tbody id="category-list">
+<!--          <tr th:each="category : ${categories}">-->
+<!--            <td><input type="checkbox" class="form-check-input category-select"></td>-->
+<!--            <td>1</td>-->
+<!--            <td th:text="${category.name}">Rau củ quả</td>-->
+<!--            <td th:text="${category.slug}">rau-cu-qua</td>-->
+<!--            <td>-->
+<!--                <span th:switch="${#strings.toUpperCase(category.type)}">-->
+<!--                    <span th:case="'PRODUCT'">Sản phẩm</span>-->
+<!--                    <span th:case="'BLOG'">Bài viết</span>-->
+<!--                    <span th:case="*">Unkonow</span>-->
+<!--                </span>-->
+<!--            </td>-->
+
+<!--            <td>-->
+<!--              <span class="status-active" th:text="${category.status == true} ? 'Hoạt động' : 'Vô hiệu hóa'"-->
+<!--                    th:classappend="${category.status} ? 'status-active' : 'status-inactive'">>Hoạt động-->
+<!--              </span>-->
+<!--            </td>-->
+<!--            <td th:text="${#temporals.format(category.createdAt, 'dd/MMM/yyyy')}">2024-03-15</td>-->
+<!--            <td th:text="${#temporals.format(category.updatedAt, 'dd/MMM/yyyy')}">2024-03-15</td>-->
+<!--            <td>-->
+<!--              <div class="d-flex gap-2">-->
+<!--                <button class="btn btn-sm btn-info" onclick="openModalUpdateCategory(${category.id})" title="Chỉnh sửa">-->
+<!--                  <i class="fas fa-edit"></i>-->
+<!--                </button>-->
+<!--                <button class="btn btn-sm btn-danger" onclick="deleteCategory(1)" title="Xóa">-->
+<!--                  <i class="fas fa-trash"></i>-->
+<!--                </button>-->
+<!--              </div>-->
+<!--            </td>-->
+<!--          </tr>-->
+          <!-- More category rows... -->
+          </tbody>
+        </table>
+
+        <!-- Bulk Actions -->
+        <div class="d-flex justify-content-between align-items-center mt-3">
+          <div class="bulk-actions" style="display: none;">
+            <button class="btn btn-sm btn-outline-primary me-2" onclick="bulkAction('activate')">
+              <i class="fas fa-check-circle me-2"></i>Kích hoạt
+            </button>
+            <button class="btn btn-sm btn-outline-warning me-2" onclick="bulkAction('deactivate')">
+              <i class="fas fa-ban me-2"></i>Vô hiệu hóa
+            </button>
+            <button class="btn btn-sm btn-outline-danger" onclick="bulkAction('delete')">
+              <i class="fas fa-trash me-2"></i>Xóa
+            </button>
+          </div>
+          <div class="pagination-info">
+            Hiển thị 1-10 của 24 danh mục
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Category Drawer -->
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<div class="modal modal-slide-right fade" id="categoryModal" tabindex="-1" aria-labelledby="categoryModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-slide-right">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="categoryModalLabel">Thêm danh mục mới</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form id="categoryForm">
+          <div class="mb-3">
+            <label class="form-label">Tên danh mục</label>
+            <input type="text" class="form-control" name="name" id="nameCategory" required>
+          </div>
+<!--          <div class="mb-3">-->
+<!--            <label class="form-label">Slug</label>-->
+<!--            <input type="text" class="form-control" name="slug" id="slugCategory" required>-->
+<!--          </div>-->
+          <div class="mb-3">
+            <label class="form-label">Loại</label>
+            <select class="form-select" name="type" id="typeCategory" required>
+                <option value="">----------------Chọn danh mục----------------</option>
+              <option value="PRODUCT">Sản phẩm</option>
+              <option value="BLOG">Bài viết</option>
+
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Trạng thái</label>
+            <select class="form-select" name="status" id="statusCategory" required>
+              <option value="">----------------Chọn trạng thái----------------</option>
+              <option value="true">Hoạt động</option>
+              <option value="false">Vô hiệu hóa</option>
+            </select>
+          </div>
+        </form>
+      </div>
+      <form id="formCategory">
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+        <button type="button" class="btn btn-primary" id="btn-save-category">Lưu thay đổi</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Mobile Menu Toggle Button -->
+<button class="btn btn-primary d-md-none position-fixed bottom-4 right-4 rounded-circle shadow" style="z-index: 1001;" onclick="toggleSidebar()">
+  <i class="fas fa-bars"></i>
+</button>
+
+<!-- Required Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<script src="/admin-assets/js/main.js"></script>
+<script th:inline="javascript">
+  let categories = [[${categories}]];
+  console.log('Categories:', categories);
+
+  window.closeDrawer = function() {
+    const drawer = document.getElementById('categoryDrawer');
+    const overlay = document.getElementById('drawerOverlay');
+
+    drawer.classList.remove('show');
+    overlay.classList.remove('show');
+    document.body.style.overflow = '';
+  };
+
+  window.toggleSidebar = function() {
+    document.querySelector('.sidebar').classList.toggle('show');
+  };
+
+  window.resetFilters = function() {
+    document.getElementById('searchInput').value = '';
+    document.getElementById('typeFilter').value = '';
+    document.getElementById('statusFilter').value = '';
+    applyFilters();
+  };
+
+  window.applyFilters = function() {
+    const search = document.getElementById('searchInput').value.toLowerCase();
+    const type = document.getElementById('typeFilter').value;
+    const status = document.getElementById('statusFilter').value;
+
+    // Implement your filter logic here
+    console.log('Applying filters:', { search, type, status });
+  };
+
+  window.bulkAction = function(action) {
+    const selectedCategories = Array.from(document.querySelectorAll('.category-select:checked'))
+            .map(checkbox => checkbox.closest('tr').querySelector('td:nth-child(2)').textContent);
+
+    console.log(`Performing ${action} on categories:`, selectedCategories);
+    // Implement your bulk action logic here
+  };
+
+  window.exportCategories = function() {
+    console.log('Exporting categories to Excel...');
+    // Implement your export logic here
+  };
+
+
+  window.deleteCategory = function(categoryId) {
+    if (confirm('Bạn có chắc chắn muốn xóa danh mục này?')) {
+      console.log('Deleting category:', categoryId);
+      // Implement your delete logic here
+    }
+  };
+
+    // Initialize with all submenus closed
+    document.querySelectorAll('.sidebar-submenu').forEach(submenu => {
+      submenu.classList.remove('show');
+    });
+
+
+    // Initialize bulk actions
+    document.getElementById('selectAll').addEventListener('change', function() {
+      const checkboxes = document.querySelectorAll('.category-select');
+      checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+      updateBulkActionsVisibility();
+    });
+
+    document.querySelectorAll('.category-select').forEach(checkbox => {
+      checkbox.addEventListener('change', updateBulkActionsVisibility);
+    });
+
+    // Initialize form submission
+    document.getElementById('categoryForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Add your form submission logic here
+      closeDrawer();
+    });
+
+    // Initialize overlay click handler
+    document.getElementById('drawerOverlay').addEventListener('click', closeDrawer);
+
+  // Helper function for bulk actions visibility
+  function updateBulkActionsVisibility() {
+    const checkedCount = document.querySelectorAll('.category-select:checked').length;
+    const bulkActions = document.querySelector('.bulk-actions');
+    bulkActions.style.display = checkedCount > 0 ? 'block' : 'none';
+  }
+</script>
+<script src="/admin-assets/js/category.js"></script>
+</body>
+</html>
