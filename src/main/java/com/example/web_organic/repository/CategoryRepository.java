@@ -12,4 +12,6 @@ public interface CategoryRepository extends JpaRepository<Category, Integer> {
     List<Category> findByTypeAndStatusTrue(Category_Type type);
 
     Category findBySlug(String type);
+
+    Category findByName(String name);
 }
