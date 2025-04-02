@@ -217,7 +217,7 @@
 
                             <!-- Số trang -->
                             <li th:each="i : ${#numbers.sequence(1, totalPages)}">
-                                <a th:href="@{/admin/user-list(page=${i})}"
+                                <a th:href="@{/admin/product(page=${i})}"
                                    th:text="${i}"
                                    th:classappend="${i == currentPage} ? 'border px-2 py-2 rounded-md bg-blue-500 text-white' : 'border px-2 py-2 rounded-md'">
                                 </a>
