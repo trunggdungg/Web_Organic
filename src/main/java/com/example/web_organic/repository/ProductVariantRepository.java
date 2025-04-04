@@ -15,4 +15,6 @@ public interface ProductVariantRepository extends JpaRepository<ProductVariants,
 
 //    lấy bien tể tru của san pham
     ProductVariants findByProductIdAndIsDefaultTrue(Integer productId);
+
+    List<ProductVariants> findByProduct_IdIn(List<Integer> productIds);
 }
