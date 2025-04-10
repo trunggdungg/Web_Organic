@@ -20,4 +20,29 @@ public class BrandService {
     public List<Brand> getBrandByStatus() {
         return brandRepository.findByStatus(true);
     }
+
+    public Brand createBrand(String nameBrand, String imageUrl, Boolean status) {
+        Brand brand = new Brand();
+        brand.setNameBrand(nameBrand);
+        brand.setLogo(imageUrl);
+        brand.setStatus(status);
+        brand.setSlug(nameBrand.toLowerCase().replaceAll(" ", "-"));
+        return brandRepository.save(brand);
+    }
+
+    public Brand updateBrand(Integer id, String nameBrand, String imageUrl, Boolean status) {
+        Brand brand = brandRepository.findById(id).orElseThrow(() -> new RuntimeException("Brand not found"));
+        brand.setNameBrand(nameBrand);
+        if (imageUrl != null) {
+            brand.setLogo(imageUrl);
+        }
+        brand.setStatus(status);
+        brand.setSlug(nameBrand.toLowerCase().replaceAll(" ", "-"));
+        return brandRepository.save(brand);
+    }
+
+    public void deleteBrand(Integer id) {
+        Brand brand = brandRepository.findById(id).orElseThrow(() -> new RuntimeException("Brand not found"));
+        brandRepository.delete(brand);
+    }
 }
