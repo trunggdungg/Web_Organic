@@ -6,8 +6,8 @@ const renderProductList = (products) => {
         html += `
             <tr data-product-id="${product.id}">
                 <td class="align-middle"><input type="checkbox" class="form-check-input product-select"></td>
-                <td class="align-middle"><img src="${product.imageUrl}" alt="Product" class="product-image w-50 h-50"></td>
-                <td class="align-middle">${product.name}</td>
+                <td class="align-middle"><img src="${product.imageUrl}" alt="Product" class="product-image " style="height: 100px ;width: 100px !important; max-width: none"></td>
+                <td class="align-middle"> ${product.name.length > 20 ? product.name.substring(0, 20) + '...' : product.name}</td>
                 <td class="align-middle">${product.brand.nameBrand}</td>
                 <td class="align-middle">${product.category.name}</td>
                 <td class="align-middle">
@@ -332,8 +332,16 @@ const updateProduct = async () => {
         isFeatured: isFeaturedProductEl.checked
     };
     console.log("request", request);
-
+    const isActive = statusProductEl.value === 'active';
     try {
+        // Nếu bật trạng thái active, kiểm tra sản phẩm có biến thể chưa
+        if (isActive) {
+            const variantResponse = await axios.get(`/api/admin/product/variants/${idUpdateProduct}`);
+            if (variantResponse.data.length === 0) {
+                alertWarning("Sản phẩm chưa có biến thể, không thể kích hoạt!");
+                return;
+            }
+        }
         // Cập nhật sản phẩm
         const productResponse = await axios.put(`/api/admin/product/update/${idUpdateProduct}`, request);
 
