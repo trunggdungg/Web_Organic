@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Organic Food</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .gradient-card {
+            border-radius: 8px;
+            padding: 15px;
+            color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            height: 100%;
+        }
+        .gradient-card:hover {
+            transform: translateY(-3px);
+        }
+        .gradient-1 {
+            background: linear-gradient(135deg, #4CAF50, #2E7D32);
+        }
+        .gradient-2 {
+            background: linear-gradient(135deg, #FF9800, #F57C00);
+        }
+        .gradient-3 {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+        }
+        .gradient-4 {
+            background: linear-gradient(135deg, #9C27B0, #7B1FA2);
+        }
+        .stat-change {
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            border-radius: 8px;
+            margin-left: 8px;
+            font-weight: 600;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .stat-change.positive {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .stat-change.negative {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .card {
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border: none;
+            margin-bottom: 15px;
+            height: 100%;
+        }
+        .card-header {
+            background-color: transparent;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 12px 15px;
+        }
+        .card-body {
+            padding: 12px 15px;
+        }
+        .table th {
+            font-weight: 600;
+            color: #555;
+            font-size: 0.875rem;
+        }
+        .table td {
+            font-size: 0.875rem;
+            vertical-align: middle;
+        }
+        .badge {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+        }
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        .chart-container {
+            position: relative;
+            height: 250px;
+        }
+        .table-responsive {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .list-group-item {
+            padding: 10px 15px;
+        }
+        .btn-sm {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+        }
+    </style>
+    <link rel="stylesheet" href="/admin-assets/css/style.css">
+</head>
+<body class="bg-gray-100">
+<!-- Sidebar -->
+<div th:insert="~{/admin/fragments/nav}"></div>
+
+<!-- Main Content -->
+<div class="main-content" id="content">
+    <div class="container-fluid py-3">
+        <!-- Welcome Message -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2 class="text-xl font-semibold mb-1">Dashboard</h2>
+                <p class="text-gray-500 text-sm mb-0">Chào mừng bạn đến với trang quản lý Organic Food</p>
+            </div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-sm btn-outline-primary">
+                    <i class="fas fa-download me-1"></i>Xuất báo cáo
+                </button>
+                <button class="btn btn-sm btn-primary">
+                    <i class="fas fa-sync-alt me-1"></i>Cập nhật
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row g-3 mb-3">
+            <div class="col-md-3">
+                <div class="gradient-card gradient-1">
+                    <h3 class="text-sm mb-2">Tổng doanh thu tháng này</h3>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <i class="fas fa-dollar-sign fa-lg"></i>
+                        <div class="text-xl font-bold">
+                            <span th:text="${#numbers.formatDecimal(stats.currentMonthRevenue, 0, 'POINT', 0, 'COMMA')}">0</span>đ
+                        </div>
+                    </div>
+                    <div class="mt-2 d-flex align-items-center">
+                <span class="stat-change" th:classappend="${stats.revenueGrowthRate >= 0 ? 'positive' : 'negative'}">
+                    <i class="fas" th:classappend="${stats.revenueGrowthRate >= 0 ? 'fa-arrow-up' : 'fa-arrow-down'}"></i>
+                    <span th:text="${#numbers.formatDecimal(stats.revenueGrowthRate, 0, 'POINT', 1, 'COMMA')}">0</span>%
+                </span>
+                        <span class="text-xs">so với tháng trước</span>
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="gradient-card gradient-2">
+                    <h3 class="text-sm mb-2">Đơn hàng thành công</h3>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <i class="fas fa-shopping-cart fa-lg"></i>
+                        <div class="text-xl font-bold" th:text="${stats.currentMonthOrders}">0</div>
+                    </div>
+                    <div class="mt-2 d-flex align-items-center">
+                <span class="stat-change" th:classappend="${stats.orderGrowthRate >= 0 ? 'positive' : 'negative'}">
+                    <i class="fas" th:classappend="${stats.orderGrowthRate >= 0 ? 'fa-arrow-up' : 'fa-arrow-down'}"></i>
+                    <span th:text="${#numbers.formatDecimal(stats.orderGrowthRate, 0, 'POINT', 1, 'COMMA')}">0</span>%
+                </span>
+                        <span class="text-xs">so với tháng trước</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="gradient-card gradient-3">
+                    <h3 class="text-sm mb-2">Khách hàng</h3>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <i class="fas fa-users fa-lg"></i>
+                        <div class="text-xl font-bold" th:text="${stats.newCustomersCurrentMonth}">2,845</div>
+                    </div>
+                    <div class="mt-2 d-flex align-items-center">
+                        <span class="stat-change" th:classappend="${stats.customerGrowthRate >= 0 ? 'positive' : 'negative'}">
+                    <i class="fas" th:classappend="${stats.customerGrowthRate >= 0 ? 'fa-arrow-up' : 'fa-arrow-down'}"></i>
+                        <span th:text="${#numbers.formatDecimal(stats.customerGrowthRate, 0, 'POINT', 1, 'COMMA')}">0</span>%
+                         </span>
+                        <span class="text-xs">so với tháng trước</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="gradient-card gradient-4">
+                    <h3 class="text-sm mb-2">Số sản phẩm đã bán</h3>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <i class="fas fa-box fa-lg"></i>
+                        <div class="text-xl font-bold" th:text="${stats.hotProductsCurrentMonth}">0</div>
+                    </div>
+                    <div class="mt-2 d-flex align-items-center">
+                <span class="stat-change" th:classappend="${stats.hotProductGrowthRate >= 0 ? 'positive' : 'negative'}">
+                    <i class="fas" th:classappend="${stats.hotProductGrowthRate >= 0 ? 'fa-arrow-up' : 'fa-arrow-down'}"></i>
+                    <span th:text="${#numbers.formatDecimal(stats.hotProductGrowthRate, 0, 'POINT', 1, 'COMMA')}">0</span>%
+                </span>
+                        <span class="text-xs">so với tháng trước</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <!-- Biểu đồ doanh thu theo thời gian -->
+        <div class="row g-3 mb-3">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center py-2">
+                        <h5 class="mb-0 text-sm">Doanh thu theo thời gian</h5>
+                        <div class="d-flex align-items-center">
+                            <div class="dropdown me-2">
+                                <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-calendar-alt me-1"></i>Tháng này
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="#" onclick="setDateRange('week')">Tuần này</a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="setDateRange('month')">Tháng này</a></li>
+                                    <li><a class="dropdown-item" href="#" onclick="setDateRange('year')">Năm nay</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#" onclick="showCustomDateRange()">Tùy chỉnh</a></li>
+                                </ul>
+                            </div>
+                            <button class="btn btn-sm btn-primary" id="applyDateRange" style="display: none;">
+                                <i class="fas fa-check me-1"></i>Áp dụng
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body p-2">
+                        <!-- Custom Date Range Form (Hidden by default) -->
+                        <div id="customDateRangeForm" class="mb-3" style="display: none;">
+                            <div class="row g-2">
+                                <div class="col-md-5">
+                                    <label class="form-label small">Từ ngày</label>
+                                    <input type="date" class="form-control form-control-sm" id="startDate">
+                                </div>
+                                <div class="col-md-5">
+                                    <label class="form-label small">Đến ngày</label>
+                                    <input type="date" class="form-control form-control-sm" id="endDate">
+                                </div>
+                                <div class="col-md-2 d-flex align-items-end">
+                                    <button class="btn btn-sm btn-primary w-100" onclick="applyCustomDateRange()">
+                                        <i class="fas fa-check me-1"></i>Áp dụng
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header py-2">
+                        <h5 class="mb-0 text-sm">Phân loại sản phẩm đã bán theo danh mục</h5>
+                    </div>
+                    <div class="card-body p-2">
+                        <div class="chart-container">
+                            <canvas id="productCategoryChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row g-3 mb-3">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header py-2">
+                        <h5 class="mb-0 text-sm">Trạng thái đơn hàng</h5>
+                    </div>
+                    <div class="card-body p-2">
+                        <div class="chart-container">
+                            <canvas id="orderStatusChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header py-2">
+                        <h5 class="mb-0 text-sm">Phân bố khách hàng</h5>
+                    </div>
+                    <div class="card-body p-2">
+                        <div class="chart-container">
+                            <canvas id="customerRegionChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tables Section -->
+        <div class="row g-3">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center py-2">
+                        <h5 class="mb-0 text-sm">Đơn hàng gần đây</h5>
+                        <a href="/admin/order" class="btn btn-sm btn-primary">Xem tất cả</a>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                <tr>
+                                    <th>Mã đơn</th>
+                                    <th>Khách hàng</th>
+                                    <th>Sản phẩm</th>
+                                    <th>Giá trị</th>
+                                    <th>Trạng thái</th>
+                                    <th>Ngày đặt</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr th:each="order : ${recentOrders}">
+                                    <td th:text="${'#'+order.id}">#ORD-2023-005</td>
+                                    <td th:text="${order.fullName}">Nguyễn Văn A</td>
+                                    <td th:text="${order.products.length() > 25 ? #strings.substring(order.products, 0, 25) + '...' : order.products}">
+                                        Trà xanh, Táo hữu cơ
+                                    </td>
+
+                                    <td th:text="${#numbers.formatDecimal(order.total, 0, 'POINT', 0, 'COMMA')} + 'đ'">120,000đ</td>
+                                    <td>
+                                        <span class="badge"
+                                              th:switch="${order.status}">
+                                            <span th:case="'PENDING'" class="badge bg-secondary">Chờ xử lý</span>
+                                            <span th:case="'PROCESSING'" class="badge bg-info">Đang xử lý</span>
+                                            <span th:case="'SHIPPED'" class="badge bg-warning text-dark">Đang giao</span>
+                                            <span th:case="'COMPLETED'" class="badge bg-success">Hoàn thành</span>
+                                            <span th:case="'CANCELED'" class="badge bg-danger">Đã hủy</span>
+                                        </span>
+                                    </td>
+                                    <td th:text="${order.orderDate}">11/03/2023</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center py-2">
+                        <h5 class="mb-0 text-sm">Sản phẩm bán chạy</h5>
+<!--                        <a href="#" class="btn btn-sm btn-primary">Xem tất cả</a>-->
+                    </div>
+                    <div class="card-body p-0">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center" th:each="product : ${productHot}">
+                                <div>
+                                    <div class="fw-bold text-sm" th:text="${product.productName.length()>25 ? #strings.substring(product.productName,0,25)+'...': product.productName}">Rau hữu cơ mix</div>
+                                    <small class="text-muted" th:text="${'Đã bán: '+product.totalQuantitySold+' sản phẩm'}">Đã bán: 245 sản phẩm</small>
+                                </div>
+                                <span class="badge bg-primary rounded-pill" th:text="${product.totalQuantitySold}">245</span>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Info -->
+        <div class="row g-3 mt-3">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center py-2">
+                        <h5 class="mb-0 text-sm">Khách hàng mới</h5>
+                        <a href="/admin/user-list" class="btn btn-sm btn-primary">Xem tất cả</a>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                <tr>
+                                    <th>Tên</th>
+                                    <th>Email</th>
+                                    <th>Ngày đăng ký</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="user : ${recentUsers}">
+                                    <td th:text="${user.fullName}">Nguyễn Văn F</td>
+                                    <td th:text="${user.email}">nguyenvf@example.com</td>
+                                    <td th:text="${#temporals.format(user.createdAt, 'dd/MMM/yyyy')}">15/03/2023</td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center py-2">
+                        <h5 class="mb-0 text-sm">Cảnh báo tồn kho</h5>
+                        <a href="#" class="btn btn-sm btn-primary">Xem tất cả</a>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0">
+                                <thead>
+                                <tr>
+                                    <th>Sản phẩm</th>
+                                    <th>Tồn kho</th>
+                                    <th>Trạng thái</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="alert : ${stockAlert}">
+                                    <td th:text="${alert.productName.length() > 25 ? #strings.substring(alert.productName, 0, 25) + '...' : alert.productName}">Trà xanh</td>
+                                    <td th:text="${alert.stockQuantity}">4</td>
+                                    <td>
+                                        <span th:switch="${alert.stockStatus}">
+                                            <span th:case="'Sắp hết'" class="badge bg-danger">Sắp hết</span>
+                                            <span th:case="'Thấp'" class="badge bg-warning text-dark">Thấp</span>
+                                            <span th:case="'Hết hàng'" class="badge bg-warning">Hết hàng</span>
+                                            <span th:case="'Đủ'" class="badge bg-success">Đủ</span>
+                                        </span>
+                                    </td>
+                                </tr>
+
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Mobile Menu Toggle Button -->
+<button class="btn btn-primary d-md-none position-fixed bottom-4 right-4 rounded-circle shadow" style="z-index: 1001;" onclick="toggleSidebar()">
+    <i class="fas fa-bars"></i>
+</button>
+
+<!-- Required Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/admin-assets/js/main.js"></script>
+<script th:inline="javascript">
+const  stats = [[${stats}]];
+console.log("Stats data: ", stats);
+const dailyRevenue = [[${dailyRevenue}]];
+console.log("Daily Revenue data: ", dailyRevenue);
+const monthlyRevenue = [[${monthlyRevenue}]];
+console.log("Monthly Revenue data: ", monthlyRevenue);
+const orderStatusDistribution = [[${orderStatusDistribution}]];
+console.log("Order Status Distribution data: ", orderStatusDistribution);
+const recentOrders = [[${recentOrders}]];
+console.log("Recent Orders data: ", recentOrders);
+const recentUsers = [[${recentUsers}]];
+console.log("Recent Users data: ", recentUsers);
+const productCategoryDistribution = [[${productCategoryDistribution}]];
+console.log("Product Category Distribution data: ", productCategoryDistribution);
+const productHot = [[${productHot}]];
+console.log("Product Hot data: ", productHot);
+const  stockAlert = [[${stockAlert}]];
+console.log("Stock Alert data: ", stockAlert);
+const customerDistributionByProvince = [[${customerDistributionByProvince}]];
+console.log("Customer Distribution by Province data: ", customerDistributionByProvince);
+</script>
+<script src="/admin-assets/js/home.js">
+
+</script>
+</body>
+</html>
