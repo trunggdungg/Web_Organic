@@ -3,10 +3,7 @@ import com.example.web_organic.entity.*;
 import com.example.web_organic.modal.Enum.Payment_Status_Enum;
 import com.example.web_organic.modal.Enum.Status_Enum;
 import com.example.web_organic.modal.request.OrderRequest;
-import com.example.web_organic.repository.CartItemRepository;
-import com.example.web_organic.repository.OrderDetailRepository;
-import com.example.web_organic.repository.OrderRepository;
-import com.example.web_organic.repository.UserRepository;
+import com.example.web_organic.repository.*;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +34,8 @@ public class OrderService {
     private HttpSession httpSession;
     @Autowired
     private OrderDetailService orderDetailService;
+    @Autowired
+    private ProductVariantRepository productVariantRepository;
 
 
     @Transactional
@@ -48,6 +47,7 @@ public class OrderService {
         if (cartItems.isEmpty()) {
             throw new RuntimeException("Giỏ hàng trống, không thể tạo đơn hàng.");
         }
+
         // Create order
         Order order = Order.builder()
             .id(generateOrderCode())
@@ -134,27 +134,77 @@ public class OrderService {
         Order order = orderRepository.findOrderById(orderId)
             .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng!"));
 
-        if (!"COD".equals(order.getPaymentMethod())) {
-            throw new IllegalStateException("Chỉ hỗ trợ xác nhận đơn hàng cho phương thức COD!");
-        }
-
-        switch (order.getStatus()) {
-            case PENDING -> order.setStatus(Status_Enum.PROCESSING); // Xác nhận đơn hàng
-            case PROCESSING -> order.setStatus(Status_Enum.SHIPPED); // Đang giao hàng
-            case SHIPPED -> {
-                if (customerReceived) {
-                    order.setStatus(Status_Enum.COMPLETED);
-                    order.setPaymentStatus(Payment_Status_Enum.PAID);
-                } else {
-                    order.setStatus(Status_Enum.CANCELED);
-                    order.setPaymentStatus(Payment_Status_Enum.CANCELED);
-                }
-            }
-            default -> throw new IllegalStateException("Trạng thái không hợp lệ để xác nhận!");
+        switch (order.getPaymentMethod()) {
+            case "COD" -> handleCODOrder(order, customerReceived);
+            case "Bank" -> handleBankOrder(order, customerReceived);
+            default -> throw new IllegalStateException("Phương thức thanh toán không được hỗ trợ!");
         }
 
         orderRepository.save(order);
     }
+
+    private void handleCODOrder(Order order, boolean customerReceived) {
+        switch (order.getStatus()) {
+            case PENDING -> {
+                // Giảm số lượng sản phẩm trong kho
+                List<OrderDetail> orderDetails = orderDetailRepository.findByOrderId(order.getId());
+                for (OrderDetail detail : orderDetails) {
+                    ProductVariants variant = detail.getProductVariant();
+                    if (variant.getStock() < detail.getQuantity()) {
+                        throw new IllegalStateException("Không đủ hàng trong kho cho sản phẩm: " + variant.getProduct().getName());
+                    }
+                    variant.setStock(variant.getStock() - detail.getQuantity());
+                    productVariantRepository.save(variant);
+                }
+                order.setStatus(Status_Enum.PROCESSING);
+            }
+            case PROCESSING -> order.setStatus(Status_Enum.SHIPPED);
+            case SHIPPED -> updateOrderAfterShipping(order, customerReceived, false);
+            default -> throw new IllegalStateException("Trạng thái không hợp lệ để xác nhận!");
+        }
+    }
+
+    private void handleBankOrder(Order order, boolean customerReceived) {
+        if (order.getPaymentStatus() != Payment_Status_Enum.PAID) {
+            throw new IllegalStateException("Đơn hàng chưa được thanh toán!");
+        }
+
+        switch (order.getStatus()) {
+            case PENDING -> {
+                // Giảm số lượng sản phẩm trong kho
+                List<OrderDetail> orderDetails = orderDetailRepository.findByOrderId(order.getId());
+                for (OrderDetail detail : orderDetails) {
+                    ProductVariants variant = detail.getProductVariant();
+                    if (variant.getStock() < detail.getQuantity()) {
+                        throw new IllegalStateException("Không đủ hàng trong kho cho sản phẩm: " + variant.getProduct().getName());
+                    }
+                    variant.setStock(variant.getStock() - detail.getQuantity());
+                    productVariantRepository.save(variant);
+                }
+                order.setStatus(Status_Enum.PROCESSING);
+            }
+            case PROCESSING -> order.setStatus(Status_Enum.SHIPPED);
+            case SHIPPED -> updateOrderAfterShipping(order, customerReceived, true);
+            default -> throw new IllegalStateException("Trạng thái không hợp lệ để xác nhận!");
+        }
+    }
+
+    private void updateOrderAfterShipping(Order order, boolean customerReceived, boolean isBankPayment) {
+        if (customerReceived) {
+            order.setStatus(Status_Enum.COMPLETED);
+            if (!isBankPayment) {
+                order.setPaymentStatus(Payment_Status_Enum.PAID);
+            }
+        } else {
+            order.setStatus(Status_Enum.RETURNED);
+            if (isBankPayment) {
+                order.setPaymentStatus(Payment_Status_Enum.REFUNDED); // Hoàn tiền cho khách Bank
+            } else {
+                order.setPaymentStatus(Payment_Status_Enum.CANCELED); // Hủy đơn với COD
+            }
+        }
+    }
+
 
     public List<Order> getOrderByUserAndStatus(User user, Status_Enum statusEnum) {
         return orderRepository.findByUserAndStatus(user, statusEnum);
@@ -163,5 +213,23 @@ public class OrderService {
 
     public List<OrderDetail> getOrderDetailsByOrderId(String id) {
         return orderDetailService.getOrderDetailsByOrderId(id);
+    }
+
+
+    public List<Order> getAllOrdersByStatus(Status_Enum status) {
+        return orderRepository.findByStatus(status);
+    }
+
+    public long countAll() {
+        return  orderRepository.count();
+    }
+
+    public long countByStatus(String status) {
+        Status_Enum statusEnum = Status_Enum.valueOf(status.toUpperCase());
+        return (long) orderRepository.countByStatus(statusEnum);
+    }
+
+    public List<Order> findOrderByNameUser(String name) {
+        return orderRepository.findOrderByFullName(name);
     }
 }
