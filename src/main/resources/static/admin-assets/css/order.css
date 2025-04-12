@@ -1,0 +1,300 @@
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: white;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+.sidebar-logo {
+    padding: 1.5rem;
+    border-bottom: 1px solid #eee;
+}
+.sidebar-menu {
+    padding: 1rem 0;
+}
+.sidebar-menu-item {
+    padding: 0.75rem 1.5rem;
+    display: flex;
+    align-items: center;
+    color: #666;
+    transition: all 0.3s;
+    text-decoration: none;
+}
+.sidebar-menu-item:hover {
+    background: #f8f9fa;
+    color: #4c6ef5;
+    text-decoration: none;
+    padding-left: 1.75rem;
+}
+.sidebar-menu-item.active {
+    background: #f0f2ff;
+    color: #4c6ef5;
+    border-right: 3px solid #4c6ef5;
+    font-weight: 600;
+}
+.sidebar-menu-item i {
+    width: 20px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+/* Submenu Styles */
+.sidebar-submenu {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+.sidebar-submenu.show {
+    max-height: 500px;
+}
+.sidebar-section {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 0.5rem;
+}
+.sidebar-section:last-child {
+    border-bottom: none;
+}
+.sidebar-section-header {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6b7280;
+    font-size: 0.75rem;
+    padding: 0.5rem 1.5rem;
+}
+.sidebar-section-header::after {
+    content: '\f107';
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    transition: transform 0.3s;
+    font-size: 0.8rem;
+}
+.sidebar-section-header.active::after {
+    transform: rotate(-180deg);
+}
+
+/* Main Content Styles */
+.main-content {
+    margin-left: 250px;
+    padding: 20px;
+}
+.card {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 1rem;
+}
+.gradient-card {
+    border-radius: 8px;
+    padding: 1rem;
+    color: white;
+}
+.gradient-1 { background: linear-gradient(to bottom right, #ec4786, #b955a4); }
+.gradient-2 { background: linear-gradient(to bottom right, #865ec0, #5144b4); }
+.gradient-3 { background: linear-gradient(to bottom right, #56cdf3, #719de3); }
+.gradient-4 { background: linear-gradient(to bottom right, #fcbc25, #f68057); }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s;
+    }
+    .sidebar.show {
+        transform: translateX(0);
+    }
+    .main-content {
+        margin-left: 0;
+    }
+}
+
+/* Order Details Styles */
+.order-details {
+    display: none;
+    background-color: #f8f9fa;
+}
+.order-details.show {
+    display: table-row;
+}
+.order-details-content {
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    background: white;
+    margin: 0.5rem 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+.order-details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #eee;
+}
+.order-details-header h6 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+.product-list {
+    margin-bottom: 1.5rem;
+}
+.product-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid #eee;
+    border-radius: 0.5rem;
+    margin-bottom: 0.75rem;
+    background: #fff;
+    transition: all 0.2s ease;
+}
+.product-item:hover {
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-color: #e2e8f0;
+}
+.product-item:last-child {
+    margin-bottom: 0;
+}
+.product-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.product-info {
+    flex: 1;
+    min-width: 0; /* Để text-overflow hoạt động */
+}
+.product-name {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.25rem;
+    font-size: 1rem;
+}
+.product-variant {
+    color: #666;
+    font-size: 0.875rem;
+    margin-bottom: 0.25rem;
+}
+.product-quantity {
+    color: #666;
+    font-size: 0.875rem;
+}
+.product-price {
+    text-align: right;
+    min-width: 150px;
+}
+.product-price p {
+    margin: 0;
+    line-height: 1.5;
+}
+.unit-price {
+    color: #666;
+    font-size: 0.875rem;
+}
+.total-price {
+    color: #333;
+    font-weight: 600;
+    font-size: 1rem;
+}
+.order-summary {
+    background: #f8f9fa;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin-top: 1rem;
+}
+.order-summary p {
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0.25rem 0;
+}
+.order-summary p:last-child {
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed #dee2e6;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* Status Badge Styles */
+.status-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+}
+/* Order Status Styles */
+.status-pending {
+    background-color: #fff7ed;
+    color: #ea580c;
+    border: 1px solid #fdba74;
+}
+
+.status-processing {
+    background-color: #eff6ff;
+    color: #2563eb;
+    border: 1px solid #93c5fd;
+}
+
+.status-shipped {
+    background-color: #f0fdf4;
+    color: #16a34a;
+    border: 1px solid #86efac;
+}
+
+.status-completed {
+    background-color: #ecfdf5;
+    color: #059669;
+    border: 1px solid #6ee7b7;
+}
+
+.status-canceled {
+    background-color: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+}
+
+.status-returned {
+    background-color: #faf5ff;
+    color: #7c3aed;
+    border: 1px solid #c4b5fd;
+}
+
+/* Payment Status Styles */
+.payment-pending {
+    background-color: #fff7ed;
+    color: #ea580c;
+    border: 1px solid #fdba74;
+}
+
+.payment-paid {
+    background-color: #ecfdf5;
+    color: #059669;
+    border: 1px solid #6ee7b7;
+}
+.payment-canceled {
+    background-color: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+}
+
+.payment-refunded {
+    background-color: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+}
