@@ -1,11 +1,17 @@
 package com.example.web_organic.service;
+import com.example.web_organic.entity.Product;
 import com.example.web_organic.entity.ProductVariants;
+import com.example.web_organic.entity.User;
+import com.example.web_organic.modal.request.UpSertProductVariantRequestAdmin;
+import com.example.web_organic.repository.ProductRepository;
 import com.example.web_organic.repository.ProductVariantRepository;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -15,6 +21,10 @@ import java.util.stream.Collectors;
 public class ProductVariantService {
     @Autowired
     private ProductVariantRepository productVariantRepository;
+    @Autowired
+    private HttpSession httpSession;
+    @Autowired
+    private ProductRepository productRepository;
 
     // Lấy tổng stock của một sản phẩm
     public Integer getTotalStockByProductId(Integer productId) {
@@ -49,5 +59,64 @@ public class ProductVariantService {
     // Lấy danh sách variants của một sản phẩm
     public List<ProductVariants> getVariantsByProductId(Integer productId) {
         return productVariantRepository.findByProductId(productId);
+    }
+
+
+    public ProductVariants createProductVariant(UpSertProductVariantRequestAdmin upSertProductVariantRequestAdmin) {
+        User user = (User) httpSession.getAttribute("CURRENT_USER");
+        if (user== null){
+            throw new RuntimeException("User not found");
+        }
+        Product product = productRepository.getProductById(upSertProductVariantRequestAdmin.getProductId());
+        if (product == null){
+            throw new RuntimeException("Product not found");
+        }
+        ProductVariants productVariants = ProductVariants.builder()
+                .product(product)
+                .price(upSertProductVariantRequestAdmin.getPrice())
+                .stock(upSertProductVariantRequestAdmin.getStock())
+                .weight(upSertProductVariantRequestAdmin.getWeight())
+                .isDefault(upSertProductVariantRequestAdmin.getIsDefault())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+        return productVariantRepository.save(productVariants);
+
+    }
+
+    public ProductVariants updateProductVariant(Integer id, UpSertProductVariantRequestAdmin upSertProductVariantRequestAdmin) {
+        User user = (User) httpSession.getAttribute("CURRENT_USER");
+        if (user== null){
+            throw new RuntimeException("User not found");
+        }
+        Product product = productRepository.getProductById(upSertProductVariantRequestAdmin.getProductId());
+        if (product == null){
+            throw new RuntimeException("Product not found");
+        }
+        ProductVariants productVariants = productVariantRepository.findById(id).orElse(null);
+        if (productVariants == null){
+            throw new RuntimeException("Product variant not found");
+        }
+        productVariants.setProduct(product);
+        productVariants.setPrice(upSertProductVariantRequestAdmin.getPrice());
+        productVariants.setStock(upSertProductVariantRequestAdmin.getStock());
+        productVariants.setWeight(upSertProductVariantRequestAdmin.getWeight());
+        productVariants.setIsDefault(upSertProductVariantRequestAdmin.getIsDefault());
+        productVariants.setUpdatedAt(LocalDateTime.now());
+        return productVariantRepository.save(productVariants);
+
+    }
+
+    public void deleteProductVariant(Integer id) {
+        User user = (User) httpSession.getAttribute("CURRENT_USER");
+        if (user== null){
+            throw new RuntimeException("User not found");
+        }
+        ProductVariants productVariants = productVariantRepository.findById(id).orElse(null);
+        if (productVariants == null){
+            throw new RuntimeException("Product variant not found");
+        }
+        productVariantRepository.delete(productVariants);
+
     }
 }
