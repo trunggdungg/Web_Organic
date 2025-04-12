@@ -54,13 +54,13 @@
 
         <!-- Stats Cards -->
         <div class="row g-4 mb-4">
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <p class="text-gray-500 mb-1">Tổng đơn hàng</p>
-                                <h3 class="text-2xl font-bold">3</h3>
+                                <h3 class="text-2xl font-bold" th:text="${totalOrders}">3</h3>
                             </div>
                             <div class="rounded-circle bg-primary bg-opacity-10 p-3">
                                 <i class="fas fa-shopping-cart text-primary"></i>
@@ -69,13 +69,13 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <p class="text-gray-500 mb-1">Đơn chờ xử lý</p>
-                                <h3 class="text-2xl font-bold">3</h3>
+                                <h3 class="text-2xl font-bold" th:text="${pendingOrders}">3</h3>
                             </div>
                             <div class="rounded-circle bg-warning bg-opacity-10 p-3">
                                 <i class="fas fa-clock text-warning"></i>
@@ -84,28 +84,14 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <p class="text-gray-500 mb-1">Doanh thu</p>
-                                <h3 class="text-2xl font-bold">5,985,339đ</h3>
-                            </div>
-                            <div class="rounded-circle bg-success bg-opacity-10 p-3">
-                                <i class="fas fa-dollar-sign text-success"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3">
+
+            <div class="col-md-4">
                 <div class="card">
                     <div class="card-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
                                 <p class="text-gray-500 mb-1">Đơn hủy</p>
-                                <h3 class="text-2xl font-bold">0</h3>
+                                <h3 class="text-2xl font-bold" th:text="${cancelledOrders}">0</h3>
                             </div>
                             <div class="rounded-circle bg-danger bg-opacity-10 p-3">
                                 <i class="fas fa-times-circle text-danger"></i>
@@ -122,7 +108,7 @@
                 <!-- Filters -->
                 <div class="row g-3 mb-4">
                     <div class="col-md-3">
-                        <input type="text" class="form-control" placeholder="Tìm kiếm đơn hàng..." id="searchInput">
+                        <input type="text" class="form-control" placeholder="Tìm kiếm theo tên khách hàng..." id="searchInput">
                     </div>
                     <div class="col-md-2">
                         <select class="form-select" id="statusFilter">
@@ -146,7 +132,7 @@
                             <button class="btn btn-outline-secondary w-100" onclick="resetFilters()">
                                 <i class="fas fa-redo me-2"></i>Đặt lại
                             </button>
-                            <button class="btn btn-primary w-100" onclick="applyFilters()">
+                            <button class="btn btn-primary w-100" onclick="applyFiltersOrder()">
                                 <i class="fas fa-filter me-2"></i>Lọc
                             </button>
                         </div>
@@ -267,24 +253,28 @@
         <div class="flex justify-center mt-4" th:if="${totalPages > 1}">
             <ul class="flex space-x-2">
                 <!-- Nút "Trước" (Disabled nếu trang hiện tại là 1) -->
+                <!-- Nút "Trước" -->
+                <!-- Nút "Trước" -->
                 <li th:classappend="${currentPage == 1} ? 'opacity-50 pointer-events-none' : ''">
-                    <a th:href="@{/admin/order(page=${currentPage - 1})}"
+                    <a th:href="${type != null} ? @{/admin/order(page=${currentPage - 1}, type=${type})} : @{/admin/order(page=${currentPage - 1})}"
                        class="px-4 py-2 border rounded-md">Trước</a>
                 </li>
 
-                <!-- Số trang -->
+                <!-- Các số trang -->
                 <li th:each="i : ${#numbers.sequence(1, totalPages)}">
-                    <a th:href="@{/admin/order(page=${i})}"
+                    <a th:href="${type != null} ? @{/admin/order(page=${i}, type=${type})} : @{/admin/order(page=${i})}"
                        th:text="${i}"
                        th:classappend="${i == currentPage} ? 'border px-2 py-2 rounded-md bg-blue-500 text-white' : 'border px-2 py-2 rounded-md'">
                     </a>
                 </li>
 
-                <!-- Nút "Sau" (Disabled nếu trang hiện tại là trang cuối) -->
+                <!-- Nút "Sau" -->
                 <li th:classappend="${currentPage == totalPages} ? 'opacity-50 pointer-events-none' : ''">
-                    <a th:href="@{/admin/order(page=${currentPage + 1})}"
+                    <a th:href="${type != null} ? @{/admin/order(page=${currentPage + 1}, type=${type})} : @{/admin/order(page=${currentPage + 1})}"
                        class="px-4 py-2 border rounded-md">Sau</a>
                 </li>
+
+
             </ul>
         </div>
 
