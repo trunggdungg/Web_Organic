@@ -26,64 +26,62 @@
 </head>
 
 <body class="font-sans">
-    <div class="header-sticky">
-        <!-- Top Navigation -->
-        <div th:insert="~{/web/fragments/header}"></div>
+<div class="header-sticky">
+    <!-- Top Navigation -->
+    <div th:insert="~{/web/fragments/header}"></div>
 
-        <!-- Breadcrumb -->
-        <div class="bg-green-500 text-white py-2 px-4 ">
-            <div class="container mx-auto ">
-                <span>Trang chủ > Sản phẩm</span>
-            </div>
+    <!-- Breadcrumb -->
+    <div class="bg-green-500 text-white py-2 px-4 ">
+        <div class="container mx-auto ">
+            <span>Trang chủ > Quên mật khẩu</span>
         </div>
     </div>
+</div>
 
-    <!-- fget -->
-    <div class="forgot-container mx-auto">
-        <div class="forgot-header">
-            <h1>Quên mật khẩu</h1>
-            <p>Vui lòng nhập email hoặc số điện thoại để khôi phục mật khẩu của bạn</p>
+<!-- fget -->
+<div class="forgot-container mx-auto">
+    <div class="forgot-header">
+        <h1>Quên mật khẩu</h1>
+        <p>Vui lòng nhập email để khôi phục mật khẩu của bạn</p>
+    </div>
+    <form>
+        <div class="input-group">
+            <label for="email">Email </label>
+            <input type="text" id="email" placeholder="Nhập email của bạn">
         </div>
-        <form>
+
+        <button type="button" class="btn-reset" id="btn-reset">Gửi link khôi phục mật khẩu</button>
+
+        <div class="or-text">HOẶC</div>
+
+        <button type="button" class="btn-otp">Gửi mã OTP</button>
+
+        <div class="verification-section" id="otpSection">
             <div class="input-group">
-                <label for="email">Email hoặc số điện thoại</label>
-                <input type="text" id="email" placeholder="Nhập email hoặc số điện thoại của bạn">
-            </div>
-
-            <button type="button" class="btn-reset">Gửi link khôi phục mật khẩu</button>
-
-            <div class="or-text">HOẶC</div>
-
-            <button type="button" class="btn-otp">Gửi mã OTP</button>
-
-            <div class="verification-section" id="otpSection">
-                <div class="input-group">
-                    <label>Nhập mã xác thực gửi đến email/số điện thoại của bạn</label>
-                    <div class="verification-code">
-                        <input type="text" maxlength="1">
-                        <input type="text" maxlength="1">
-                        <input type="text" maxlength="1">
-                        <input type="text" maxlength="1">
-                        <input type="text" maxlength="1">
-                        <input type="text" maxlength="1">
-                    </div>
-                </div>
-                <div class="timer">
-                    Mã xác thực sẽ hết hạn sau <span id="countdown">05:00</span>
-                </div>
-                <button type="button" class="btn-reset">Xác nhận</button>
-                <div class="resend">
-                    Không nhận được mã? <a href="#">Gửi lại</a>
+                <label>Nhập mã xác thực gửi đến email/số điện thoại của bạn</label>
+                <div class="verification-code">
+                    <input type="text" maxlength="1">
+                    <input type="text" maxlength="1">
+                    <input type="text" maxlength="1">
+                    <input type="text" maxlength="1">
+                    <input type="text" maxlength="1">
+                    <input type="text" maxlength="1">
                 </div>
             </div>
-
-            <div class="back-link">
-                <a href="#">Quay lại đăng nhập</a>
+            <div class="timer">
+                Mã xác thực sẽ hết hạn sau <span id="countdown">05:00</span>
             </div>
-        </form>
-    </div>
+            <button type="button" class="btn-reset">Xác nhận</button>
+            <div class="resend">
+                Không nhận được mã? <a href="#">Gửi lại</a>
+            </div>
+        </div>
 
-
+        <div class="back-link">
+            <a href="#">Quay lại đăng nhập</a>
+        </div>
+    </form>
+</div>
 
 
 <!-- Footer -->
@@ -99,7 +97,48 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script src="/assets/js/main.js"></script>
+<script>
+    const emailEL = document.getElementById('email');
+    const btnReset = document.getElementById('btn-reset');
 
+    btnReset.addEventListener('click', async (event) => {
+        event.preventDefault(); // Prevent form submission
+        const request = {
+            email: emailEL.value
+        };
+        console.log("request", request);
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Regular expression for email validation
+
+        if (!request.email) {
+            alertWarning('Vui lòng nhập email'); // Alert if email is empty
+            return;
+        }
+
+        if (!emailRegex.test(request.email)) {
+            alertWarning('Email không hợp lệ'); // Alert if email format is invalid
+            return;
+        }
+
+        try {
+            const response = await axios.post('/api/auth/forgot-password', request);
+            if (response.status === 200) {
+                alertSuccess('Đã gửi email khôi phục mật khẩu, vui lòng kiểm tra hộp thư đến của bạn');
+                setTimeout(() => {
+                    window.location.href = '/login';
+                }, 2500);
+            } else {
+                alertError(response.data.message || 'Có lỗi xảy ra, vui lòng thử lại sau');
+            }
+        } catch (error) {
+            console.error(error);
+            if (error.response && error.response.data && error.response.data.message) {
+                alertError(error.response.data.message);
+            } else {
+                alertError('Có lỗi xảy ra, vui lòng thử lại sau');
+            }
+        }
+    });
+</script>
 
 
 </body>
