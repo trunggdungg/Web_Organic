@@ -5,6 +5,7 @@ import com.example.web_organic.modal.Enum.Category_Type;
 import com.example.web_organic.modal.Enum.User_Role;
 import com.example.web_organic.modal.request.UpSertCategoryRequestAdmin;
 import com.example.web_organic.repository.CategoryRepository;
+import com.github.slugify.Slugify;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,14 +50,16 @@ private HttpSession httpSession;
         if (existingCategory.isPresent()) {
             throw new RuntimeException("Category already exists");
         }
-
+// Tạo slug từ tên danh mục
+        Slugify slugify = Slugify.builder().build();
+        String slug = slugify.slugify(upSertCategoryRequestAdmin.getName());
 
 
         Category category = new Category();
         category.setName(upSertCategoryRequestAdmin.getName());
         category.setType(upSertCategoryRequestAdmin.getType());
         category.setStatus(upSertCategoryRequestAdmin.getStatus());
-        category.setSlug(upSertCategoryRequestAdmin.getName().toLowerCase().replace(" ", "-"));
+        category.setSlug(slug);
         category.setCreatedAt(LocalDateTime.now());
         category.setUpdatedAt(LocalDateTime.now());
         categoryRepository.save(category);
