@@ -1,7 +1,6 @@
 package com.example.web_organic.controller;
 
 import com.example.web_organic.entity.*;
-import com.example.web_organic.modal.Enum.Category_Type;
 import com.example.web_organic.modal.Enum.Status_Enum;
 import com.example.web_organic.modal.response.TokenConfirmMessageResponse;
 import com.example.web_organic.service.*;
@@ -46,10 +45,10 @@ public class WebController {
     public String getHomePage(@RequestParam(required = false,defaultValue = "1") int page,
         @RequestParam(required = false,defaultValue = "10") int pageSize, Model model) {
 
-        Page<Product> products = productService.getProductPopular(page, pageSize);
-        Page<Product> productCategory = productService.getProductByCategory(1, 10,"music");
-        Page<Product> productReadyToEat = productService.getProductByCategory(1, 10,"health");
-        Page<Product> productNonFood = productService.getProductByCategory(1, 10,"jewelry");
+        Page<Product> products = productService.getProductPopular(page, 20);
+        Page<Product> productCategory = productService.getProductByCategory(1, 20,"music");
+        Page<Product> productReadyToEat = productService.getProductByCategory(1, 20,"ready-to-eat");
+        Page<Product> productNonFood = productService.getProductByCategory(1, 20,"phi-thuc-pham");
         List<Product> productDiscountMax = productService.getProductDiscountMax();//        lây 20 san phảm discount lớn nhat
         Page<Blog> blogs = blogService.getBlogPopular(1, 6);// 3 blog
         // Thêm thông tin stock và giá cho mỗi sản phẩm
@@ -79,7 +78,6 @@ public class WebController {
         model.addAttribute("productNonFood", productNonFood); //sản phẩm không phải thức ăn
         model.addAttribute("productDiscountMax", productDiscountMax); //sản phẩm có discount lớn nhất
         model.addAttribute("blogs", blogs); //blog
-
 
         return "/web/index";
     }
@@ -120,11 +118,6 @@ public class WebController {
         model.addAttribute("brands", brands);
         model.addAttribute("selectedCategory", selectedCategory);
 
-        // Nếu là request AJAX, chỉ trả về phần danh sách sản phẩm
-//        if (page > 1 || !"all".equals(sort) || !"all".equals(brand) || !"all".equals(price)) {
-//            return "/web/product :: productList";
-//        }
-
         return "/web/product";
     }
 
@@ -133,9 +126,6 @@ public class WebController {
     public String getBlogPage(@RequestParam(required = false, defaultValue = "1") int page,
                               @RequestParam(required = false, defaultValue = "9") int pageSize,
                               @RequestParam(required = false) String type, Model model) {
-//        List<Category> categoryProduct = categoryService.getCategoryByTypeAndStatus(Category_Type.PRODUCT);
-//        List<Category> categoryBlog = categoryService.getCategoryByTypeAndStatus(Category_Type.BLOG);
-
         Category selectedCategory = null;
         if (type != null) {
             selectedCategory = categoryService.getCategoryBySlug(type);
@@ -145,22 +135,34 @@ public class WebController {
         if (selectedCategory != null) {
             blogPage = blogService.getBlogsByCategory(selectedCategory, page - 1, pageSize);
         } else {
-            blogPage = blogService.getAllBlogs(page - 1, pageSize);
+            blogPage = blogService.getAllBlogsAndStatus(page - 1, pageSize);
         }
 
+
+//        String plainText = Jsoup.parse(blog.getContent()).text();
+//        model.addAttribute("shortContent", plainText);
         model.addAttribute("blogs", blogPage.getContent());
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", blogPage.getTotalPages());
-//        model.addAttribute("categoryProduct", categoryProduct);
-//        model.addAttribute("categoryBlog", categoryBlog);
         return "/web/blog";
+    }
+
+    @GetMapping("/blog/{id}/{slug}")
+    public String getBlogDetailPage(@PathVariable Integer id, @PathVariable String slug, Model model) {
+        Blog blog = blogService.getBlogDetail(id,slug);
+
+
+        //lay tat ca blog
+        List<Blog> allBlogs = blogService.getAllBlog();
+        model.addAttribute("allBlogs", allBlogs);
+        model.addAttribute("blog", blog);
+        return "/web/blog-detail";
     }
 
     @GetMapping("/product/{id}/{slug}")
     public String getProductDetailPage(@PathVariable Integer id,@PathVariable String slug, Model model) {
         Product product = productService.getProductDetail(id,slug);
         List<ProductImage> productImages = productService.getProductImages(id);
-//        Page<Product> relatedProducts = productService.getRelatedProducts(id,slug);
 
         List<ProductVariants> productVariants = productService.getProductVariantsByProductId(id); // Lấy danh sách biến thể của sản phẩm
 
@@ -209,8 +211,6 @@ public class WebController {
         return "/web/signup";
     }
 
-
-
     @GetMapping("/cart")
     public String getCartPage(Model model,HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("CURRENT_USER");
@@ -229,8 +229,6 @@ public class WebController {
         model.addAttribute("cartItems", groupedItems.values());
         return "/web/cart";
     }
-
-
 
 
     @GetMapping("/contact")
@@ -292,7 +290,33 @@ public class WebController {
 
 
     @GetMapping("/promotion")
-    public String getPromotionPage() {
+    public String getPromotionPage(@RequestParam(required = false, defaultValue = "1") int page,
+                                   @RequestParam(required = false, defaultValue = "10") int pageSize,
+                                   @RequestParam(required = false, defaultValue = "all") String sort,
+                                   @RequestParam(required = false, defaultValue = "all") String brand,
+                                   @RequestParam(required = false, defaultValue = "all") String price,
+                                   Model model) {
+
+        List<Brand> brands = brandService.getBrandByStatus();
+        Map<Integer, Integer> productStocks = new HashMap<>();
+        Map<Integer, BigDecimal> productVariantPrices = new HashMap<>();
+
+        // Không có selectedCategory vì không lọc theo type
+        Page<Product> productPage = productService.getPromotionProducts(sort, brand, price, page - 1, pageSize);
+
+        productPage.getContent().forEach(product -> {
+            int productId = product.getId();
+            productStocks.putIfAbsent(productId, productService.getProductStock(productId));
+            productVariantPrices.putIfAbsent(productId, productService.getProductVariantPrice(productId));
+        });
+
+        model.addAttribute("products", productPage.getContent());
+        model.addAttribute("productStocks", productStocks);
+        model.addAttribute("productVariantPrices", productVariantPrices);
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", productPage.getTotalPages());
+        model.addAttribute("brands", brands);
+
         return "/web/promotion";
     }
 
@@ -322,7 +346,7 @@ public class WebController {
             totalAmount = totalAmount.add(price.multiply(BigDecimal.valueOf(item.getQuantity())));
         }
 
-// Làm tròn lên số nguyên gần nhất
+        // Làm tròn lên số nguyên gần nhất
         totalAmount = totalAmount.setScale(0, RoundingMode.CEILING);
 
         // Truyền dữ liệu giỏ hàng và tổng tiền vào model
@@ -342,6 +366,23 @@ public class WebController {
         TokenConfirmMessageResponse response = userService.verifyAccount(token);
         model.addAttribute("response",response);
         return "web/xac-thuc-tai-khoan";
+    }
+
+    @GetMapping("/forgot-password")
+    public String getForgotPasswordPage(HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("CURRENT_USER");
+        if (user != null) {
+            return "redirect:/";
+        }
+        return "/web/forgetpw";
+    }
+
+    @GetMapping("/dat-lai-mat-khau")
+    public String getResetPasswordPage(@RequestParam String token, Model model) {
+        TokenConfirmMessageResponse response = userService.verifyResetPasword(token);
+        model.addAttribute("response", response);
+        model.addAttribute("token", token);
+        return "/web/dat-lai-mat-khau";
     }
 
 }
