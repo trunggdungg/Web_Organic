@@ -19,7 +19,8 @@ public class ProductApiAdmin {
 @Autowired
 private ProductService productService;
     @PostMapping("/{id}/upload-poster")
-    public ResponseEntity<?> uploadPoster(@PathVariable Integer id, @RequestParam MultipartFile file) {//MultipartFile file để upload file,la dai dien cac file dc tu client gui len
+    public ResponseEntity<?> uploadPoster(@PathVariable Integer id, @RequestParam MultipartFile file) {
+        //MultipartFile file để upload file,la dai dien cac file dc tu client gui len
         String path = productService.uploadPoster(id, file);
         FileResponse fileResponse = FileResponse.builder()
             .url(path)
