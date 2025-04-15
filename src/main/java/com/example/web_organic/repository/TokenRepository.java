@@ -13,4 +13,6 @@ public interface TokenRepository extends JpaRepository<TokenConfirm, Integer> {
     void deleteByToken(String token);
 
     Optional<TokenConfirm> findByTokenAndTokenType(String token, Token_Type tokenType);
+
+    Optional<TokenConfirm> findByUserAndTokenType(User existingUser, Token_Type tokenType);
 }
