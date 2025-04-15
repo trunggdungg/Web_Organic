@@ -32,7 +32,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer>, JpaS
 //    tim theo slug
     Page<Product> findByCategorySlugAndStatusTrue(String slug, Pageable pageable);
 
-    List<Product> findTop15ByOrderByDiscountDesc();
+    List<Product> findTop15ByStatusTrueOrderByDiscountDesc();
 
     Page<Product> findByBrandId(Integer brandId, Pageable pageable);
 
