@@ -22,7 +22,7 @@
 
     <!-- cdn fontawesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<!--    phan trang-->
+    <!--    phan trang-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paginationjs/2.1.5/pagination.css">
 
     <!-- link CSS -->
@@ -155,15 +155,16 @@
                               d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                     </svg>
                 </button>
-<!--                <i class="far fa-heart ml-auto text-2xl text-red-500 cursor-pointer"   th:onclick="'toggleHeart(this, ' + ${product.id} + ')'"-->
-<!--                   th:data-product-id="${product.id}"></i>-->
+                <!--                <i class="far fa-heart ml-auto text-2xl text-red-500 cursor-pointer"   th:onclick="'toggleHeart(this, ' + ${product.id} + ')'"-->
+                <!--                   th:data-product-id="${product.id}"></i>-->
             </div>
 
             <div class="flex space-x-4 mt-4">
-                <button class="flex-1 px-4 py-2 bg-green-500 text-white rounded transition-all duration-300 hover:bg-green-600" id="add-to-cart">
+                <button class="flex-1 px-4 py-2 bg-green-500 text-white rounded transition-all duration-300 hover:bg-green-600"
+                        id="add-to-cart">
                     Thêm vào giỏ hàng
                 </button>
-                <button class="flex-1 px-4 py-2 bg-red-500 text-white rounded transition-all duration-300 hover:bg-red-600">
+                <button class="flex-1 px-4 py-2 bg-red-500 text-white rounded transition-all duration-300 hover:bg-red-600" id="btn-buy-now">
                     Mua ngay
                 </button>
             </div>
@@ -195,59 +196,59 @@
         </div>
         <div class="review-list">
             <!-- Bình luận giả -->
-<!--            <div class="rating-item d-flex position-relative" th:each="review : ${reviews}">-->
-<!--                <div class="rating-avatar position-absolute" style="top: 3px; left: 5px;">-->
-<!--                    <img th:src="${review.user.avatar}" th:alt="${review.user.fullName}">-->
-<!--                </div>-->
-<!--                <div class="rating-info ms-3" style="margin-left: 80px !important;">-->
-<!--                    <div class="d-flex">-->
-<!--                        <p class="rating-name" th:text="${review.user.fullName}">Nguyễn Văn A</p>-->
-<!--                    </div>-->
+            <!--            <div class="rating-item d-flex position-relative" th:each="review : ${reviews}">-->
+            <!--                <div class="rating-avatar position-absolute" style="top: 3px; left: 5px;">-->
+            <!--                    <img th:src="${review.user.avatar}" th:alt="${review.user.fullName}">-->
+            <!--                </div>-->
+            <!--                <div class="rating-info ms-3" style="margin-left: 80px !important;">-->
+            <!--                    <div class="d-flex">-->
+            <!--                        <p class="rating-name" th:text="${review.user.fullName}">Nguyễn Văn A</p>-->
+            <!--                    </div>-->
 
-<!--                    <div class="d-flex">-->
-<!--                        <p class="rating-time" th:text="${#temporals.format(review.createdAt, 'dd/MMM/yyyy')}">-->
-<!--                            25/02/2025</p>-->
-<!--                        <p class="time ms-2" th:text="${#temporals.format(review.createdAt, 'HH:mm')}">20:11</p>-->
-<!--                    </div>-->
-<!--                    <div class="rating-star">-->
-<!--                        <th:block th:each="i : ${#numbers.sequence(1, 5)}">-->
-<!--                            <i th:class="${i <= review.rating} ? 'fa fa-star' : 'fa fa-star empty-star'"></i>-->
-<!--                        </th:block>-->
-<!--                    </div>-->
+            <!--                    <div class="d-flex">-->
+            <!--                        <p class="rating-time" th:text="${#temporals.format(review.createdAt, 'dd/MMM/yyyy')}">-->
+            <!--                            25/02/2025</p>-->
+            <!--                        <p class="time ms-2" th:text="${#temporals.format(review.createdAt, 'HH:mm')}">20:11</p>-->
+            <!--                    </div>-->
+            <!--                    <div class="rating-star">-->
+            <!--                        <th:block th:each="i : ${#numbers.sequence(1, 5)}">-->
+            <!--                            <i th:class="${i <= review.rating} ? 'fa fa-star' : 'fa fa-star empty-star'"></i>-->
+            <!--                        </th:block>-->
+            <!--                    </div>-->
 
-<!--                    <p class="rating-content" th:text="${review.content}">Sản phẩm rất tốt!</p>-->
-<!--                    <span class="show-more" onclick="toggleExpand(this.previousElementSibling)">Xem thêm</span>-->
+            <!--                    <p class="rating-content" th:text="${review.content}">Sản phẩm rất tốt!</p>-->
+            <!--                    <span class="show-more" onclick="toggleExpand(this.previousElementSibling)">Xem thêm</span>-->
 
-<!--                    <div>-->
-<!--                        <span class="text-primary">Sửa</span> |-->
-<!--                        <span class="text-danger">Xóa</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
+            <!--                    <div>-->
+            <!--                        <span class="text-primary">Sửa</span> |-->
+            <!--                        <span class="text-danger">Xóa</span>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </div>-->
 
-<!--            <div class="rating-item d-flex">-->
-<!--                <div class="rating-avatar">-->
-<!--                    <img src="https://via.placeholder.com/50" alt="Trần Thị B">-->
-<!--                </div>-->
-<!--                <div class="rating-info ms-3">-->
-<!--                    <div class="d-flex">-->
-<!--                        <p class="rating-name">Trần Thị B</p>-->
-<!--                        <p class="rating-time ms-2">24/02/2025</p>-->
-<!--                    </div>-->
-<!--                    <div class="rating-star">-->
-<!--                        <i class="fa fa-star"></i>-->
-<!--                        <i class="fa fa-star"></i>-->
-<!--                        <i class="fa fa-star empty-star"></i>-->
-<!--                        <i class="fa fa-star empty-star"></i>-->
-<!--                        <i class="fa fa-star empty-star"></i>-->
-<!--                    </div>-->
-<!--                    <p class="rating-content">Chất lượng trung bình.</p>-->
-<!--                    <div>-->
-<!--                        <span class="text-primary">Sửa</span> |-->
-<!--                        <span class="text-danger">Xóa</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
+            <!--            <div class="rating-item d-flex">-->
+            <!--                <div class="rating-avatar">-->
+            <!--                    <img src="https://via.placeholder.com/50" alt="Trần Thị B">-->
+            <!--                </div>-->
+            <!--                <div class="rating-info ms-3">-->
+            <!--                    <div class="d-flex">-->
+            <!--                        <p class="rating-name">Trần Thị B</p>-->
+            <!--                        <p class="rating-time ms-2">24/02/2025</p>-->
+            <!--                    </div>-->
+            <!--                    <div class="rating-star">-->
+            <!--                        <i class="fa fa-star"></i>-->
+            <!--                        <i class="fa fa-star"></i>-->
+            <!--                        <i class="fa fa-star empty-star"></i>-->
+            <!--                        <i class="fa fa-star empty-star"></i>-->
+            <!--                        <i class="fa fa-star empty-star"></i>-->
+            <!--                    </div>-->
+            <!--                    <p class="rating-content">Chất lượng trung bình.</p>-->
+            <!--                    <div>-->
+            <!--                        <span class="text-primary">Sửa</span> |-->
+            <!--                        <span class="text-danger">Xóa</span>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </div>-->
         </div>
         <div class="flex justify-center mt-4">
             <ul id="review-pagination" class="flex space-x-2">
@@ -274,7 +275,7 @@
                             </span>
                         <span class="star" data-rating="2">
                             <i class="fa-solid fa-star" style="color: #cad1dd;"></i>
-<!--                                <i class="fa-regular fa-star" style="color: #FFD43B;"></i>-->
+                            <!--                                <i class="fa-regular fa-star" style="color: #FFD43B;"></i>-->
                             </span>
                         <span class="star" data-rating="3">
                                <i class="fa-solid fa-star" style="color: #cad1dd;"></i>
@@ -360,44 +361,6 @@
                                   th:if="${relatedProduct.discount != null and relatedProduct.discount != 0}"
                                   th:text="${#numbers.formatDecimal(productVariantPrices.get(relatedProduct.id), 0, 'COMMA', 0, 'POINT')} + '₫'">
                 </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="item group border border-green-500 bg-white relative overflow-hidden min-h-[300px] flex flex-col">
-                <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm">-15%</div>
-                <div class="absolute top-2 right-2 bg-green-200 text-green-800 px-2 py-1 text-sm">Tạm hết</div>
-
-                <!-- Heart button overlay -->
-                <div class="heart-overlay absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full  transition-all duration-300 group-hover:translate-x-2 group-hover:opacity-100"
-                     style="z-index: 112">
-                    <button class="heart-button bg-white p-2 rounded-full shadow-md">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500 " fill="none"
-                             viewBox="0 0 24 24"
-                             stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                        </svg>
-                    </button>
-                </div>
-
-                <!-- Buy button overlay -->
-                <div class="buy-overlay absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-full  transition-all duration-300 group-hover:-translate-x-2 group-hover:opacity-100">
-                    <button class="buy-button bg-green-500 text-white px-4 py-2 rounded-full shadow-md">Mua hàng
-                    </button>
-                </div>
-
-                <img alt="Thịt gà - 1kg" class="w-full h-60 object-cover"
-                     src="https://storage.googleapis.com/a1aa/image/8i4yLd6XdlflaljUcctxSK902Arhp5XGHB7ZB2_VyGo.jpg"/>
-
-
-                <div class="p-3 text-center flex flex-col h-full">
-                    <p class="text-lg">Dầu Olive hữu cơ Gusti Italia 500ml</p>
-                    <div class="mt-auto">
-                        <div class="flex justify-center items-center mt-2">
-                            <p class="text-red-500 text-xl font-semibold mr-2">330,000₫</p>
-                            <p class="text-gray-500 line-through">440,000₫</p>
                         </div>
                     </div>
                 </div>
@@ -627,7 +590,7 @@
     });
 
 
-//
+    //
     async function updateCartHeader() {
         try {
             const response = await fetch("/api/cart-header");
@@ -647,6 +610,74 @@
         }
     }
 
+    const btnBuyNow = document.getElementById('btn-buy-now');
+    btnBuyNow.addEventListener('click', async () => {
+        const productVariantId = productVariantIdEl.value;
+        const quantity = parseInt(document.getElementById('quantityProduct').value);
+
+        if (!productVariantId) {
+            alertWarning('Vui lòng chọn kích thước');
+            return;
+        }
+
+        // Kiểm tra số lượng tồn kho
+        const selectedVariant = productVariants.find(variant => variant.id === parseInt(productVariantId));
+        if (!selectedVariant) {
+            alertError('Không tìm thấy biến thể sản phẩm');
+            return;
+        }
+
+        // Lấy số lượng tồn kho từ biến variantStocks
+        const variantStock = variantStocks[productVariantId];
+        console.log('Số lượng tồn kho:', variantStock);
+
+        // Kiểm tra nếu sản phẩm hết hàng
+        if (variantStock === 0) {
+            alertError('Sản phẩm đã hết hàng');
+            return;
+        }
+
+        // Kiểm tra số lượng yêu cầu so với tồn kho
+        if (quantity > variantStock) {
+            alertError('Số lượng yêu cầu vượt quá số lượng tồn kho');
+            return;
+        }
+
+        const data = {
+            productVariantId: productVariantId,
+            quantity: quantity
+        };
+
+        try {
+            const loginCheckResponse = await axios.get('/api/auth/check-login');
+        } catch (error) {
+            // Kiểm tra đăng nhập
+            alertWarning('Vui lòng đăng nhập để thêm vào giỏ hàng');
+            if (error.response.status === 401) {
+                return setTimeout(() => {
+                    window.location.href = '/login';
+                }, 2000);
+            }
+        }
+
+        try {
+            // Gửi yêu cầu thêm vào giỏ hàng
+            const response = await axios.post('/api/add-to-cart', data);
+
+            if (response.status === 200) {
+                alertSuccess('Thêm vào giỏ hàng thành công');
+                updateCartHeader();
+              setTimeout(() => {
+                    window.location.href = '/cart';
+                }, 2000);
+            } else {
+                alertError('Thêm vào giỏ hàng thất bại');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alertError('Thêm vào giỏ hàng thất bại');
+        }
+    });
 
 </script>
 <script src="/assets/js/product-review.js"></script>
