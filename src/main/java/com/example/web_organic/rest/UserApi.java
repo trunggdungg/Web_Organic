@@ -1,9 +1,7 @@
 package com.example.web_organic.rest;
 
 import com.example.web_organic.entity.User;
-import com.example.web_organic.modal.request.LoginRequest;
-import com.example.web_organic.modal.request.RegisterRequest;
-import com.example.web_organic.modal.request.ResetPassWordRequest;
+import com.example.web_organic.modal.request.*;
 import com.example.web_organic.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -63,6 +61,18 @@ public class UserApi {
     @PutMapping("/change-password")
     public ResponseEntity<?> resetPassword(@RequestBody ResetPassWordRequest resetPassWordRequest) {
         userService.resetPassword(resetPassWordRequest);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody ForgetPasswordRequest forgetPasswordRequest) {
+        userService.forgotPassword(forgetPasswordRequest);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetForgotPassword(@RequestBody ResetForgotPasswordRequest resetForgotPasswordRequest) {
+        userService.resetForgotPassword(resetForgotPasswordRequest);
         return ResponseEntity.ok().build();
     }
 
