@@ -161,15 +161,31 @@
             // Call API
             const response = await axios.post('/api/auth/signup', data);
             if (response.status === 200) {
-                alertSuccess('Đăng ký tài khoản thành công');
+                alertSuccess('Đăng ký tài khoản thành công, vui lòng kiểm tra email để xác thực tài khoản');
                 setTimeout(() => {
-
+                    // Redirect or perform another action
                 }, 1200);
             }
-
         } catch (error) {
-          alertError('Đăng ký tài khoản thất bại');
-            alert(error.message);
+            if (error.response) {
+                const errorMessage = error.response.data?.message;
+                const statusCode = error.response.status;
+
+                if (errorMessage === "Email is already taken and verified") {
+                    alertError('Email đã được sử dụng và đã xác thực');
+                } else if (errorMessage === "Tài khoản đã bị cấm") {
+                    alertError('Tài khoản đã bị cấm');
+                } else if (errorMessage === "Tài khoản đã được kích hoạt") {
+                    alertError('Tài khoản đã được kích hoạt');
+                } else if (statusCode === 400) {
+                    alertError('Yêu cầu không hợp lệ');
+                } else {
+                    alertError('Đăng ký tài khoản thất bại');
+                }
+            } else {
+                alertError('Đã xảy ra lỗi không xác định');
+            }
+            console.error(error.message);
         }
     });
 </script>
