@@ -61,7 +61,7 @@ public class ProductService {
     }
 //    lấy 15 sản phẩm có discount lớn nhất
     public List<Product> getProductDiscountMax() {
-        return productRepository.findTop15ByOrderByDiscountDesc();
+        return productRepository.findTop15ByStatusTrueOrderByDiscountDesc();
     }
 
     // lấy giá sản phẩm
