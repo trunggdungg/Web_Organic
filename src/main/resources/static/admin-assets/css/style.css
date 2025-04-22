@@ -116,3 +116,61 @@
         margin-left: 0;
     }
 }
+
+/* Custom Slide Right Modal */
+/* Custom Slide Right Modal */
+.modal-dialog-slide-right {
+    position: fixed;
+    margin: 0;
+    padding: 0;
+    width: 500px;
+    max-width: 90%;
+    height: 100%;
+    right: -500px; /* Bắt đầu ở bên ngoài màn hình bên phải */
+    top: 0;
+    transition: right 0.3s ease-in-out;
+    z-index: 1050;
+}
+
+.modal-slide-right.show .modal-dialog-slide-right {
+    right: 0; /* Trượt vào khi modal được kích hoạt */
+}
+
+.modal-slide-right .modal-content {
+    height: 100%;
+    border: none;
+    border-radius: 0;
+    box-shadow: -4px 0 15px rgba(0,0,0,0.1);
+}
+
+.modal-slide-right .modal-body {
+    overflow-y: auto;
+}
+
+/* Tùy chỉnh backdrop */
+.modal-slide-right .modal-backdrop {
+    background-color: rgba(0,0,0,0.5);
+    opacity: 1;
+}
+
+@media (max-width: 576px) {
+    .modal-dialog-slide-right {
+        width: 100%;
+        right: -100%; /* Điều chỉnh cho màn hình nhỏ */
+    }
+}
+.status-active {
+    background-color: #28a745;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+}
+
+.status-inactive {
+    background-color: #dc3545;
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.875rem;
+}
