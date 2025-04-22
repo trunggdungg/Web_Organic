@@ -143,13 +143,131 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script src="/assets/js/main.js"></script>
 <script src="/assets/js/cartApi.js"></script>
-<script src="/assets/js/orderProcessing.js"></script>
+<!--<script src="/assets/js/orderProcessing.js"></script>-->
 <script th:inline="javascript">
     const cartItems = [[${cartItems}]];
     console.log('cartItems',cartItems);
 
 
 </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const orderButton = document.getElementById('btn-cart-order');
+
+            if (orderButton) {
+                orderButton.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    checkStockBeforeOrder();
+                });
+            }
+
+            function checkStockBeforeOrder() {
+                // Hiển thị thông báo đang kiểm tra
+                showLoading();
+
+                // Thu thập thông tin các sản phẩm trong giỏ hàng
+                const cartItems = [];
+                document.querySelectorAll('#cart-itemsPage tbody tr').forEach(row => {
+                    const variantId = parseInt(row.querySelector('.idProductVariantId').textContent);
+                    const quantity = parseInt(row.querySelector('.quantity-input').value);
+
+                    cartItems.push({
+                        variantId: variantId,
+                        quantity: quantity
+                    });
+                });
+
+                // Gọi API kiểm tra tồn kho
+                fetch('/api/cart/check-stock', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(cartItems)
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        hideLoading();
+
+                        if (data.success) {
+                            // Nếu tất cả sản phẩm còn đủ hàng, chuyển đến trang thanh toán
+                            window.location.href = '/payment';
+                        } else {
+                            // Hiển thị thông báo lỗi nếu có sản phẩm hết hàng
+                            let errorMessage = "Một số sản phẩm trong giỏ hàng đã hết hàng hoặc không đủ số lượng:\n\n";
+
+                            data.outOfStockItems.forEach(item => {
+                                errorMessage += `- ${item.productName} (${item.variantName}): Bạn đặt ${item.requestedQuantity} sản phẩm, nhưng chỉ còn ${item.availableStock} trong kho.\n`;
+
+                                // Đánh dấu trực quan các sản phẩm hết hàng trong giỏ hàng
+                                document.querySelectorAll('#cart-itemsPage tbody tr').forEach(row => {
+                                    const variantId = parseInt(row.querySelector('.idProductVariantId').textContent);
+                                    if (variantId === item.variantId) {
+                                        row.style.backgroundColor = "#ffe6e6";
+
+                                        // Thêm thông báo hết hàng vào dòng sản phẩm
+                                        const quantityCell = row.querySelector('td:nth-child(3)');
+                                        let stockWarning = quantityCell.querySelector('.stock-warning');
+
+                                        if (!stockWarning) {
+                                            stockWarning = document.createElement('div');
+                                            stockWarning.className = 'stock-warning';
+                                            quantityCell.appendChild(stockWarning);
+                                        }
+
+                                        stockWarning.textContent = `Chỉ còn ${item.availableStock} sản phẩm!`;
+                                    }
+                                });
+                            });
+
+                            alertInfo(errorMessage);
+                        }
+                    })
+                    .catch(error => {
+                        hideLoading();
+                        console.error('Error checking stock:', error);
+                        alert('Đã xảy ra lỗi khi kiểm tra tồn kho. Vui lòng thử lại sau.');
+                    });
+            }
+
+            function showLoading() {
+                // Tạo và hiển thị thông báo đang tải
+                let loadingDiv = document.getElementById('loading-overlay');
+                if (!loadingDiv) {
+                    loadingDiv = document.createElement('div');
+                    loadingDiv.id = 'loading-overlay';
+                    loadingDiv.style.position = 'fixed';
+                    loadingDiv.style.top = '0';
+                    loadingDiv.style.left = '0';
+                    loadingDiv.style.width = '100%';
+                    loadingDiv.style.height = '100%';
+                    loadingDiv.style.backgroundColor = 'rgba(0,0,0,0.5)';
+                    loadingDiv.style.display = 'flex';
+                    loadingDiv.style.alignItems = 'center';
+                    loadingDiv.style.justifyContent = 'center';
+                    loadingDiv.style.zIndex = '9999';
+
+                    const spinner = document.createElement('div');
+                    spinner.style.color = 'white';
+                    spinner.style.fontSize = '20px';
+                    spinner.innerHTML = 'Đang kiểm tra tồn kho...';
+
+                    loadingDiv.appendChild(spinner);
+                    document.body.appendChild(loadingDiv);
+                } else {
+                    loadingDiv.style.display = 'flex';
+                }
+            }
+
+            function hideLoading() {
+                // Ẩn thông báo đang tải
+                const loadingDiv = document.getElementById('loading-overlay');
+                if (loadingDiv) {
+                    loadingDiv.style.display = 'none';
+                }
+            }
+        });
+    </script>
 </body>
 
 </html>
