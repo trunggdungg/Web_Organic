@@ -30,72 +30,84 @@
 
 </head>
 <body>
-<div class="font-sans">
+<div class="font-sans bg-cover bg-center min-h-screen" style="background-image: url('/assets/img/bg/bg_feedback.d3724c210d6633d0eb48.jpg');">
     <div class="header-sticky">
         <!-- Top Navigation -->
         <div th:insert="~{/web/fragments/header}"></div>
 
         <!-- Breadcrumb -->
-        <div class="bg-green-500 text-white py-2 px-4 ">
-            <div class="container mx-auto ">
-                <span>Trang chủ > Sản phẩm</span>
+        <div class="bg-green-700 text-white py-2 px-4 shadow-md">
+            <div class="container mx-auto text-sm">
+                <span>Trang chủ &gt; Đăng nhập</span>
             </div>
         </div>
     </div>
 
+    <!-- Login Container -->
+    <div class="flex justify-center items-center min-h-[80vh] px-4">
+        <div class="bg-white bg-opacity-90 backdrop-blur-md p-8 rounded-2xl shadow-xl max-w-md w-full">
+            <div class="text-center mb-6">
+                <h1 class="text-2xl font-bold text-green-700">Đăng nhập</h1>
+                <p class="text-gray-600 text-sm">Vui lòng nhập thông tin tài khoản của bạn</p>
+            </div>
 
-    <!-- login -->
-    <div class="login-container mx-auto">
-        <div class="login-header">
-            <h1>Đăng nhập</h1>
-            <p>Vui lòng nhập thông tin tài khoản của bạn</p>
-        </div>
-        <form>
-            <div class="input-group">
-                <label for="email">Tên đăng nhập</label>
-                <input type="text" id="email" placeholder="Nhập email">
-            </div>
-            <div class="input-group">
-                <label for="password">Mật khẩu</label>
-                <input type="password" id="password" placeholder="Nhập mật khẩu">
-            </div>
-            <div class="remember-forgot">
-                <div class="remember-me">
-                    <input type="checkbox" id="remember">
-                    <label for="remember">Ghi nhớ đăng nhập</label>
+            <form>
+                <div class="mb-4">
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Tên đăng nhập</label>
+                    <input type="text" id="email" placeholder="Nhập email"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none" />
                 </div>
-                <div class="forgot-password">
-                    <a href="#">Quên mật khẩu?</a>
-                </div>
-            </div>
-            <button type="submit" id="btn-login" class="btn-login">Đăng nhập</button>
 
-            <div class="social-login">
-                <div class="social-login-text">Hoặc đăng nhập với</div>
-                <div class="social-login-buttons">
-                    <button type="button" class="social-btn facebook-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white">
+                <div class="mb-4">
+                    <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Mật khẩu</label>
+                    <input type="password" id="password" placeholder="Nhập mật khẩu"
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:outline-none" />
+                </div>
+
+                <div class="flex justify-between items-center text-sm mb-6">
+                    <label class="flex items-center space-x-2">
+                        <input type="checkbox" id="remember" class="text-green-600" />
+                        <span class="text-gray-600">Ghi nhớ đăng nhập</span>
+                    </label>
+                    <a href="/forgot-password" class="text-green-600 hover:underline">Quên mật khẩu?</a>
+                </div>
+
+                <button type="submit" id="btn-login"
+                        class="w-full bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg font-semibold transition duration-300">
+                    Đăng nhập
+                </button>
+
+                <div class="text-center my-4 text-gray-500 text-sm">Hoặc đăng nhập với</div>
+
+                <div class="flex gap-4 justify-center">
+                    <button type="button"
+                            class="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white"
+                             viewBox="0 0 24 24">
                             <path
-                                    d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127c-.82-.088-1.643-.13-2.467-.127-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z"/>
+                                    d="M13.397 20.997v-8.196h2.765l.411-3.209h-3.176V7.548c0-.926.258-1.56 1.587-1.56h1.684V3.127c-.82-.088-1.643-.13-2.467-.127-2.444 0-4.122 1.492-4.122 4.231v2.355H7.332v3.209h2.753v8.202h3.312z" />
                         </svg>
                         Facebook
                     </button>
-                    <button type="button" class="social-btn google-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white">
+
+                    <button type="button"
+                            class="flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white"
+                             viewBox="0 0 24 24">
                             <path
-                                    d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032c0-3.331,2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12c0,5.523,4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z"/>
+                                    d="M12.545,10.239v3.821h5.445c-0.712,2.315-2.647,3.972-5.445,3.972c-3.332,0-6.033-2.701-6.033-6.032c0-3.331,2.701-6.032,6.033-6.032c1.498,0,2.866,0.549,3.921,1.453l2.814-2.814C17.503,2.988,15.139,2,12.545,2C7.021,2,2.543,6.477,2.543,12c0,5.523,4.478,10,10.002,10c8.396,0,10.249-7.85,9.426-11.748L12.545,10.239z" />
                         </svg>
                         Google
                     </button>
                 </div>
-            </div>
 
-            <div class="register-link">
-                Bạn chưa có tài khoản? <a href="/register">Đăng ký ngay</a>
-            </div>
-        </form>
+                <div class="text-center mt-6 text-sm text-gray-700">
+                    Bạn chưa có tài khoản?
+                    <a href="/register" class="text-green-600 font-semibold hover:underline">Đăng ký ngay</a>
+                </div>
+            </form>
+        </div>
     </div>
-
 </div>
 
 
@@ -148,8 +160,13 @@
             }, 1500);
 
         } catch (e) {
-            // console.log(e);
-            alertError('Đăng nhập thất bại');
+            if (e.response && e.response.data && e.response.data.message === "Account is not verify") {
+
+                alertError('Tài khoản chưa được xác thực. Vui lòng kiểm tra email để xác thực tài khoản.');
+            } else {
+                alertError('Đăng nhập thất bại');
+            }
+            console.error(e.message);
         }
     });
 
