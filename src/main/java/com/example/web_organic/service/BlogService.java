@@ -35,7 +35,7 @@ public class BlogService {
     }
 
     public Page<Blog> getAllBlogs(int page, int pageSize) {
-        return blogRepository.findAll(PageRequest.of(page , pageSize, Sort.by(Sort.Direction.DESC,"createdAt")));
+        return blogRepository.findAll(PageRequest.of(page - 1 , pageSize, Sort.by(Sort.Direction.DESC,"createdAt")));
     }
 
     public Page<Blog> getAllBlogsAndStatus(int i, int pageSize) {
