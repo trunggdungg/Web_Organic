@@ -111,4 +111,16 @@ private HttpSession httpSession;
         }
         categoryRepository.deleteById(id);
     }
+
+    public int countActiveCategories() {
+        return categoryRepository.countActiveCategories();
+    }
+
+    public int countInactiveCategories() {
+        return categoryRepository.countInactiveCategories();
+    }
+
+    public int countNewCategoriesCurrentMonth() {
+        return categoryRepository.countNewCategoriesCurrentMonth();
+    }
 }
