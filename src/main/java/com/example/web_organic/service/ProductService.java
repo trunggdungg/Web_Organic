@@ -248,6 +248,16 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    //    Doanh thu
+    public int countProductsWithDiscount() {
+        return productRepository.countProductsWithDiscount();
+    }
+
+    public int countFeaturedProducts() {
+        return productRepository.countFeaturedProducts();
+    }
+
+    public int countNewProductsCurrentMonth() {
+        return productRepository.countNewProductsCurrentMonth();
+    }
 
 }
