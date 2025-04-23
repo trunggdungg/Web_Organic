@@ -38,6 +38,8 @@ public class AdminController {
     @Autowired
     private ProductService productService;
     @Autowired
+    private ProductVariantService productVariantService;
+    @Autowired
     private BrandService brandService;
     @Autowired
     private ProductImageService productImageService;
@@ -144,9 +146,19 @@ public class AdminController {
                            @RequestParam(required = false,defaultValue = "10") int pageSize,
                            Model model) {
             Page<User> users = userService.getAllUsers(page, pageSize);
+
+            int totalUsers = userService.countUser();
+            int activatedUsers = userService.countUserActivated();
+            int notActivatedUsers = userService.countUserNotActivated();
+            int newUsersMonth = userService.countNewUserCurrentMonth();
             model.addAttribute("users", users);
             model.addAttribute("currentUser",page);
             model.addAttribute("totalPages",users.getTotalPages());
+
+            model.addAttribute("totalUsers", totalUsers);
+            model.addAttribute("activatedUsers", activatedUsers);
+            model.addAttribute("notActivatedUsers", notActivatedUsers);
+            model.addAttribute("newUsersMonth", newUsersMonth);
         return "admin/user-list";
     }
 
@@ -157,16 +169,33 @@ public class AdminController {
                            Model model) {
         Page<Blog> blogs = blogService.getAllBlogs(page, pageSize);
         List<Category> categories = categoryService.getCategoryByTypeAndStatus(Category_Type.BLOG);
+
+        int totalBlogs = blogService.countTotalBlogs();
+        int publishedBlogs = blogService.countPublishedBlogs();
+        int draftBlogs = blogService.countDraftBlogs();
+        int newBlogsMonth = blogService.countNewBlogsCurrentMonth();
+
         model.addAttribute("categories", categories);
         model.addAttribute("blogs", blogs);
         model.addAttribute("currentPage",page);
         model.addAttribute("totalPages",blogs.getTotalPages());
+
+        model.addAttribute("totalBlogs", totalBlogs);
+        model.addAttribute("publishedBlogs", publishedBlogs);
+        model.addAttribute("draftBlogs", draftBlogs);
+        model.addAttribute("newBlogsMonth", newBlogsMonth);
         return "admin/blog-list";
     }
     @GetMapping("/category")
     public String category(Model model) {
         List<Category> categories = categoryService.getAllCategories();
+        int activeCategoriesCount = categoryService.countActiveCategories();
+        int inactiveCategoriesCount = categoryService.countInactiveCategories();
+        int newCategoriesCount = categoryService.countNewCategoriesCurrentMonth();
         model.addAttribute("categories", categories);
+        model.addAttribute("activeCategoriesCount", activeCategoriesCount);
+        model.addAttribute("inactiveCategoriesCount", inactiveCategoriesCount);
+        model.addAttribute("newCategoriesCount", newCategoriesCount);
         return "admin/category";
     }
 
@@ -175,6 +204,11 @@ public class AdminController {
                           @RequestParam(required = false,defaultValue = "10") int pageSize,
                           Model model) {
         Page<Product> products = productService.getAllProducts(page, pageSize);
+
+        int discountedProductsCount = productService.countProductsWithDiscount();
+        int featuredProductsCount = productService.countFeaturedProducts();
+        int newProductsCount = productService.countNewProductsCurrentMonth();
+
         List<Category> categories = categoryService.getCategoryByTypeAndStatus(Category_Type.PRODUCT);
         List<Brand> brands = brandService.getAllBrands();
         model.addAttribute("brands", brands);
@@ -182,6 +216,9 @@ public class AdminController {
         model.addAttribute("products", products);
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", products.getTotalPages());
+        model.addAttribute("discountedProductsCount", discountedProductsCount);
+        model.addAttribute("featuredProductsCount", featuredProductsCount);
+        model.addAttribute("newProductsCount", newProductsCount);
         return "admin/product-list";
     }
 
@@ -203,6 +240,11 @@ public class AdminController {
             .stream()
             .collect(Collectors.groupingBy(variant -> variant.getProduct().getId()));
 
+        int totalVariants = productVariantService.countTotalVariants();
+        int defaultVariants = productVariantService.countDefaultVariants();
+        int totalStock = productVariantService.getTotalStock();
+        int outOfStockVariants = productVariantService.countOutOfStockVariants();
+
         model.addAttribute("allProducts", allProducts);
         model.addAttribute("products", products);
         model.addAttribute("variantsByProductId", variantsByProductId);
@@ -210,6 +252,10 @@ public class AdminController {
         model.addAttribute("pageSize", pageSize);
         model.addAttribute("totalPages", allProducts.getTotalPages());
 
+        model.addAttribute("totalVariants", totalVariants);
+        model.addAttribute("defaultVariants", defaultVariants);
+        model.addAttribute("totalStock", totalStock);
+        model.addAttribute("outOfStockVariants", outOfStockVariants);
         return "admin/product-variant";
     }
 
