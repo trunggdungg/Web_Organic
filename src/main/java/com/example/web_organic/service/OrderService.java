@@ -2,6 +2,7 @@ package com.example.web_organic.service;
 import com.example.web_organic.entity.*;
 import com.example.web_organic.modal.Enum.Payment_Status_Enum;
 import com.example.web_organic.modal.Enum.Status_Enum;
+import com.example.web_organic.modal.request.CancelOrderRequest;
 import com.example.web_organic.modal.request.OrderRequest;
 import com.example.web_organic.repository.*;
 import jakarta.servlet.http.HttpSession;
@@ -36,6 +37,8 @@ public class OrderService {
     private OrderDetailService orderDetailService;
     @Autowired
     private ProductVariantRepository productVariantRepository;
+    @Autowired
+    private OrderCanCellationRepository orderCancellationRepository;
 
 
     @Transactional
@@ -68,21 +71,7 @@ public class OrderService {
             .build();
         orderRepository.save(order);
 
-
-        // Lưu các sản phẩm từ giỏ hàng vào OrderDetail
-//        List<OrderDetail> orderDetails = cartItems.stream().map(cartItem -> {
-//            BigDecimal unitPrice = cartItem.getProductVariant().getPrice();
-//            BigDecimal subTotal = unitPrice.multiply(BigDecimal.valueOf(cartItem.getQuantity()));
-//
-//            return OrderDetail.builder()
-//                .id(UUID.randomUUID().toString().substring(0, 6).toUpperCase()) // Tạo ID ngẫu nhiên cho OrderDetail
-//                .order(order)
-//                .productVariant(cartItem.getProductVariant())
-//                .unitPrice(unitPrice)
-//                .quantity(cartItem.getQuantity())
-//                .subTotal(subTotal)
-//                .build();
-//        }).collect(Collectors.toList());
+        // Tạo danh sách OrderDetail từ giỏ hàng
         List<OrderDetail> orderDetails = cartItems.stream().map(cartItem -> {
             ProductVariants productVariant = cartItem.getProductVariant();
             BigDecimal priceOld = productVariant.getPrice();
@@ -203,6 +192,45 @@ public class OrderService {
                 order.setPaymentStatus(Payment_Status_Enum.CANCELED); // Hủy đơn với COD
             }
         }
+    }
+
+
+    @Transactional
+    public void cancelOrder(CancelOrderRequest cancelOrderRequest) {
+        User currentUser = (User) httpSession.getAttribute("CURRENT_USER");
+        if (currentUser == null) {
+            throw new RuntimeException("Người dùng chưa đăng nhập");
+        }
+
+        // Kiểm tra xem đơn hàng có tồn tại và thuộc về người dùng hiện tại không
+        Order order = orderRepository.findOrderById(cancelOrderRequest.getOrderId())
+            .orElseThrow(() -> new RuntimeException("Không tìm thấy đơn hàng"));
+
+        if (!order.getUser().getId().equals(currentUser.getId())) {
+            throw new RuntimeException("Bạn không có quyền hủy đơn hàng này");
+        }
+
+        // Kiểm tra xem đơn hàng có đang ở trạng thái PENDING không
+        if (order.getStatus() != Status_Enum.PENDING) {
+            throw new RuntimeException("Chỉ có thể hủy đơn hàng ở trạng thái chờ xác nhận");
+        }
+
+        // Cập nhật trạng thái đơn hàng
+        order.setStatus(Status_Enum.CANCELED);
+        order.setPaymentStatus(Payment_Status_Enum.CANCELED);
+        orderRepository.save(order);
+
+        // Tạo OrderCancellation
+        String cancellationId = "CAN-" + UUID.randomUUID().toString().substring(0, 6).toUpperCase();
+        OrderCancellation cancellation = OrderCancellation.builder()
+            .id(cancellationId)
+            .order(order)
+            .user(currentUser)
+            .reason(cancelOrderRequest.getReason())
+            .cancelledAt(LocalDateTime.now())
+            .build();
+
+        orderCancellationRepository.save(cancellation);
     }
 
 
