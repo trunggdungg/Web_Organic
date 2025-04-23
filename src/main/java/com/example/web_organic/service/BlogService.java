@@ -102,4 +102,20 @@ public class BlogService {
             .orElseThrow(() -> new RuntimeException("Blog not found"));
         blogRepository.delete(blog);
     }
+
+    public int countTotalBlogs() {
+        return blogRepository.countTotalBlogs();
+    }
+
+    public int countPublishedBlogs() {
+        return blogRepository.countPublishedBlogs();
+    }
+
+    public int countDraftBlogs() {
+        return blogRepository.countDraftBlogs();
+    }
+
+    public int countNewBlogsCurrentMonth() {
+        return blogRepository.countNewBlogsCurrentMonth();
+    }
 }
