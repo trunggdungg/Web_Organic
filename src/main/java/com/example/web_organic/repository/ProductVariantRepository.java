@@ -29,9 +29,24 @@ public interface ProductVariantRepository extends JpaRepository<ProductVariants,
            END
     FROM ProductVariants pv
     JOIN pv.product p
-    WHERE pv.stock <= 20
+  
     ORDER BY pv.stock ASC
     """)
     List<Object[]> getStockAlerts(Pageable pageable);
 
+    // Đếm tổng số biến thể
+    @Query("SELECT COUNT(pv) FROM ProductVariants pv")
+    int countTotalVariants();
+
+    // Đếm số biến thể mặc định
+    @Query("SELECT COUNT(pv) FROM ProductVariants pv WHERE pv.isDefault = true")
+    int countDefaultVariants();
+
+    // Tính tổng số lượng hàng tồn kho
+    @Query("SELECT SUM(pv.stock) FROM ProductVariants pv")
+    Integer getTotalStock();
+
+    // Đếm số biến thể hết hàng
+    @Query("SELECT COUNT(pv) FROM ProductVariants pv WHERE pv.stock = 0")
+    int countOutOfStockVariants();
 }
