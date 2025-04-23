@@ -119,4 +119,21 @@ public class ProductVariantService {
         productVariantRepository.delete(productVariants);
 
     }
+
+    public int countTotalVariants() {
+        return productVariantRepository.countTotalVariants();
+    }
+
+    public int countDefaultVariants() {
+        return productVariantRepository.countDefaultVariants();
+    }
+
+    public int getTotalStock() {
+        Integer totalStock = productVariantRepository.getTotalStock();
+        return totalStock != null ? totalStock : 0;
+    }
+
+    public int countOutOfStockVariants() {
+        return productVariantRepository.countOutOfStockVariants();
+    }
 }
