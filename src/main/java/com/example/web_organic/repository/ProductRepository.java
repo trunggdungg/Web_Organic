@@ -78,7 +78,17 @@ public interface ProductRepository extends JpaRepository<Product, Integer>, JpaS
         "ORDER BY totalQuantitySold DESC")
     List<Map<String, Object>> getHotProducts(Pageable pageable);    // Dữ liệu cho biểu đồ sản phẩm bán chạy
 
+    // Đếm số sản phẩm có giảm giá > 0
+    @Query("SELECT COUNT(p) FROM Product p WHERE p.discount > 0 AND p.status = true")
+    int countProductsWithDiscount();
 
+    // Đếm số sản phẩm nổi bật
+    @Query("SELECT COUNT(p) FROM Product p WHERE p.isFeatured = true AND p.status = true")
+    int countFeaturedProducts();
+
+    // Đếm số sản phẩm mới trong tháng hiện tại
+    @Query("SELECT COUNT(p) FROM Product p WHERE p.status = true AND MONTH(p.createdAt) = MONTH(CURRENT_DATE) AND YEAR(p.createdAt) = YEAR(CURRENT_DATE)")
+    int countNewProductsCurrentMonth();
 
 
 }
