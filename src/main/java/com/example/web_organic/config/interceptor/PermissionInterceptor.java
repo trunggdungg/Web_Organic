@@ -26,6 +26,11 @@ public class PermissionInterceptor implements HandlerInterceptor {
             return false;
         }
 
+        if (user.getRole() != User_Role.ADMIN && user.getRole() != User_Role.STAFF) {
+            response.sendRedirect("/"); // Chuyển hướng về trang chủ
+            return false;
+        }
+
         if (request.getSession().getAttribute("STAFF_PERMISSION") == null) {
             if (user.getRole() == User_Role.ADMIN) {
                 StaffPermission adminPermission = StaffPermission.builder()
