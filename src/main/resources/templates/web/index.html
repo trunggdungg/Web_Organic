@@ -29,41 +29,173 @@
         }
 
     </style>
-    <!--    <style>-->
-    <!--    /* Gradient text với hiệu ứng ánh kim */-->
-    <!--    .gradient-text {-->
-    <!--        background: linear-gradient(-->
-    <!--                45deg,-->
-    <!--                #2ecc71,    /* Màu xanh lá */-->
-    <!--                #27ae60,    /* Xanh đậm hơn */-->
-    <!--                #2980b9,    /* Xanh dương */-->
-    <!--                #3498db     /* Xanh dương sáng */-->
-    <!--        );-->
-    <!--        background-size: 400% 400%;-->
-    <!--        -webkit-background-clip: text;-->
-    <!--        -webkit-text-fill-color: transparent;-->
-    <!--        animation: shine 5s ease infinite;-->
-    <!--        background-clip: text;-->
-    <!--    }-->
+    <style>
+        /* CSS cho Chat Bubble */
+        .chat-bubble-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 9999;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    <!--    /* Animation chuyển màu */-->
-    <!--    @keyframes shine {-->
-    <!--        0% {-->
-    <!--            background-position: 0% 50%;-->
-    <!--        }-->
-    <!--        50% {-->
-    <!--            background-position: 100% 50%;-->
-    <!--        }-->
-    <!--        100% {-->
-    <!--            background-position: 0% 50%;-->
-    <!--        }-->
-    <!--    }-->
+        .chat-bubble {
+            width: 60px;
+            height: 60px;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+        }
 
-    <!--    /* Hiệu ứng hover */-->
-    <!--    .gradient-text:hover {-->
-    <!--        animation: shine 2s ease infinite;-->
-    <!--    }-->
-    <!--</style>-->
+        .chat-bubble:hover {
+            transform: scale(1.1);
+        }
+
+        .chat-notification {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #ff4b4b;
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            font-size: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            display: none;
+        }
+
+        .chat-box {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 350px;
+            height: 450px;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .chat-header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-title {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .chat-close {
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .chat-body {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+
+        .chat-message {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-message.system .message-content {
+            background-color: #e9e9eb;
+            color: #333;
+            align-self: center;
+            border-radius: 18px;
+            padding: 10px 15px;
+            max-width: 80%;
+        }
+
+        .chat-message.user .message-content {
+            background-color: #4CAF50;
+            color: white;
+            align-self: flex-end;
+            border-radius: 18px 18px 0 18px;
+            padding: 10px 15px;
+            max-width: 80%;
+        }
+
+        .chat-message.admin .message-content {
+            background-color: #e9e9eb;
+            color: #333;
+            align-self: flex-start;
+            border-radius: 18px 18px 18px 0;
+            padding: 10px 15px;
+            max-width: 80%;
+        }
+
+        .message-time {
+            font-size: 10px;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        .chat-message.user .message-time {
+            align-self: flex-end;
+        }
+
+        .chat-message.admin .message-time {
+            align-self: flex-start;
+        }
+
+        .chat-footer {
+            display: flex;
+            padding: 10px;
+            background-color: white;
+            border-top: 1px solid #e9e9eb;
+        }
+
+        .chat-footer input {
+            flex: 1;
+            border: none;
+            background-color: #f1f1f1;
+            border-radius: 20px;
+            padding: 10px 15px;
+            outline: none;
+        }
+
+        .chat-footer button {
+            background-color: transparent;
+            border: none;
+            color: #4CAF50;
+            font-size: 20px;
+            margin-left: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .chat-footer button:hover {
+            color: #357a38;
+        }
+    </style>
 
 </head>
 
@@ -259,7 +391,7 @@
                 <div class="p-3 text-center flex flex-col h-full" style="min-height: 124px">
                     <p class="text-lg line-clamp-2" th:text="${product.name}">Dầu Olive hữu cơ Gusti Italia 500ml</p>
                     <div class="mt-auto">
-                        <div class="flex justify-start items-center mt-2">
+                        <div class="flex justify-center  items-center mt-2">
                     <span class="price-new text-red-500 text-xl font-semibold mr-2"
                           th:text="${product.discount != null } ? ${#numbers.formatDecimal(productVariantPrices.get(product.id) - (productVariantPrices.get(product.id) * product.discount / 100), 0, 'COMMA', 0, 'POINT')} + '₫' :
                                           ${#numbers.formatDecimal(productVariantPrices.get(product.id), 0, 'COMMA', 0, 'POINT')} + '₫'">
@@ -276,44 +408,7 @@
             </div>
 
 
-            <!--            sp khác-->
-            <div class="item group border border-green-300 hover:border-green-500 hover:border-2 bg-white relative overflow-hidden min-h-[300px] flex flex-col group">
-                <div class="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-sm">-15%</div>
-                <div class="absolute top-2 right-2 bg-green-200 text-green-800 px-2 py-1 text-sm">Tạm hết</div>
 
-                <!-- Heart button overlay -->
-                <!-- Heart button overlay -->
-                <div class="heart-overlay absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-full  transition-all duration-300 group-hover:translate-x-2 group-hover:opacity-100">
-                    <button class="heart-button bg-white p-2 rounded-full shadow-md">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-red-500 " fill="none"
-                             viewBox="0 0 24 24"
-                             stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                  d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                        </svg>
-                    </button>
-                </div>
-
-                <!-- Buy button overlay -->
-                <div class="buy-overlay absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-full  transition-all duration-300 group-hover:-translate-x-2 group-hover:opacity-100">
-                    <button class="buy-button bg-green-500 text-white px-4 py-2 rounded-full shadow-md">Mua hàng
-                    </button>
-                </div>
-
-                <img alt="Thịt gà - 1kg" class="w-full h-60 object-cover"
-                     src="https://storage.googleapis.com/a1aa/image/8i4yLd6XdlflaljUcctxSK902Arhp5XGHB7ZB2_VyGo.jpg"/>
-
-
-                <div class="p-3 text-center flex flex-col h-full">
-                    <p class="text-lg">Dầu Olive hữu cơ Gusti Italia 500ml</p>
-                    <div class="mt-auto">
-                        <div class="flex justify-center items-center mt-2">
-                            <p class="text-red-500 text-xl font-semibold mr-2">330,000₫</p>
-                            <p class="text-gray-500 line-through">440,000₫</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
 
         </div>
@@ -620,7 +715,7 @@
                 <h2 class="text-lg font-bold mb-2 fixed-h2 line-clamp-2" th:text="${blog.title}">
                     Ngày Tết - Đặc sản dấu ấn vùng miền
                 </h2>
-                <p class="text-gray-600 line-clamp-2" th:text="${blog.content}">
+                <p class="text-gray-600 line-clamp-2" th:text="${blog.description}">
                     Từ hàm lượng dinh dưỡng tuyệt vời, Organica giới thiệu bạn Top 25 cách chế biến hạt quinoa thành
                     những...
                 </p>
@@ -686,6 +781,35 @@
         THỐNG CỬA HÀNG</a>
 </section>
 
+<!-- Fragment cho chat bubble của người dùng -->
+<!--<div th:fragment="chat-bubble">-->
+    <!-- Chat Bubble cho người dùng -->
+    <div class="chat-bubble-container" id="chatBubbleContainer">
+        <!-- Nút chat -->
+        <div class="chat-bubble" id="chatBubble">
+            <i class="fas fa-comments"></i>
+            <span class="chat-notification" id="chatNotification">0</span>
+        </div>
+
+        <!-- Cửa sổ chat -->
+        <div class="chat-box" id="chatBox">
+            <div class="chat-header">
+                <div class="chat-title">Hỗ trợ trực tuyến</div>
+                <div class="chat-close" id="chatClose">&times;</div>
+            </div>
+            <div class="chat-body" id="chatBody">
+                <!-- Tin nhắn hệ thống -->
+                <div class="chat-message system">
+                    <div class="message-content">Xin chào! Chúng tôi có thể giúp gì cho bạn?</div>
+                </div>
+                <!-- Tin nhắn sẽ được thêm vào đây -->
+            </div>
+            <div class="chat-footer">
+                <input type="text" id="chatInput" placeholder="Nhập tin nhắn...">
+                <button id="chatSend"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+    </div>
 
 <!-- Footer -->
 <div class="bg-gray-900 text-white footer">
@@ -695,10 +819,13 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-
+<!-- JavaScript cho chat -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <!-- JS carousel -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+
 <script src="/assets/js/main.js"></script>
 
 <script th:inline="javascript">
@@ -718,6 +845,167 @@
     console.log("blogs :", blogs);
 
 </script>
+<script >
+    document.addEventListener('DOMContentLoaded', function() {
+        const chatBubble = document.getElementById('chatBubble');
+        const chatBox = document.getElementById('chatBox');
+        const chatClose = document.getElementById('chatClose');
+        const chatInput = document.getElementById('chatInput');
+        const chatSend = document.getElementById('chatSend');
+        const chatBody = document.getElementById('chatBody');
+        let stompClient = null;
+        let username = null;
 
+        // Hiển thị/ẩn cửa sổ chat
+        chatBubble.addEventListener('click', function() {
+            chatBox.style.display = 'flex';
+            // Nếu chưa kết nối, hiển thị hộp thoại nhập tên
+            if (!username) {
+                showUsernamePrompt();
+            }
+            // Đánh dấu thông báo là đã đọc
+            document.getElementById('chatNotification').style.display = 'none';
+            document.getElementById('chatNotification').textContent = '0';
+        });
+
+        chatClose.addEventListener('click', function() {
+            chatBox.style.display = 'none';
+        });
+
+        // Gửi tin nhắn khi nhấn nút gửi
+        chatSend.addEventListener('click', sendMessage);
+
+        // Gửi tin nhắn khi nhấn Enter
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // Hiển thị hộp thoại nhập tên
+        function showUsernamePrompt() {
+            const userName = prompt('Vui lòng nhập tên của bạn để bắt đầu chat:', '');
+            if (userName && userName.trim() !== '') {
+                username = userName.trim();
+                // Kết nối WebSocket sau khi có tên người dùng
+                connect(username);
+                // Kích hoạt input chat sau khi có tên
+                chatInput.disabled = false;
+            } else {
+                // Nếu không nhập tên, ẩn cửa sổ chat
+                chatBox.style.display = 'none';
+            }
+        }
+
+        // Kết nối WebSocket
+        function connect(userName) {
+            const socket = new SockJS('/ws');
+            stompClient = Stomp.over(socket);
+
+            stompClient.connect({
+                'username': userName
+            }, function() {
+                // Subscribe để nhận tin nhắn riêng tư
+                stompClient.subscribe('/user/queue/private', onMessageReceived);
+                stompClient.subscribe('/user/' + userName + '/queue/private', onMessageReceived);
+
+                // Gửi thông báo tham gia
+                stompClient.send("/app/chat.addUser", {},
+                    JSON.stringify({
+                        sender: userName,
+                        type: 'JOIN'
+                    })
+                );
+
+                // Thêm tin nhắn chào mừng vào khung chat
+                addMessage({
+                    type: 'SYSTEM',
+                    content: 'Kết nối thành công! Bạn có thể bắt đầu trò chuyện với hỗ trợ viên.'
+                });
+            }, onError);
+        }
+
+        function onError() {
+            addMessage({
+                type: 'SYSTEM',
+                content: 'Không thể kết nối đến máy chủ. Vui lòng thử lại sau.'
+            });
+        }
+
+        // Gửi tin nhắn
+        function sendMessage() {
+            const messageContent = chatInput.value.trim();
+
+            if (messageContent && stompClient) {
+                const chatMessage = {
+                    sender: username,
+                    content: messageContent,
+                    receiver: 'admin', // Gửi đến admin
+                    type: 'PRIVATE'
+                };
+
+                // Gửi tin nhắn qua WebSocket
+                stompClient.send("/app/chat.sendPrivateMessage", {}, JSON.stringify(chatMessage));
+
+                // Hiển thị tin nhắn của người dùng trong cửa sổ chat
+                addMessage({
+                    type: 'USER',
+                    content: messageContent
+                });
+
+                // Xóa nội dung input
+                chatInput.value = '';
+            }
+        }
+
+        // Xử lý khi nhận được tin nhắn
+        function onMessageReceived(payload) {
+            const message = JSON.parse(payload.body);
+
+            // Nếu là tin nhắn từ admin
+            if (message.sender === 'admin' && message.receiver === username) {
+                addMessage({
+                    type: 'ADMIN',
+                    content: message.content
+                });
+
+                // Hiển thị thông báo nếu cửa sổ chat đang đóng
+                if (chatBox.style.display !== 'flex') {
+                    const notification = document.getElementById('chatNotification');
+                    notification.style.display = 'flex';
+
+                    // Tăng số lượng thông báo nếu đã có
+                    const count = parseInt(notification.textContent) || 0;
+                    notification.textContent = count + 1;
+                }
+            }
+        }
+
+        // Thêm tin nhắn vào khung chat
+        function addMessage(message) {
+            const messageElement = document.createElement('div');
+            messageElement.classList.add('chat-message', message.type.toLowerCase());
+
+            const contentElement = document.createElement('div');
+            contentElement.classList.add('message-content');
+            contentElement.textContent = message.content;
+            messageElement.appendChild(contentElement);
+
+            // Thêm thời gian
+            const timeElement = document.createElement('div');
+            timeElement.classList.add('message-time');
+            const now = new Date();
+            timeElement.textContent = now.getHours().toString().padStart(2, '0') + ':' +
+                now.getMinutes().toString().padStart(2, '0');
+            messageElement.appendChild(timeElement);
+
+            chatBody.appendChild(messageElement);
+
+            // Cuộn xuống tin nhắn mới nhất
+            chatBody.scrollTop = chatBody.scrollHeight;
+        }
+    });
+</script>
 </body>
 </html>
