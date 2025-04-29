@@ -72,21 +72,21 @@
                         <img class="w-16 h-16 object-cover rounded-md"
                              th:src="${blog.thumbnail}"
                              th:alt="${blog.title}">
-                        <a th:href="@{/blog/{slug}(slug=${blog.slug})}"
+                        <a th:href="|/blog/${blog.id}/${blog.slug}|"
                            class="text-gray-700 font-medium hover:underline"
                            th:text="${#strings.length(blog.title) > 50} ? ${blog.title.substring(0, 50)} + '...' : ${blog.title}">
                         </a>
                     </li>
                 </th:block>
 
-                <li class="flex items-center space-x-3">
-                    <img class="w-16 h-16 object-cover rounded-md"
-                         src="https://file.hstatic.net/200000692807/article/mon-an-voi-hat-quinoa-1_1dd05b680b54411ca664d52cfbb27dcd_large.jpg"
-                         alt="Top 25 cách chế biến hạt quinoa">
-                    <a href="#" class="text-gray-700 font-medium hover:underline">
-                        Top 25 cách chế biến hạt quinoa thành món ăn bổ dưỡng mà lại dễ làm
-                    </a>
-                </li>
+<!--                <li class="flex items-center space-x-3">-->
+<!--                    <img class="w-16 h-16 object-cover rounded-md"-->
+<!--                         src="https://file.hstatic.net/200000692807/article/mon-an-voi-hat-quinoa-1_1dd05b680b54411ca664d52cfbb27dcd_large.jpg"-->
+<!--                         alt="Top 25 cách chế biến hạt quinoa">-->
+<!--                    <a href="#" class="text-gray-700 font-medium hover:underline">-->
+<!--                        Top 25 cách chế biến hạt quinoa thành món ăn bổ dưỡng mà lại dễ làm-->
+<!--                    </a>-->
+<!--                </li>-->
             </ul>
         </div>
 
