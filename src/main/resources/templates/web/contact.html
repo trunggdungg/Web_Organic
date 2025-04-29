@@ -35,7 +35,7 @@
         <!-- Breadcrumb -->
         <div class="bg-green-500 text-white py-2 px-4 ">
             <div class="container mx-auto ">
-                <span>Trang chủ > Sản phẩm</span>
+                <span>Trang chủ > Liên hệ</span>
             </div>
         </div>
     </div>
@@ -88,15 +88,15 @@
             <div class="border p-4">
                 <form class="space-y-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input type="text" placeholder="Họ và tên" class="border p-2 w-full">
-                        <input type="email" placeholder="Email" class="border p-2 w-full">
+                        <input type="text" placeholder="Họ và tên" class="border p-2 w-full" id="name">
+                        <input type="email" placeholder="Email" class="border p-2 w-full" id="email">
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <input type="text" placeholder="Số điện thoại" class="border p-2 w-full">
-                        <input type="text" placeholder="Chủ đề" class="border p-2 w-full">
+                        <input type="text" placeholder="Số điện thoại" class="border p-2 w-full" id="phone">
+                        <input type="text" placeholder="Chủ đề" class="border p-2 w-full" id="subject">
                     </div>
-                    <textarea placeholder="Lời nhắn" class="border p-2 w-full h-32"></textarea>
-                    <button type="submit" class="bg-green-500 text-white px-4 py-2">Gửi tin</button>
+                    <textarea placeholder="Lời nhắn" class="border p-2 w-full h-32" id="message"></textarea>
+                    <button type="submit" class="bg-green-500 text-white px-4 py-2" id="btn-send-mess">Gửi tin</button>
                 </form>
             </div>
         </div>
@@ -117,6 +117,44 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
 <script src="/assets/js/main.js"></script>
+<script >
+    const nameEl = document.getElementById('name');
+    const emailEl = document.getElementById('email');
+    const phoneEl = document.getElementById('phone');
+    const subjectEl = document.getElementById('subject');
+    const messageEl = document.getElementById('message');
+    const btnSendMess = document.getElementById('btn-send-mess');
+
+    btnSendMess.addEventListener('click', async function (e) {
+        e.preventDefault();
+        const data = {
+            name: nameEl.value,
+            email: emailEl.value,
+            phone: phoneEl.value,
+            subject: subjectEl.value,
+            message: messageEl.value
+        }
+        console.log("data", data);
+        if (!data.name || !data.email || !data.phone || !data.subject || !data.message) {
+            alertError('Vui lòng điền đầy đủ thông tin');
+            return;
+        }
+
+        try {
+            const response = await axios.post('/api/contact/insert', data);
+            if (response.status === 200) {
+                alertSuccess('Gửi tin nhắn thành công');
+            } else {
+
+                alertError('Có lỗi xảy ra, vui lòng thử lại sau');
+            }
+        } catch (error) {
+            console.log(error);
+            alertError('Có lỗi xảy ra, vui lòng thử lại sau');
+        }
+
+    });
+</script>
 </body>
 
 </html>
